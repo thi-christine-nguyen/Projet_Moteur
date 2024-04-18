@@ -165,9 +165,14 @@ int main( void )
 
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
+        
+        float updateTime = 0.05f;
 
-        // Check des collisions entre le plan et les gameObjects
-        basketBall->handleCollisionWithLandscape(*landscape);
+        while (physicsClock >= updateTime) {
+            // Check des collisions entre le plan et les gameObjects
+            basketBall->handleCollisionWithLandscape(*landscape);
+            physicsClock -= updateTime;
+        }
 
         // Affichage de tous les élements de la scène via le SceneManager
         SM->draw();

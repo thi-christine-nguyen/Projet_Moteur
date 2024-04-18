@@ -1,4 +1,4 @@
-# Install script for directory: /home/e20210001937/Documents/Master1/M1/S2/Moteur de jeux/TP5/external
+# Install script for directory: /home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/external
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/e20210001937/Documents/Master1/M1/S2/Moteur de jeux/TP5/build/external/glfw-3.1.2/cmake_install.cmake")
+  include("/home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/external/glfw-3.1.2/cmake_install.cmake")
 
 endif()
 

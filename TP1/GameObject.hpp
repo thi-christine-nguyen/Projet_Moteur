@@ -329,10 +329,14 @@ public:
             // Vérifiez la collision avec les AABB
             if (boundingBox.intersect(other.getBoundingBox())) {
                 // std::cout << "Collision entre le GameObject (" << getName() << ") et le terrain (" << other.getName() << ") détectée" << std::endl;
-                grounded = true;
+                if (!grounded) { // Si elle n'était pas déjà au sol alors beginOverlap
+                    grounded = true;
+                    std::cout << "vitesse avant: " << getVelocity().x << "; " << getVelocity().y << "; " << getVelocity().z << std::endl;
+                    setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f): glm::vec3(0.0f));
+                    std::cout << "vitesse apres: " << getVelocity().x << "; " << getVelocity().y << "; " << getVelocity().z << std::endl;
+                }
                 // Calcul des impulsions
                 // glm::vec3 impulsion1, impulsion2, normale_contact = glm::normalize(other.getTransform().getPosition() - transform.getPosition());
-                std::cout << "vitesse avant: " << getVelocity().x << "; " << getVelocity().y << "; " << getVelocity().z << std::endl;
                 // calculer_impulsions(other, impulsion1, impulsion2, normale_contact);
                 // std::cout << "normale contact: " << normale_contact.x << "; " << normale_contact.y << "; " << normale_contact.z << std::endl;
                 // std::cout << "impulsion: " << impulsion1.x << "; " << impulsion1.y << "; " << impulsion1.z << std::endl;
@@ -340,10 +344,9 @@ public:
                 // transform.setPosition(glm::vec3(transform.getPosition().x, other.getTransform().getPosition().y, transform.getPosition().z));
 
                 // Réinitialisez la vitesse du GameObject à zéro
-                setVelocity(length(getVelocity()) > 0.01f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f): glm::vec3(0.0f));
-                std::cout << "vitesse apres: " << getVelocity().x << "; " << getVelocity().y << "; " << getVelocity().z << std::endl;
             } else {
-                grounded = false;
+                if (grounded) // endOverlap
+                    grounded = false;
             }
         }
     }

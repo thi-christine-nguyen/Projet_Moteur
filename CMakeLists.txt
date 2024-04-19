@@ -54,8 +54,15 @@ add_definitions(
 )
 
 # TP1
+file( GLOB IMGUIC imgui/*.cpp) 
+file( GLOB IMGUIH imgui/*.h) 
 add_executable(TP1
         TP1/TP1.cpp
+		TP1/Camera/Camera.cpp
+		TP1/Camera/Camera.hpp
+		TP1/Camera/Camera_Helper.cpp
+		TP1/Camera/Camera_Helper.hpp
+
 	common/shader.cpp
 	common/shader.hpp
 	common/controls.cpp
@@ -68,9 +75,12 @@ add_executable(TP1
 	common/vboindexer.hpp
 	common/stb_image.cpp
 	common/stb_image.hpp
+
 	
         TP1/vertex_shader.glsl
         TP1/fragment_shader.glsl
+					${IMGUIH}
+					${IMGUIC}
 )
 target_link_libraries(TP1
 	${ALL_LIBS}
@@ -83,6 +93,7 @@ create_target_launcher(TP1 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/TP1/")
 
 
 SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
+SOURCE_GROUP(common REGULAR_EXPRESSION ".*/imgui/.*" )
 SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )
 
 

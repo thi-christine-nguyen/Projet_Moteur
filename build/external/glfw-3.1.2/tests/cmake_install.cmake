@@ -1,4 +1,4 @@
-# Install script for directory: /home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/external/glfw-3.1.2/tests
+# Install script for directory: /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

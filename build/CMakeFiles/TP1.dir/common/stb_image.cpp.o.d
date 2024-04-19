@@ -1,7 +1,7 @@
 CMakeFiles/TP1.dir/common/stb_image.cpp.o: \
- /home/narraxas/Documents/Master1/M1/S2/Moteur\ de\ jeux/Projet_Moteur/common/stb_image.cpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/stb_image.cpp \
  /usr/include/stdc-predef.h \
- /home/narraxas/Documents/Master1/M1/S2/Moteur\ de\ jeux/Projet_Moteur/common/./stb_image.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/./stb_image.hpp \
  /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \

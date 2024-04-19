@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "/home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/external/glfw-3.1.2/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: \"/home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/external/glfw-3.1.2/install_manifest.txt\"")
+if (NOT EXISTS "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: \"/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/install_manifest.txt\"")
 endif()
 
-file(READ "/home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/external/glfw-3.1.2/install_manifest.txt" files)
+file(READ "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})

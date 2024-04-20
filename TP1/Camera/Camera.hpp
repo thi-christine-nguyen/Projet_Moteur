@@ -33,7 +33,7 @@ private:
 
 	//Camera parameters 
 	float		m_fovDegree{ 45.0f };
-	glm::vec3	m_position{ glm::vec3(0.f, 40.f, 0.f) };
+	glm::vec3	m_position{ glm::vec3(0.f, 0.f, 0.f) };
 	glm::vec3	m_eulerAngle{ glm::vec3(0.f, 0.f, 0.f) };
 	glm::quat	m_rotation{};
 	float 		m_translationSpeed;

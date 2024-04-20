@@ -1,13 +1,20 @@
 #include "lib.hpp"
-#include "InputManager.hpp"
+// #include "InputManager.hpp"
 #include "SceneManager.hpp"
-#include "Camera.hpp"
+#include "Camera/Camera.hpp"
 #include "GameObject.hpp"
 #include "Sphere.hpp"
 #include "Plane.hpp"
 #include "Cube.hpp"
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 /*******************************************************************************/
+
+void windowSetup();
+void initImgui();
 
 int main( void )
 {
@@ -65,16 +72,8 @@ int main( void )
     // Cull triangles which normal is not towards the camera
     //glEnable(GL_CULL_FACE);
 
-    // Création de la caméra
-    camera.setSpeed(0.1f);
-    camera.setIsOrbiting(false);
-    camera.setOrbitSpeed(0.025f);
-    camera.setFov(45.0f);
-    camera.resetCamera();
-
     // Création des managers
     SceneManager *SM = new SceneManager();
-    InputManager *IM = new InputManager();
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -89,6 +88,8 @@ int main( void )
 
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
+    GLuint id_v = glGetUniformLocation(programID, "view_mat");
+    GLuint id_p = glGetUniformLocation(programID, "project_mat");
     glUseProgram(programID);
 
     //----------------------------------------- Init -----------------------------------------//
@@ -109,7 +110,7 @@ int main( void )
     // Transformations sur les GameObjects
     basketBall->translate(glm::vec3(0.f, 1.f, 0.f));
     basketBall->scale(glm::vec3(0.2));
-
+    
     // cube->translate(camera.getPosition());
     // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
     basketBall->setWeight(0.6f);
@@ -117,6 +118,9 @@ int main( void )
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
     GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+
+    initImgui();
+    camera.init();
 
     do{
 
@@ -139,6 +143,7 @@ int main( void )
             totalDeltaTime = 0.;
         }
 
+   
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -148,23 +153,25 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        // Envoi de la matrice de vue et de projection au GPU
-        camera.sendToShader(programID);
+        //Imgui 
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
-        // Input gérés par l'InputManager
-        IM->processInput(window);
+        camera.update(deltaTime, window);
 
-        //----------------------------------- Throw cube 45° from camera front -----------------------------------//
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            basketBall->setPosition(camera.getPosition());
-            float throwStrenght = 3.0f;
-            glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
-            speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
-            basketBall->setVelocity(speedVector);
-        }
+        glm::mat4 viewMatrix = camera.getViewMatrix();
+        glUniformMatrix4fv(id_v, 1, GL_FALSE, &viewMatrix[0][0]);
 
+        glm::mat4 projectionMatrix = camera.getProjectionMatrix();
+        glUniformMatrix4fv(id_p, 1, GL_FALSE, &projectionMatrix[0][0]);
+
+  
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
         float updateTime = 0.05f;
 
@@ -186,6 +193,13 @@ int main( void )
     } // Check if the ESC key was pressed or the window was closed
     while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
            glfwWindowShouldClose(window) == 0 );
+    
+
+    // Deletes all ImGUI instances
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
 
     // Cleanup VBO and shader
     glDeleteBuffers(1, &vertexbuffer);
@@ -208,4 +222,38 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
+}
+
+
+void windowSetup()
+{
+    // Ensure we can capture the escape key being pressed below
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+    // Hide the mouse and enable unlimited mouvement
+    //  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    // Set the mouse at the center of the screen
+    glfwPollEvents();
+    //glfwSetCursorPos(window, 1024 / 2, 768 / 2);
+
+    // Dark blue background
+    glClearColor(0.8f, 0.8f, 0.8f, 0.0f);
+
+    // Enable depth test
+    glEnable(GL_DEPTH_TEST);
+    // Accept fragment if it closer to the camera than the former one
+    glDepthFunc(GL_LESS);
+
+    // Cull triangles which normal is not towards the camera
+    glEnable(GL_CULL_FACE);
+}
+
+void initImgui()
+{
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 }

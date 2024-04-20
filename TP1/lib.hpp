@@ -25,7 +25,7 @@ using namespace glm;
 #include <common/vboindexer.hpp>
 #include <common/texture.hpp>
 #include "variables.hpp"
-#include "Camera.hpp"
+// #include "Camera.hpp"
 
 /* ------------------ Plane Generation ------------------ */
 
@@ -96,7 +96,7 @@ void targetMesh(std::vector<glm::vec3> &indexed_vertices )
     }
     centroid /= static_cast<float>(indexed_vertices.size());
 
-    camera.setFront(centroid - camera.getPosition());
+    // camera.setFront(centroid - camera.getPosition());
 }
 
 void computeUV(std::vector<glm::vec2> &uv, std::vector<glm::vec3> &indexed_vertices) 

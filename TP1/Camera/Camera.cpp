@@ -15,7 +15,7 @@
 void Camera::init()
 {
 	m_fovDegree = 45.0f;
-	m_position = glm::vec3(0.f, 40.f, 0.f);
+	m_position = glm::vec3(0.f, 0.f, 0.f);
 	m_eulerAngle = glm::vec3(0.f, 0.f, 0.f);
 	m_rotation = glm::quat{};
 	m_showImguiDemo = false;
@@ -235,3 +235,8 @@ void Camera::update(float _deltaTime, GLFWwindow* _window)
 
 	Camera_Helper::computeFinalView(m_projectionMatrix, m_viewMatrix, m_position, m_rotation, m_fovDegree);
 }
+
+
+
+
+

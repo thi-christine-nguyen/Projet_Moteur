@@ -278,8 +278,17 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./common/vboindexer.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./common/texture.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/variables.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Camera.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/InputManager.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Camera/Camera.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtc/quaternion.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtc/quaternion.inl \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/quaternion.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/../gtx/norm.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/../gtx/norm.inl \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/quaternion.inl \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/euler_angles.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/euler_angles.inl \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/compatibility.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glm-0.9.7.1/glm/gtx/compatibility.inl \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/SceneManager.hpp \
  /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_tempbuf.h \
  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
@@ -306,4 +315,8 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/BoundingBox.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Sphere.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Plane.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Cube.hpp
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Cube.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui.h \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imconfig.h \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui_impl_glfw.h \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui_impl_opengl3.h

@@ -24,6 +24,22 @@ public:
         }
     }
 
+    // void handleCollisions() {
+    //     // Mettre à jour la physique de chaque objet
+    //     for (size_t i = 0; i < objects.size(); ++i) {
+    //         for (size_t j = i + 1; j < objects.size(); ++j) {
+    //             // Vérification de la collision entre les objets i et j
+    //             if (i != j) {
+    //                 if (objects[i]->getBoundingBox().intersect(objects[j]->getBoundingBox())) {
+    //                     // Gestion de la collision entre les objets i et j
+    //                     objects[i]->handleCollision(*objects[j]);
+    //                     objects[j]->handleCollision(*objects[i]);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
     // Méthode pour afficher tous les objets de la scène
     void draw() {
         for (const auto& object : objects) {

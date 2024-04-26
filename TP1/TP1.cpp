@@ -1,6 +1,7 @@
 #include "lib.hpp"
 #include "InputManager.hpp"
 #include "SceneManager.hpp"
+#include "PhysicManager.hpp"
 #include "Camera.hpp"
 #include "GameObject.hpp"
 #include "Sphere.hpp"
@@ -48,7 +49,7 @@ int main( void )
     // Ensure we can capture the escape key being pressed below
     // glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     // Hide the mouse and enable unlimited mouvement
-     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     // Set the mouse at the center of the screen
     glfwPollEvents();
@@ -75,6 +76,7 @@ int main( void )
     // Création des managers
     SceneManager *SM = new SceneManager();
     InputManager *IM = new InputManager();
+    PhysicManager *PM = new PhysicManager();
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -94,7 +96,7 @@ int main( void )
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
+    GameObject *landscape = new Plane("landscape", 16, 15, 1, "../data/textures/terrain.png");
     GameObject *basketBall = new Sphere("basketBall", 20, 1, 2, "../data/textures/ball.png");
     // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
 
@@ -102,6 +104,10 @@ int main( void )
     SM->addObject(std::move(landscape->ptr));
     SM->addObject(std::move(basketBall->ptr));
     // SM->addObject(std::move(cube->ptr));
+
+    // Ajout des GameObjects au PhysicManager
+    PM->addObject(landscape);
+    PM->addObject(basketBall);
 
     // Initialisation des textures des GameObjects
     SM->initGameObjectsTexture();
@@ -154,6 +160,12 @@ int main( void )
         // Input gérés par l'InputManager
         IM->processInput(window);
 
+        // Test mode édition du terrain
+        // if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        //     glm::vec3 mousePositionOnPlane = landscape->getMousePositionOnPlane(window);
+        //     std::cout << mousePositionOnPlane.x << ", " << mousePositionOnPlane.y << std::endl;
+        // }
+
         //----------------------------------- Throw cube 45° from camera front -----------------------------------//
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
             basketBall->setPosition(camera.getPosition());
@@ -166,11 +178,11 @@ int main( void )
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
         
-        float updateTime = 0.05f;
+        float updateTime = 1.0f/60.0f;
 
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects
-            basketBall->handleCollisionWithLandscape(*landscape);
+            PM->handleCollisions();
             physicsClock -= updateTime;
         }
 

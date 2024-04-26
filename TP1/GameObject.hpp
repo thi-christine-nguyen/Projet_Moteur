@@ -68,7 +68,7 @@ protected:
     BoundingBox boundingBox;
     glm::vec3 velocity;
     glm::vec3 acceleration;
-    float weight = 0.f;
+    float weight = 1.f;
     bool grounded = false;
     float restitutionCoef = 0.6f;
 
@@ -323,8 +323,8 @@ public:
     }
 
     // Méthode pour détecter et résoudre les collisions avec un autre GameObject
-    void handleCollisionWithLandscape(const GameObject& other) {
-        if (other.getType() == GameObjectType::PLANE) {
+    void handleCollision(const GameObject& other) {
+        if (other.getType() == GameObjectType::PLANE) { // Collision avec le landscape
             // Collision entre le GameObject et le terrain détectée
             // Vérifiez la collision avec les AABB
             if (boundingBox.intersect(other.getBoundingBox())) {
@@ -340,10 +340,10 @@ public:
                 // calculer_impulsions(other, impulsion1, impulsion2, normale_contact);
                 // std::cout << "normale contact: " << normale_contact.x << "; " << normale_contact.y << "; " << normale_contact.z << std::endl;
                 // std::cout << "impulsion: " << impulsion1.x << "; " << impulsion1.y << "; " << impulsion1.z << std::endl;
-                // Réglez la position du GameObject sur le terrain
+                // Régler la position du GameObject sur le terrain
                 // transform.setPosition(glm::vec3(transform.getPosition().x, other.getTransform().getPosition().y, transform.getPosition().z));
 
-                // Réinitialisez la vitesse du GameObject à zéro
+                // Réinitialiser la vitesse du GameObject à zéro
             } else {
                 if (grounded) // endOverlap
                     grounded = false;
@@ -354,6 +354,7 @@ public:
     bool isGrounded() {return grounded;}
 
     /* ------------------------- UPDATE -------------------------*/
+    // Elements à mettre à jour à chaque frame ou tick de mise à jour
 
     void update(float deltaTime) {
         updatePhysicallyBasedPosition(deltaTime);

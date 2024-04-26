@@ -1,4 +1,4 @@
-# Install script for directory: /home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur
+# Install script for directory: /home/e20210001937/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/external/cmake_install.cmake")
+  include("/home/e20210001937/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/external/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/narraxas/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/e20210001937/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

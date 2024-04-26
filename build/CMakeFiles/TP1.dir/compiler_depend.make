@@ -353,6 +353,7 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   /usr/include/strings.h \
   ../TP1/Transform.hpp \
   ../TP1/BoundingBox.hpp \
+  ../TP1/PhysicManager.hpp \
   ../TP1/Sphere.hpp \
   ../TP1/Plane.hpp \
   ../TP1/Cube.hpp
@@ -1670,6 +1671,8 @@ CMakeFiles/TP1.dir/common/vboindexer.cpp.o: ../common/vboindexer.cpp \
 /usr/include/GL/glext.h:
 
 ../TP1/Cube.hpp:
+
+../TP1/PhysicManager.hpp:
 
 ../TP1/Transform.hpp:
 

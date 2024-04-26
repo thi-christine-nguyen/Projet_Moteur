@@ -166,6 +166,8 @@ int main( void )
         glm::mat4 projectionMatrix = camera.getProjectionMatrix();
         glUniformMatrix4fv(id_p, 1, GL_FALSE, &projectionMatrix[0][0]);
 
+        // camera.sendToShader(programID); 
+
   
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);

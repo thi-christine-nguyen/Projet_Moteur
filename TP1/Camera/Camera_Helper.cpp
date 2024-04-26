@@ -1,8 +1,49 @@
 #include <TP1/Camera/Camera_Helper.hpp>
-#include <vector>
-#include <iostream>
 
+glm::vec3 Camera_Helper::ProjectVectorOnPlane(const glm::vec3& _vectorToProject, const glm::vec3& _planeNormal)
+{
+    return _vectorToProject - glm::dot(_vectorToProject, _planeNormal) * _planeNormal;
+}
 
+float Camera_Helper::ClipAngle180(float _angle)
+{
+    while (_angle >= 180.0f)
+        _angle -= 360.0f;
+    while (_angle < -180.0f)
+        _angle += 360.0f;
+
+    return fmod(_angle, 180);
+}
+
+float Camera_Helper::clipAngle(float angle, float value)
+{
+    angle = fmod(angle, (value * 2));
+    
+    // Si l'angle est en dehors de la plage [-180, 180[, ajustez-le
+    if (angle >= value)
+        angle -= (value * 2);
+    else if (angle < -value)
+        angle += (value * 2);
+    
+    return glm::radians(angle);
+}
+
+float Camera_Helper::Interpolation(float _ratio, InterpolationType _type)
+{
+    switch (_type)
+    {
+    case InterpolationType::Linear:
+        return _ratio; // Interpolation linéaire, pas de modification
+    case InterpolationType::Cosine:
+        return (1 - cos(_ratio * M_PI)) / 2; // Interpolation cosine
+    case InterpolationType::Exponential:
+        return exp(_ratio); // Interpolation exponentielle
+    case InterpolationType::Logarithmic:
+        return log(_ratio + 1); // Interpolation logarithmique
+    default:
+        return _ratio; // Par défaut, pas de modification
+    }
+}
 
 glm::vec3 Camera_Helper::quatToEuler(glm::quat _quat)
 {
@@ -51,32 +92,4 @@ void Camera_Helper::computeFinalView(glm::mat4& _outProjectionMatrix, glm::mat4&
 
 	// Camera matrix
 	_outviewMatrix = glm::lookAt(_position, _position + front, up);
-}
-
-glm::vec3 Camera_Helper::ProjectVectorOnPlan(const glm::vec3& vectorToProject, const glm::vec3& normalToPlane)
-{
-    glm::vec3 projectedVector = glm::dot(vectorToProject, normalToPlane) * normalToPlane;
-    glm::vec3 projection = vectorToProject - projectedVector;
-
-    return projection;
-}
-
-float Camera_Helper::clipAngle(float angle, float value)
-{
-    
-    angle = fmod(angle, (value * 2));
-    
-    // Si l'angle est en dehors de la plage [-180, 180[, ajustez-le
-    if (angle >= value)
-        angle -= (value * 2);
-    else if (angle < -value)
-        angle += (value * 2);
-    
-    return glm::radians(angle);
-}
-
-float Camera_Helper::interpolateExponentielle(float ratio)
-{
-    // interpolation exponentielle 
-    return 1.0f - exp(-5.0f * ratio); // L'ajustement du coefficient -5.0f détermine la vitesse de transition
 }

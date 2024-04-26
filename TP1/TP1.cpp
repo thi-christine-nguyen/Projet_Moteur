@@ -2,6 +2,7 @@
 #include "InputManager.hpp"
 #include "SceneManager.hpp"
 #include "Camera.hpp"
+#include "Player.hpp"
 #include "GameObject.hpp"
 #include "Sphere.hpp"
 #include "Plane.hpp"
@@ -95,24 +96,24 @@ int main( void )
 
     // Création des différents GameObjects
     GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
-    GameObject *basketBall = new Sphere("basketBall", 20, 1, 2, "../data/textures/ball.png");
+    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png");
     // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
 
     // Ajout des GameObjects au SceneManager
     SM->addObject(std::move(landscape->ptr));
-    SM->addObject(std::move(basketBall->ptr));
+    SM->addObject(std::move(player->ptr));
     // SM->addObject(std::move(cube->ptr));
 
     // Initialisation des textures des GameObjects
     SM->initGameObjectsTexture();
 
     // Transformations sur les GameObjects
-    basketBall->translate(glm::vec3(0.f, 1.f, 0.f));
-    basketBall->scale(glm::vec3(0.2));
+    player->translate(glm::vec3(0.f, 1.f, 0.f));
+    player->scale(glm::vec3(0.2));
 
     // cube->translate(camera.getPosition());
     // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
-    basketBall->setWeight(0.6f);
+    player->setWeight(0.6f);
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
@@ -152,16 +153,16 @@ int main( void )
         camera.sendToShader(programID);
 
         // Input gérés par l'InputManager
-        IM->processInput(window);
+        IM->processInput(window, player);
 
         //----------------------------------- Throw cube 45° from camera front -----------------------------------//
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            basketBall->setPosition(camera.getPosition());
-            float throwStrenght = 3.0f;
-            glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
-            speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
-            basketBall->setVelocity(speedVector);
-        }
+        // if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        //     // player->setPosition(camera.getPosition());
+        //     // float throwStrenght = 3.0f;
+        //     // glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
+        //     // speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
+        //     player->setVelocity(glm::vec3(0.0f, 3.0f, 0.0f));
+        // }
 
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
@@ -170,7 +171,7 @@ int main( void )
 
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects
-            basketBall->handleCollisionWithLandscape(*landscape);
+            player->handleCollisionWithLandscape(*landscape);
             physicsClock -= updateTime;
         }
 

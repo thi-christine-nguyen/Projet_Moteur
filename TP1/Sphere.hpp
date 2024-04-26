@@ -25,6 +25,7 @@ public:
         this->GenerateBuffers();
         // Init la bounding box
         this->initBoundingBox();
+        // move(window, deltaTime);
     }
 
     void init()

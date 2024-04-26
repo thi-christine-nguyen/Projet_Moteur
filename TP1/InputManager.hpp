@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "variables.hpp"
+#include "Player.hpp"
 
 void targetMesh(std::vector<glm::vec3> &indexed_vertices );
 
@@ -59,7 +60,7 @@ public:
 
     // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
     // ---------------------------------------------------------------------------------------------------------
-    void processInput(GLFWwindow *window)
+    void processInput(GLFWwindow *window, Player *player)
     {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, true);
@@ -67,6 +68,7 @@ public:
         //----------------------------------- Camera Movements -----------------------------------//
         camera.processKeyboard(window, deltaTime);
         updateMouse(window);
+        player->handleInputs(window, deltaTime);
 
         //----------------------------------- model Focus -----------------------------------//
         if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS && !camera.getIsOrbiting()) {

@@ -322,7 +322,9 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   ../TP1/variables.hpp \
   ../TP1/Camera.hpp \
   ../TP1/InputManager.hpp \
-  ../TP1/SceneManager.hpp \
+  ../TP1/Player.hpp \
+  ../TP1/Sphere.hpp \
+  ../TP1/GameObject.hpp \
   /usr/include/c++/11/memory \
   /usr/include/c++/11/bits/stl_tempbuf.h \
   /usr/include/c++/11/bits/stl_raw_storage_iter.h \
@@ -347,13 +349,12 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   /usr/include/c++/11/backward/auto_ptr.h \
   /usr/include/c++/11/pstl/glue_memory_defs.h \
   /usr/include/c++/11/pstl/execution_defs.h \
-  ../TP1/GameObject.hpp \
   /usr/include/c++/11/cstring \
   /usr/include/string.h \
   /usr/include/strings.h \
   ../TP1/Transform.hpp \
   ../TP1/BoundingBox.hpp \
-  ../TP1/Sphere.hpp \
+  ../TP1/SceneManager.hpp \
   ../TP1/Plane.hpp \
   ../TP1/Cube.hpp
 
@@ -1671,11 +1672,15 @@ CMakeFiles/TP1.dir/common/vboindexer.cpp.o: ../common/vboindexer.cpp \
 
 ../TP1/Cube.hpp:
 
+../common/stb_image.hpp:
+
+/usr/include/c++/11/bits/hashtable_policy.h:
+
+../TP1/SceneManager.hpp:
+
 ../TP1/Transform.hpp:
 
 /usr/include/strings.h:
-
-../TP1/GameObject.hpp:
 
 /usr/include/c++/11/bits/algorithmfwd.h:
 
@@ -1705,19 +1710,17 @@ CMakeFiles/TP1.dir/common/vboindexer.cpp.o: ../common/vboindexer.cpp \
 
 /usr/include/c++/11/bits/uses_allocator.h:
 
-/usr/include/c++/11/bit:
-
 /usr/include/c++/11/bits/align.h:
 
 /usr/include/c++/11/bits/stl_raw_storage_iter.h:
 
 /usr/include/c++/11/memory:
 
-../common/stb_image.hpp:
+../TP1/GameObject.hpp:
 
-/usr/include/c++/11/bits/hashtable_policy.h:
+/usr/include/c++/11/bit:
 
-../TP1/SceneManager.hpp:
+../TP1/Player.hpp:
 
 ../TP1/Camera.hpp:
 

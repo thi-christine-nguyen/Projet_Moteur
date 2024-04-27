@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS
 
-C_INCLUDES = -I/home/e20190003297/Documents/M1/S8/HAI819I/Projet_Moteur/external/glfw-3.1.2/include -I/home/e20190003297/Documents/M1/S8/HAI819I/Projet_Moteur/external/glfw-3.1.2/deps
+C_INCLUDES = -I/home/mat/Documents/M1/Moteur/Projet_Moteur/external/glfw-3.1.2/include -I/home/mat/Documents/M1/Moteur/Projet_Moteur/external/glfw-3.1.2/deps
 
 C_FLAGS =   -Wall
 

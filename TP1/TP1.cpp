@@ -171,10 +171,8 @@ int main( void )
   
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
-        glDisable(GL_DEPTH_TEST);
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        glEnable(GL_DEPTH_TEST);
+
+        
         
         float updateTime = 0.05f;
 
@@ -186,6 +184,9 @@ int main( void )
 
         // Affichage de tous les élements de la scène via le SceneManager
         SM->draw();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+       
 
         // Swap buffers
         glfwSwapBuffers(window);

@@ -83,24 +83,10 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP1.dir/TP1/TP1.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/TP1.cpp -o CMakeFiles/TP1.dir/TP1/TP1.cpp.s
 
-CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o: CMakeFiles/TP1.dir/flags.make
-CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o: ../TP1/Camera/Camera_Helper.cpp
-CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o -MF CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o.d -o CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Camera/Camera_Helper.cpp
-
-CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Camera/Camera_Helper.cpp > CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.i
-
-CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Camera/Camera_Helper.cpp -o CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.s
-
 CMakeFiles/TP1.dir/common/shader.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/common/shader.cpp.o: ../common/shader.cpp
 CMakeFiles/TP1.dir/common/shader.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/TP1.dir/common/shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TP1.dir/common/shader.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/common/shader.cpp.o -MF CMakeFiles/TP1.dir/common/shader.cpp.o.d -o CMakeFiles/TP1.dir/common/shader.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/shader.cpp
 
 CMakeFiles/TP1.dir/common/shader.cpp.i: cmake_force
@@ -114,7 +100,7 @@ CMakeFiles/TP1.dir/common/shader.cpp.s: cmake_force
 CMakeFiles/TP1.dir/common/controls.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/common/controls.cpp.o: ../common/controls.cpp
 CMakeFiles/TP1.dir/common/controls.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/TP1.dir/common/controls.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/TP1.dir/common/controls.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/common/controls.cpp.o -MF CMakeFiles/TP1.dir/common/controls.cpp.o.d -o CMakeFiles/TP1.dir/common/controls.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/controls.cpp
 
 CMakeFiles/TP1.dir/common/controls.cpp.i: cmake_force
@@ -128,7 +114,7 @@ CMakeFiles/TP1.dir/common/controls.cpp.s: cmake_force
 CMakeFiles/TP1.dir/common/texture.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/common/texture.cpp.o: ../common/texture.cpp
 CMakeFiles/TP1.dir/common/texture.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TP1.dir/common/texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/TP1.dir/common/texture.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/common/texture.cpp.o -MF CMakeFiles/TP1.dir/common/texture.cpp.o.d -o CMakeFiles/TP1.dir/common/texture.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/texture.cpp
 
 CMakeFiles/TP1.dir/common/texture.cpp.i: cmake_force
@@ -142,7 +128,7 @@ CMakeFiles/TP1.dir/common/texture.cpp.s: cmake_force
 CMakeFiles/TP1.dir/common/objloader.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/common/objloader.cpp.o: ../common/objloader.cpp
 CMakeFiles/TP1.dir/common/objloader.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/TP1.dir/common/objloader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TP1.dir/common/objloader.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/common/objloader.cpp.o -MF CMakeFiles/TP1.dir/common/objloader.cpp.o.d -o CMakeFiles/TP1.dir/common/objloader.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/objloader.cpp
 
 CMakeFiles/TP1.dir/common/objloader.cpp.i: cmake_force
@@ -156,7 +142,7 @@ CMakeFiles/TP1.dir/common/objloader.cpp.s: cmake_force
 CMakeFiles/TP1.dir/common/vboindexer.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/common/vboindexer.cpp.o: ../common/vboindexer.cpp
 CMakeFiles/TP1.dir/common/vboindexer.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/TP1.dir/common/vboindexer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/TP1.dir/common/vboindexer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/common/vboindexer.cpp.o -MF CMakeFiles/TP1.dir/common/vboindexer.cpp.o.d -o CMakeFiles/TP1.dir/common/vboindexer.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/vboindexer.cpp
 
 CMakeFiles/TP1.dir/common/vboindexer.cpp.i: cmake_force
@@ -170,7 +156,7 @@ CMakeFiles/TP1.dir/common/vboindexer.cpp.s: cmake_force
 CMakeFiles/TP1.dir/common/stb_image.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/common/stb_image.cpp.o: ../common/stb_image.cpp
 CMakeFiles/TP1.dir/common/stb_image.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/TP1.dir/common/stb_image.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/TP1.dir/common/stb_image.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/common/stb_image.cpp.o -MF CMakeFiles/TP1.dir/common/stb_image.cpp.o.d -o CMakeFiles/TP1.dir/common/stb_image.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/stb_image.cpp
 
 CMakeFiles/TP1.dir/common/stb_image.cpp.i: cmake_force
@@ -184,7 +170,7 @@ CMakeFiles/TP1.dir/common/stb_image.cpp.s: cmake_force
 CMakeFiles/TP1.dir/imgui/imgui.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/imgui/imgui.cpp.o: ../imgui/imgui.cpp
 CMakeFiles/TP1.dir/imgui/imgui.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/imgui/imgui.cpp.o -MF CMakeFiles/TP1.dir/imgui/imgui.cpp.o.d -o CMakeFiles/TP1.dir/imgui/imgui.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui.cpp
 
 CMakeFiles/TP1.dir/imgui/imgui.cpp.i: cmake_force
@@ -198,7 +184,7 @@ CMakeFiles/TP1.dir/imgui/imgui.cpp.s: cmake_force
 CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o: ../imgui/imgui_demo.cpp
 CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o -MF CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o.d -o CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_demo.cpp
 
 CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.i: cmake_force
@@ -212,7 +198,7 @@ CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.s: cmake_force
 CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o: ../imgui/imgui_draw.cpp
 CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o -MF CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o.d -o CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_draw.cpp
 
 CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.i: cmake_force
@@ -226,7 +212,7 @@ CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.s: cmake_force
 CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o: ../imgui/imgui_impl_glfw.cpp
 CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o -MF CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o.d -o CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_impl_glfw.cpp
 
 CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.i: cmake_force
@@ -240,7 +226,7 @@ CMakeFiles/TP1.dir/imgui/imgui_impl_glfw.cpp.s: cmake_force
 CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o: ../imgui/imgui_impl_opengl3.cpp
 CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o -MF CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o.d -o CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_impl_opengl3.cpp
 
 CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.i: cmake_force
@@ -254,7 +240,7 @@ CMakeFiles/TP1.dir/imgui/imgui_impl_opengl3.cpp.s: cmake_force
 CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o: ../imgui/imgui_tables.cpp
 CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o -MF CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o.d -o CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_tables.cpp
 
 CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.i: cmake_force
@@ -268,7 +254,7 @@ CMakeFiles/TP1.dir/imgui/imgui_tables.cpp.s: cmake_force
 CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: CMakeFiles/TP1.dir/flags.make
 CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp
 CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: CMakeFiles/TP1.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o -MF CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o.d -o CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_widgets.cpp
 
 CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.i: cmake_force
@@ -282,7 +268,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.s: cmake_force
 # Object files for target TP1
 TP1_OBJECTS = \
 "CMakeFiles/TP1.dir/TP1/TP1.cpp.o" \
-"CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o" \
 "CMakeFiles/TP1.dir/common/shader.cpp.o" \
 "CMakeFiles/TP1.dir/common/controls.cpp.o" \
 "CMakeFiles/TP1.dir/common/texture.cpp.o" \
@@ -301,7 +286,6 @@ TP1_OBJECTS = \
 TP1_EXTERNAL_OBJECTS =
 
 TP1: CMakeFiles/TP1.dir/TP1/TP1.cpp.o
-TP1: CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o
 TP1: CMakeFiles/TP1.dir/common/shader.cpp.o
 TP1: CMakeFiles/TP1.dir/common/controls.cpp.o
 TP1: CMakeFiles/TP1.dir/common/texture.cpp.o
@@ -335,7 +319,7 @@ TP1: /usr/lib/x86_64-linux-gnu/libXcursor.so
 TP1: /usr/lib/x86_64-linux-gnu/libGL.so
 TP1: /usr/lib/x86_64-linux-gnu/libGLU.so
 TP1: CMakeFiles/TP1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable TP1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable TP1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TP1.dir/link.txt --verbose=$(VERBOSE)
 	/usr/bin/cmake -E copy /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/./TP1 /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/
 

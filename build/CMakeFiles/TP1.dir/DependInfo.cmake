@@ -8,7 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Camera/Camera_Helper.cpp" "CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o" "gcc" "CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/TP1.cpp" "CMakeFiles/TP1.dir/TP1/TP1.cpp.o" "gcc" "CMakeFiles/TP1.dir/TP1/TP1.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/controls.cpp" "CMakeFiles/TP1.dir/common/controls.cpp.o" "gcc" "CMakeFiles/TP1.dir/common/controls.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/objloader.cpp" "CMakeFiles/TP1.dir/common/objloader.cpp.o" "gcc" "CMakeFiles/TP1.dir/common/objloader.cpp.o.d"

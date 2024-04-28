@@ -512,30 +512,6 @@ windows/fast:
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/windows.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/windows.dir/build
 .PHONY : windows/fast
 
-TP1/Camera/Camera_Helper.o: TP1/Camera/Camera_Helper.cpp.o
-.PHONY : TP1/Camera/Camera_Helper.o
-
-# target to build an object file
-TP1/Camera/Camera_Helper.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o
-.PHONY : TP1/Camera/Camera_Helper.cpp.o
-
-TP1/Camera/Camera_Helper.i: TP1/Camera/Camera_Helper.cpp.i
-.PHONY : TP1/Camera/Camera_Helper.i
-
-# target to preprocess a source file
-TP1/Camera/Camera_Helper.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.i
-.PHONY : TP1/Camera/Camera_Helper.cpp.i
-
-TP1/Camera/Camera_Helper.s: TP1/Camera/Camera_Helper.cpp.s
-.PHONY : TP1/Camera/Camera_Helper.s
-
-# target to generate assembly for a file
-TP1/Camera/Camera_Helper.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.s
-.PHONY : TP1/Camera/Camera_Helper.cpp.s
-
 TP1/TP1.o: TP1/TP1.cpp.o
 .PHONY : TP1/TP1.o
 
@@ -911,9 +887,6 @@ help:
 	@echo "... title"
 	@echo "... wave"
 	@echo "... windows"
-	@echo "... TP1/Camera/Camera_Helper.o"
-	@echo "... TP1/Camera/Camera_Helper.i"
-	@echo "... TP1/Camera/Camera_Helper.s"
 	@echo "... TP1/TP1.o"
 	@echo "... TP1/TP1.i"
 	@echo "... TP1/TP1.s"

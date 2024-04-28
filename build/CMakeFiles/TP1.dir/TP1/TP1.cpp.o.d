@@ -315,12 +315,13 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui.h \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imconfig.h \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./TP1/Camera/Camera_Helper.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Interface.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui_impl_glfw.h \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui_impl_opengl3.h \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/SceneManager.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/GameObject.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Transform.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/BoundingBox.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Sphere.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Plane.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Cube.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui_impl_glfw.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/./imgui/imgui_impl_opengl3.h
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Cube.hpp

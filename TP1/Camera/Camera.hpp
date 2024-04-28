@@ -38,7 +38,7 @@ private:
 	glm::quat	m_rotation{};
 
     // Directions de la caméra
-    glm::vec3 m_forwardDirection;
+    glm::vec3 m_target;
     glm::vec3 m_rightDirection;
     glm::vec3 m_upDirection;
 
@@ -73,12 +73,12 @@ public:
 	void init()
 	{
 		m_fovDegree = 45.0f;
-		m_position = glm::vec3(0.f, 40.f, 0.f);
+		m_position = glm::vec3(-20.f, 15.f, 0.f);
 		m_eulerAngle = glm::vec3(0.f, 0.f, 0.f);
 		m_rotation = glm::quat{};
 		m_translationSpeed = 15.0f;
 		m_rotationSpeed = 1.0f;
-		m_forwardDirection = glm::vec3(0.0f, 0.0f, -1.0f); // La caméra commence à regarder vers l'avant
+		m_target = glm::vec3(0.0f, 0.0f, -1.0f); // La caméra commence à regarder vers l'avant
 		m_rightDirection = glm::vec3(1.0f, 0.0f, 0.0f); // La direction droite initiale
 		m_upDirection = glm::vec3(0.0f, 1.0f, 0.0f); // La direction vers le haut initiale
 		m_inputMode = InputMode::Free;
@@ -98,6 +98,14 @@ public:
 		float rotationFrequency = 5.0f;
 		cameraShake = std::make_unique<CameraShake>(m_position, shakeDuration, positionAmplitude, rotationAmplitude, positionFrequency, rotationFrequency);
 		cameraShake->startShake();
+	}
+
+	void setCameraTarget(glm::vec3 target){
+		m_target = target; 
+	}
+
+	glm::vec3 getCameraTarget(){
+		return m_target; 
 	}
 
 
@@ -191,11 +199,11 @@ public:
 			// Gestion des entrées utilisateur pour la translation de la caméra
 			if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
 				// Avancer dans le plan horizontal de la caméra
-				m_position -= glm::normalize(glm::vec3(m_forwardDirection.x, 0.0f, m_forwardDirection.z)) * m_translationSpeed * _deltaTime;
+				m_position -= glm::normalize(glm::vec3(m_target.x, 0.0f, m_target.z)) * m_translationSpeed * _deltaTime;
 			}
 			if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) {
 				// Reculer dans le plan horizontal de la caméra
-				m_position += glm::normalize(glm::vec3(m_forwardDirection.x, 0.0f, m_forwardDirection.z)) * m_translationSpeed * _deltaTime;
+				m_position += glm::normalize(glm::vec3(m_target.x, 0.0f, m_target.z)) * m_translationSpeed * _deltaTime;
 			}
 			if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
 				// Déplacer vers la gauche
@@ -207,26 +215,31 @@ public:
 			}
 			if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS) {
 				// Déplacer vers le bas
-				m_position += m_forwardDirection * m_translationSpeed * _deltaTime;
+				m_position += m_target * m_translationSpeed * _deltaTime;
 			}
 			if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS) {
 				// Déplacer vers le haut
-				m_position -= m_forwardDirection * m_translationSpeed * _deltaTime;
+				m_position -= m_target * m_translationSpeed * _deltaTime;
 			}
 
 			// Rotation
 			if (glfwGetKey(_window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 				m_eulerAngle.y += rotationSpeed * 40.0;
+				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
 				
 			}
 			if (glfwGetKey(_window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 				m_eulerAngle.y -= rotationSpeed * 40.0;
+				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
+
 			}
 			if (glfwGetKey(_window, GLFW_KEY_UP) == GLFW_PRESS) {
 				m_eulerAngle.x -= rotationSpeed * 40.0;
+				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 			}
 			if (glfwGetKey(_window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 				m_eulerAngle.x += rotationSpeed * 40.0;
+				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 			}
 		}
 
@@ -245,6 +258,8 @@ public:
 		
 				m_eulerAngle.y -= static_cast<float>(deltaX) * m_rotationSpeed * 0.075;
 				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
+
+				
 				
 			}
 
@@ -253,10 +268,10 @@ public:
 
 			// Translation de la caméra avec les touches ZQSD
 			if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
-				m_position -= m_forwardDirection * translationSpeed;
+				m_position -= m_target * translationSpeed;
 			}
 			if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) {
-				m_position += m_forwardDirection * translationSpeed;
+				m_position += m_target * translationSpeed;
 			}
 			if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
 				m_position += m_rightDirection * translationSpeed;
@@ -278,9 +293,9 @@ public:
 		m_rotation = yawQuat * pitchQuat;
 
 		// Recalcul des vecteurs de directions
-		m_forwardDirection = glm::normalize(glm::rotate(m_rotation, glm::vec3(0.0f, 0.0f, -1.0f)));
+		m_target = glm::normalize(glm::rotate(m_rotation, glm::vec3(0.0f, 0.0f, -1.0f)));
 		m_rightDirection = glm::normalize(glm::rotate(m_rotation, glm::vec3(1.0f, 0.0f, 0.0f)));
-		m_upDirection = glm::normalize(glm::cross(m_rightDirection, m_forwardDirection));
+		m_upDirection = glm::normalize(glm::cross(m_rightDirection, m_target));
 	}
 
 	glm::vec3 interpolate(const glm::vec3& start, const glm::vec3& end, float ratio)
@@ -355,7 +370,7 @@ public:
 
 	void sendToShader(GLuint programID) {
         // View matrix : camera/view transformation lookat() utiliser camera_position camera_target camera_up
-        glm::mat4 mat_v = glm::lookAt(m_position, m_position + m_forwardDirection, m_upDirection);;
+        glm::mat4 mat_v = glm::lookAt(m_position, m_target, m_upDirection);;
         GLuint id_v = glGetUniformLocation(programID, "view_mat");
         glUniformMatrix4fv(id_v, 1, false, &mat_v[0][0]);
 

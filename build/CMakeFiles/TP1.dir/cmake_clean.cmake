@@ -1,6 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o"
-  "CMakeFiles/TP1.dir/TP1/Camera/Camera_Helper.cpp.o.d"
   "CMakeFiles/TP1.dir/TP1/TP1.cpp.o"
   "CMakeFiles/TP1.dir/TP1/TP1.cpp.o.d"
   "CMakeFiles/TP1.dir/common/controls.cpp.o"

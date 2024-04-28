@@ -6,6 +6,7 @@
 #include "Sphere.hpp"
 #include "Plane.hpp"
 #include "Cube.hpp"
+#include "Interface.hpp"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
@@ -13,8 +14,6 @@
 
 /*******************************************************************************/
 
-void windowSetup();
-void initImgui();
 
 int main( void )
 {
@@ -88,8 +87,6 @@ int main( void )
 
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
-    GLuint id_v = glGetUniformLocation(programID, "view_mat");
-    GLuint id_p = glGetUniformLocation(programID, "project_mat");
     glUseProgram(programID);
 
     //----------------------------------------- Init -----------------------------------------//
@@ -111,16 +108,18 @@ int main( void )
     basketBall->translate(glm::vec3(0.f, 1.f, 0.f));
     basketBall->scale(glm::vec3(0.2));
     
+    
     // cube->translate(camera.getPosition());
     // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
     basketBall->setWeight(0.6f);
+
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
     GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
 
-    initImgui();
-    camera.init();
+    interface.initImgui(window);
+    interface.camera.init();
 
     do{
 
@@ -154,26 +153,16 @@ int main( void )
         glUseProgram(programID);
 
         //Imgui 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+        interface.createFrame(); 
 
-        camera.update(deltaTime, window);
-
-        // glm::mat4 viewMatrix = camera.getViewMatrix();
-        // glUniformMatrix4fv(id_v, 1, GL_FALSE, &viewMatrix[0][0]);
-
-        // glm::mat4 projectionMatrix = camera.getProjectionMatrix();
-        // glUniformMatrix4fv(id_p, 1, GL_FALSE, &projectionMatrix[0][0]);
-
-        camera.sendToShader(programID); 
+        interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
+        interface.camera.update(deltaTime, window);
+        interface.camera.sendToShader(programID); 
 
   
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
 
-        
-        
         float updateTime = 0.05f;
 
         while (physicsClock >= updateTime) {
@@ -184,8 +173,7 @@ int main( void )
 
         // Affichage de tous les élements de la scène via le SceneManager
         SM->draw();
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        interface.renderFrame(); 
        
 
         // Swap buffers
@@ -199,10 +187,7 @@ int main( void )
            glfwWindowShouldClose(window) == 0 );
     
 
-    // Deletes all ImGUI instances
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    interface.deleteFrame();
 
 
     // Cleanup VBO and shader
@@ -228,36 +213,3 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-
-void windowSetup()
-{
-    // Ensure we can capture the escape key being pressed below
-    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    // Hide the mouse and enable unlimited mouvement
-    //  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-    // Set the mouse at the center of the screen
-    glfwPollEvents();
-    //glfwSetCursorPos(window, 1024 / 2, 768 / 2);
-
-    // Dark blue background
-    glClearColor(0.8f, 0.8f, 0.8f, 0.0f);
-
-    // Enable depth test
-    glEnable(GL_DEPTH_TEST);
-    // Accept fragment if it closer to the camera than the former one
-    glDepthFunc(GL_LESS);
-
-    // Cull triangles which normal is not towards the camera
-    glEnable(GL_CULL_FACE);
-}
-
-void initImgui()
-{
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
-}

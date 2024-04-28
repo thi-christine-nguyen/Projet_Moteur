@@ -160,20 +160,21 @@ int main( void )
 
         camera.update(deltaTime, window);
 
-        glm::mat4 viewMatrix = camera.getViewMatrix();
-        glUniformMatrix4fv(id_v, 1, GL_FALSE, &viewMatrix[0][0]);
+        // glm::mat4 viewMatrix = camera.getViewMatrix();
+        // glUniformMatrix4fv(id_v, 1, GL_FALSE, &viewMatrix[0][0]);
 
-        glm::mat4 projectionMatrix = camera.getProjectionMatrix();
-        glUniformMatrix4fv(id_p, 1, GL_FALSE, &projectionMatrix[0][0]);
+        // glm::mat4 projectionMatrix = camera.getProjectionMatrix();
+        // glUniformMatrix4fv(id_p, 1, GL_FALSE, &projectionMatrix[0][0]);
 
-        // camera.sendToShader(programID); 
+        camera.sendToShader(programID); 
 
   
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
-
+        glDisable(GL_DEPTH_TEST);
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        glEnable(GL_DEPTH_TEST);
         
         float updateTime = 0.05f;
 

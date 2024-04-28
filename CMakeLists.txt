@@ -58,7 +58,6 @@ file( GLOB IMGUIC imgui/*.cpp)
 file( GLOB IMGUIH imgui/*.h) 
 add_executable(TP1
         TP1/TP1.cpp
-		TP1/Camera/Camera.cpp
 		TP1/Camera/Camera.hpp
 		TP1/Camera/Camera_Helper.cpp
 		TP1/Camera/Camera_Helper.hpp

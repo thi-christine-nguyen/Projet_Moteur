@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/e20170004425/Bureau/Projet_Moteur
+CMAKE_SOURCE_DIR = /mnt/c/Users/snsdt/Desktop/Projet_Moteur
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/e20170004425/Bureau/Projet_Moteur/build
+CMAKE_BINARY_DIR = /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/e20170004425/Bureau/Projet_Moteur/build/CMakeFiles /home/e20170004425/Bureau/Projet_Moteur/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/e20170004425/Bureau/Projet_Moteur/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -511,30 +511,6 @@ windows: cmake_check_build_system
 windows/fast:
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/windows.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/windows.dir/build
 .PHONY : windows/fast
-
-TP1/Camera/Camera.o: TP1/Camera/Camera.cpp.o
-.PHONY : TP1/Camera/Camera.o
-
-# target to build an object file
-TP1/Camera/Camera.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/TP1/Camera/Camera.cpp.o
-.PHONY : TP1/Camera/Camera.cpp.o
-
-TP1/Camera/Camera.i: TP1/Camera/Camera.cpp.i
-.PHONY : TP1/Camera/Camera.i
-
-# target to preprocess a source file
-TP1/Camera/Camera.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/TP1/Camera/Camera.cpp.i
-.PHONY : TP1/Camera/Camera.cpp.i
-
-TP1/Camera/Camera.s: TP1/Camera/Camera.cpp.s
-.PHONY : TP1/Camera/Camera.s
-
-# target to generate assembly for a file
-TP1/Camera/Camera.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/TP1/Camera/Camera.cpp.s
-.PHONY : TP1/Camera/Camera.cpp.s
 
 TP1/Camera/Camera_Helper.o: TP1/Camera/Camera_Helper.cpp.o
 .PHONY : TP1/Camera/Camera_Helper.o
@@ -935,9 +911,6 @@ help:
 	@echo "... title"
 	@echo "... wave"
 	@echo "... windows"
-	@echo "... TP1/Camera/Camera.o"
-	@echo "... TP1/Camera/Camera.i"
-	@echo "... TP1/Camera/Camera.s"
 	@echo "... TP1/Camera/Camera_Helper.o"
 	@echo "... TP1/Camera/Camera_Helper.i"
 	@echo "... TP1/Camera/Camera_Helper.s"

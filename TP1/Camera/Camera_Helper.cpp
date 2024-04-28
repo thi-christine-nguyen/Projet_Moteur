@@ -1,4 +1,6 @@
 #include <TP1/Camera/Camera_Helper.hpp>
+#include <iostream>
+#include <vector>
 
 glm::vec3 Camera_Helper::ProjectVectorOnPlane(const glm::vec3& _vectorToProject, const glm::vec3& _planeNormal)
 {
@@ -17,14 +19,9 @@ float Camera_Helper::ClipAngle180(float _angle)
 
 float Camera_Helper::clipAngle(float angle, float value)
 {
-    angle = fmod(angle, (value * 2));
     
-    // Si l'angle est en dehors de la plage [-180, 180[, ajustez-le
-    if (angle >= value)
-        angle -= (value * 2);
-    else if (angle < -value)
-        angle += (value * 2);
-    
+   // Limiter l'angle entre -value et value
+    angle = glm::clamp(angle, -value, value);
     return glm::radians(angle);
 }
 

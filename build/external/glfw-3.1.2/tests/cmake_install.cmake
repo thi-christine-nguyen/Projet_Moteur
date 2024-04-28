@@ -1,4 +1,4 @@
-# Install script for directory: /home/e20170004425/Bureau/Projet_Moteur/external/glfw-3.1.2/tests
+# Install script for directory: /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

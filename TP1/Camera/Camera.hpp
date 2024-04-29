@@ -199,19 +199,19 @@ public:
 		if (m_inputMode == InputMode::Drone) {  // Gestion des entrées utilisateur pour la translation de la caméra
 			// Gestion des entrées utilisateur pour la translation de la caméra
 			m_target = glm::vec3(0.0f, 0.0f, -1.0f);
-			if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) {
 				// Avancer dans le plan horizontal de la caméra
 				m_position -= glm::normalize(glm::vec3(m_target.x, 0.0f, m_target.z)) * m_translationSpeed * _deltaTime;
 			}
-			if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
 				// Reculer dans le plan horizontal de la caméra
 				m_position += glm::normalize(glm::vec3(m_target.x, 0.0f, m_target.z)) * m_translationSpeed * _deltaTime;
 			}
-			if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) {
 				// Déplacer vers la gauche
 				m_position += m_rightDirection * m_translationSpeed * _deltaTime;
 			}
-			if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
 				// Déplacer vers la droite
 				m_position -= m_rightDirection * m_translationSpeed * _deltaTime;
 			}
@@ -225,35 +225,36 @@ public:
 			// }
 
 			// Modification hauteur
-			if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS) {
 				m_position.y -= translationSpeed;
 			}
-			if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS) {
 				m_position.y += translationSpeed;
 			}
 
 			// Rotation
 			if (glfwGetKey(_window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-				m_eulerAngle.y += rotationSpeed * 40.0;
+				m_eulerAngle.y += rotationSpeed;
 				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
 				
 			}
 			if (glfwGetKey(_window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-				m_eulerAngle.y -= rotationSpeed * 40.0;
+				m_eulerAngle.y -= rotationSpeed;
 				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
 
 			}
 			if (glfwGetKey(_window, GLFW_KEY_UP) == GLFW_PRESS) {
-				m_eulerAngle.x -= rotationSpeed * 40.0;
+				m_eulerAngle.x -= rotationSpeed;
 				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 			}
 			if (glfwGetKey(_window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-				m_eulerAngle.x += rotationSpeed * 40.0;
+				m_eulerAngle.x += rotationSpeed;
 				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 			}
 		}
 
 		if (m_inputMode == InputMode::Free || m_inputMode == InputMode::Follow) {
+			// m_target = glm::vec3(0.0f, 0.0f, -1.0f);
 			// Rotation de la caméra avec la souris
 			double mouseX, mouseY;
 			glfwGetCursorPos(_window, &mouseX, &mouseY);
@@ -276,16 +277,16 @@ public:
 			m_lastMouseY = mouseY;
 
 			// Translation de la caméra avec les touches ZQSD
-			if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) {
 				m_position -= m_target * translationSpeed;
 			}
-			if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
 				m_position += m_target * translationSpeed;
 			}
-			if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) {
 				m_position += m_rightDirection * translationSpeed;
 			}
-			if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) {
+			if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
 				m_position -= m_rightDirection * translationSpeed;
 			}
 		}

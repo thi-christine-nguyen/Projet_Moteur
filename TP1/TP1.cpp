@@ -160,7 +160,7 @@ int main( void )
         //Imgui 
         interface.createFrame(); 
 
-        interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
+        // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
         interface.camera.update(deltaTime, window);
         interface.camera.sendToShader(programID); 
         // Input gérés par l'InputManager

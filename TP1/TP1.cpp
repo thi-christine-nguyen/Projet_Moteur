@@ -183,6 +183,7 @@ int main( void )
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects
             PM->handleCollisions();
+            // std::cout << "PM tick" << std::endl;
             physicsClock -= updateTime;
         }
 

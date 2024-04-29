@@ -330,6 +330,7 @@ public:
             if (boundingBox.intersect(other.getBoundingBox())) {
                 // std::cout << "Collision entre le GameObject (" << getName() << ") et le terrain (" << other.getName() << ") détectée" << std::endl;
                 if (!grounded) { // Si elle n'était pas déjà au sol alors beginOverlap
+                    std::cout << "BeginOverlap" << std::endl;
                     grounded = true;
                     std::cout << "vitesse avant: " << getVelocity().x << "; " << getVelocity().y << "; " << getVelocity().z << std::endl;
                     setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f): glm::vec3(0.0f));
@@ -345,8 +346,10 @@ public:
 
                 // Réinitialiser la vitesse du GameObject à zéro
             } else {
-                if (grounded) // endOverlap
+                if (grounded) { // endOverlap
+                    std::cout << "EndOverlap" << std::endl;
                     grounded = false;
+                }
             }
         }
     }

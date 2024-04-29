@@ -120,6 +120,7 @@ int main( void )
 
     interface.initImgui(window);
     interface.camera.init();
+    // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
 
     do{
 

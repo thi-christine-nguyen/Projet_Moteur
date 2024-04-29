@@ -21,7 +21,8 @@ enum class InputMode
 {
 	Drone,
 	Fixed,
-	Free
+	Free, 
+	Follow
 };
 
 class Camera
@@ -46,7 +47,7 @@ private:
 	bool m_showImguiDemo{ false };
 
 	// Input Mode
-    std::array<const char*, 3> inputModes = { "Drone", "Fixed", "Free" };
+    std::array<const char*, 4> inputModes = { "Drone", "Fixed", "Free", "Follow"};
 	InputMode m_inputMode;
 
 	// mouseInputs
@@ -73,8 +74,8 @@ public:
 	void init()
 	{
 		m_fovDegree = 45.0f;
-		m_position = glm::vec3(-20.f, 15.f, 0.f);
-		m_eulerAngle = glm::vec3(0.f, 0.f, 0.f);
+		m_position = glm::vec3(0.f, 40.f, 0.f);
+		m_eulerAngle = glm::vec3(glm::radians(-90.f), 0.f, 0.f);
 		m_rotation = glm::quat{};
 		m_translationSpeed = 15.0f;
 		m_rotationSpeed = 1.0f;
@@ -97,7 +98,7 @@ public:
 		float positionFrequency = 5.0f;
 		float rotationFrequency = 5.0f;
 		cameraShake = std::make_unique<CameraShake>(m_position, shakeDuration, positionAmplitude, rotationAmplitude, positionFrequency, rotationFrequency);
-		cameraShake->startShake();
+		// cameraShake->startShake();
 	}
 
 	void setCameraTarget(glm::vec3 target){
@@ -147,7 +148,7 @@ public:
 			cameraShake->updateInterface();
 			// Bouton pour jouer le shake
 			if (ImGui::Button("Play Shake")) {
-				cameraShake->startShake(); // Appel de la fonction pour jouer le shake
+				// cameraShake->startShake(); // Appel de la fonction pour jouer le shake
 			}
 
 
@@ -191,12 +192,13 @@ public:
 			m_inputMode = InputMode::Free;
 		}
 		if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-			cameraShake->startShake();
+			// cameraShake->startShake();
 		}
 
 
 		if (m_inputMode == InputMode::Drone) {  // Gestion des entrées utilisateur pour la translation de la caméra
 			// Gestion des entrées utilisateur pour la translation de la caméra
+			m_target = glm::vec3(0.0f, 0.0f, -1.0f);
 			if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
 				// Avancer dans le plan horizontal de la caméra
 				m_position -= glm::normalize(glm::vec3(m_target.x, 0.0f, m_target.z)) * m_translationSpeed * _deltaTime;
@@ -213,13 +215,21 @@ public:
 				// Déplacer vers la droite
 				m_position -= m_rightDirection * m_translationSpeed * _deltaTime;
 			}
+			// if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS) {
+			// 	// Déplacer vers le bas
+			// 	m_position += m_target * m_translationSpeed * _deltaTime;
+			// }
+			// if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS) {
+			// 	// Déplacer vers le haut
+			// 	m_position -= m_target * m_translationSpeed * _deltaTime;
+			// }
+
+			// Modification hauteur
 			if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS) {
-				// Déplacer vers le bas
-				m_position += m_target * m_translationSpeed * _deltaTime;
+				m_position.y -= translationSpeed;
 			}
 			if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS) {
-				// Déplacer vers le haut
-				m_position -= m_target * m_translationSpeed * _deltaTime;
+				m_position.y += translationSpeed;
 			}
 
 			// Rotation
@@ -243,7 +253,7 @@ public:
 			}
 		}
 
-		if (m_inputMode == InputMode::Free) {
+		if (m_inputMode == InputMode::Free || m_inputMode == InputMode::Follow) {
 			// Rotation de la caméra avec la souris
 			double mouseX, mouseY;
 			glfwGetCursorPos(_window, &mouseX, &mouseY);
@@ -252,14 +262,13 @@ public:
 				double deltaX = mouseX - m_lastMouseX;
 				double deltaY = mouseY - m_lastMouseY;
 
-				m_eulerAngle.x += static_cast<float>(deltaY) * m_rotationSpeed * 0.075;
+				m_eulerAngle.x += static_cast<float>(deltaY) * m_rotationSpeed * 0.0075;
 				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 		
 		
-				m_eulerAngle.y -= static_cast<float>(deltaX) * m_rotationSpeed * 0.075;
+				m_eulerAngle.y -= static_cast<float>(deltaX) * m_rotationSpeed * 0.0075;
 				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
 
-				
 				
 			}
 
@@ -315,7 +324,7 @@ public:
 
 		// Définir les nouvelles valeurs pour la réinitialisation
 		glm::vec3 resetPosition = glm::vec3(0.f, 40.f, 0.f);
-		glm::vec3 resetEulerAngles = glm::vec3(0.f, 0.f, 0.f);
+		glm::vec3 resetEulerAngles = glm::vec3(glm::radians(-90.f), 0.f, 0.f);
 
 		// Définir la durée de la transition
 		float transitionTime = m_transitionDuration; // Utilisez la valeur définie dans ImGui
@@ -370,7 +379,13 @@ public:
 
 	void sendToShader(GLuint programID) {
         // View matrix : camera/view transformation lookat() utiliser camera_position camera_target camera_up
-        glm::mat4 mat_v = glm::lookAt(m_position, m_target, m_upDirection);;
+		glm::mat4 mat_v; 
+		if(m_inputMode == InputMode::Follow){
+			mat_v = glm::lookAt(m_position, m_target, m_upDirection);
+		}else {
+			mat_v = glm::lookAt(m_position, m_position + m_target, m_upDirection);;
+		}
+        
         GLuint id_v = glGetUniformLocation(programID, "view_mat");
         glUniformMatrix4fv(id_v, 1, false, &mat_v[0][0]);
 

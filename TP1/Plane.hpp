@@ -88,7 +88,7 @@ public:
 
     void computeUV() 
     {
-        uv.clear();
+        uvs.clear();
 
         float UvStep = 1.0f / (float)resolution;
         for (int i = 0; i <= resolution; i++)
@@ -97,7 +97,7 @@ public:
             {
                 float u = j * UvStep;
                 float v = i * UvStep;
-                uv.push_back(glm::vec2(u, v));
+                uvs.push_back(glm::vec2(u, v));
             }
         }
     }

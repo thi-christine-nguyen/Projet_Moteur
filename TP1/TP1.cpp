@@ -45,7 +45,7 @@ int main( void )
 
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
-    ifCamera (glewInit() != GLEW_OK) {
+    if (glewInit() != GLEW_OK) {
         fprintf(stderr, "Failed to initialize GLEW\n");
         getchar();
         glfwTerminate();
@@ -74,7 +74,6 @@ int main( void )
 
     // Création des managers
     SceneManager *SM = new SceneManager();
-    InputManager *IM = new InputManager();
     PhysicManager *PM = new PhysicManager();
 
     GLuint VertexArrayID;
@@ -165,22 +164,13 @@ int main( void )
         interface.camera.update(deltaTime, window);
         interface.camera.sendToShader(programID); 
         // Input gérés par l'InputManager
-        IM->processInput(window);
+        // IM->processInput(window);
 
         // Test mode édition du terrain
         // if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
         //     glm::vec3 mousePositionOnPlane = landscape->getMousePositionOnPlane(window);
         //     std::cout << mousePositionOnPlane.x << ", " << mousePositionOnPlane.y << std::endl;
         // }
-
-        //----------------------------------- Throw cube 45° from camera front -----------------------------------//
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            basketBall->setPosition(camera.getPosition());
-            float throwStrenght = 3.0f;
-            glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
-            speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
-            basketBall->setVelocity(speedVector);
-        }
 
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);

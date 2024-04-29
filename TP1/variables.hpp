@@ -17,7 +17,6 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // Camera
-
 Interface interface; 
 
 // For speed computation
@@ -25,12 +24,6 @@ double lastTime = glfwGetTime();
 double totalDeltaTime = 0.;
 double physicsClock = 0.;
 int nbFrames = 0;
-
-// A suppr ce sera géré dans les GameObjects
-std::vector<unsigned short> indices; //Triangles concaténés dans une liste
-std::vector<std::vector<unsigned short> > triangles;
-std::vector<glm::vec3> indexed_vertices;
-std::vector<glm::vec2> uv;
 
 // Get a handle for our "Model View Projection" matrices uniforms
 glm::mat4 mat_m = glm::mat4(1); // Model

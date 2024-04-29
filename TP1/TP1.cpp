@@ -2,6 +2,7 @@
 // #include "InputManager.hpp"
 #include "SceneManager.hpp"
 #include "Camera/Camera.hpp"
+#include "PhysicManager.hpp"
 #include "GameObject.hpp"
 #include "Sphere.hpp"
 #include "Plane.hpp"
@@ -44,7 +45,7 @@ int main( void )
 
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
-    if (glewInit() != GLEW_OK) {
+    ifCamera (glewInit() != GLEW_OK) {
         fprintf(stderr, "Failed to initialize GLEW\n");
         getchar();
         glfwTerminate();
@@ -54,7 +55,7 @@ int main( void )
     // Ensure we can capture the escape key being pressed below
     // glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     // Hide the mouse and enable unlimited mouvement
-     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     // Set the mouse at the center of the screen
     glfwPollEvents();
@@ -73,6 +74,8 @@ int main( void )
 
     // Création des managers
     SceneManager *SM = new SceneManager();
+    InputManager *IM = new InputManager();
+    PhysicManager *PM = new PhysicManager();
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -92,7 +95,7 @@ int main( void )
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
+    GameObject *landscape = new Plane("landscape", 16, 15, 1, "../data/textures/terrain.png");
     GameObject *basketBall = new Sphere("basketBall", 20, 1, 2, "../data/textures/ball.png");
     // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
 
@@ -100,6 +103,10 @@ int main( void )
     SM->addObject(std::move(landscape->ptr));
     SM->addObject(std::move(basketBall->ptr));
     // SM->addObject(std::move(cube->ptr));
+
+    // Ajout des GameObjects au PhysicManager
+    PM->addObject(landscape);
+    PM->addObject(basketBall);
 
     // Initialisation des textures des GameObjects
     SM->initGameObjectsTexture();
@@ -112,7 +119,6 @@ int main( void )
     // cube->translate(camera.getPosition());
     // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
     basketBall->setWeight(0.6f);
-
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
@@ -143,7 +149,6 @@ int main( void )
             totalDeltaTime = 0.;
         }
 
-   
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -159,23 +164,39 @@ int main( void )
         interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
         interface.camera.update(deltaTime, window);
         interface.camera.sendToShader(programID); 
+        // Input gérés par l'InputManager
+        IM->processInput(window);
 
-  
+        // Test mode édition du terrain
+        // if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        //     glm::vec3 mousePositionOnPlane = landscape->getMousePositionOnPlane(window);
+        //     std::cout << mousePositionOnPlane.x << ", " << mousePositionOnPlane.y << std::endl;
+        // }
+
+        //----------------------------------- Throw cube 45° from camera front -----------------------------------//
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+            basketBall->setPosition(camera.getPosition());
+            float throwStrenght = 3.0f;
+            glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
+            speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
+            basketBall->setVelocity(speedVector);
+        }
+
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
-
-        float updateTime = 0.05f;
+        
+        float updateTime = 1.0f/60.0f;
 
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects
-            basketBall->handleCollisionWithLandscape(*landscape);
+            PM->handleCollisions();
+            // std::cout << "PM tick" << std::endl;
             physicsClock -= updateTime;
         }
 
         // Affichage de tous les élements de la scène via le SceneManager
         SM->draw();
         interface.renderFrame(); 
-       
 
         // Swap buffers
         glfwSwapBuffers(window);
@@ -184,8 +205,8 @@ int main( void )
         glfwPollEvents();
 
     } // Check if the ESC key was pressed or the window was closed
-    while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
-           glfwWindowShouldClose(window) == 0 );
+    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
+          glfwWindowShouldClose(window) == 0 );
     
 
     interface.deleteFrame();

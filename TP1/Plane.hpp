@@ -101,6 +101,33 @@ public:
             }
         }
     }
+
+    // Test mode édition du terrain
+    // glm::vec3 getMousePositionOnPlane(GLFWwindow* window) {
+    //     double mouseX, mouseY;
+    //     glfwGetCursorPos(window, &mouseX, &mouseY);
+
+    //     // Récupérer les dimensions de la fenêtre
+    //     int windowWidth, windowHeight;
+    //     glfwGetWindowSize(window, &windowWidth, &windowHeight);
+
+    //     // Coordonnées normalisées de la souris dans la fenêtre (-1,1)
+    //     float normalizedX = (2.0f * mouseX) / windowWidth - 1.0f;
+    //     float normalizedY = 1.0f - (2.0f * mouseY) / windowHeight;
+
+    //     // Créer un rayon depuis la caméra
+    //     glm::vec4 rayClip(normalizedX, normalizedY, -1.0f, 1.0f);
+    //     glm::vec4 rayEye = glm::inverse(projectionMatrix) * rayClip;
+    //     rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
+
+    //     // Transformer le rayon en espace du monde
+    //     glm::vec3 rayWorld = glm::vec3(glm::inverse(viewMatrix) * rayEye);
+    //     rayWorld = glm::normalize(rayWorld);
+
+    //     // Intersection du rayon avec le plan
+    //     float distance = -cameraPosition.y / rayWorld.y;
+    //     return cameraPosition + (rayWorld * distance);
+    // }
 };
 
 #endif

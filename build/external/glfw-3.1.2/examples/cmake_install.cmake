@@ -1,4 +1,4 @@
-# Install script for directory: /home/mat/Documents/M1/Moteur/Projet_Moteur/external/glfw-3.1.2/examples
+# Install script for directory: /home/e20190003297/Documents/M1/S8/HAI819I/Projet_Moteur/external/glfw-3.1.2/examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

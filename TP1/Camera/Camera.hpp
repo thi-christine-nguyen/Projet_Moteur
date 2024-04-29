@@ -294,7 +294,7 @@ public:
 		}
 
 		if (m_inputMode == InputMode::Follow) {
-			glm::vec3 cameraOffset = glm::vec3(0.0f, 10.0f, 4.0f); // Ajustez le décalage selon vos préférences
+			glm::vec3 cameraOffset = glm::vec3(0.0f, 1.0f, 0.0f); // Ajustez le décalage selon vos préférences
 			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
 			glm::vec3 cameraPosition = targetPosition + cameraOffset;
 			

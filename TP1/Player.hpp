@@ -64,7 +64,7 @@ public:
             if (this->velocity.z < velocityMax){
                 this->velocity.z += this->acceleration.z * deltaTime;
             }
-            this->rotate(-rotateSpeed, glm::vec3(0.0f, 1.0f, 0.0f));
+            this->rotate(-rotateSpeed, glm::vec3(1.0f, 0.0f, 0.0f));
         }
         // Mouvement vers le bas
         if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS && grounded) {
@@ -75,7 +75,7 @@ public:
             if (this->velocity.z > -1*velocityMax){
                 this->velocity.z += this->acceleration.z * deltaTime;
             }
-            this->rotate(rotateSpeed, glm::vec3(0.0f, 1.0f, 0.0f));
+            this->rotate(rotateSpeed, glm::vec3(1.0f, 0.0f, 0.0f));
         }
         if(isMovingY == 0){
             this->acceleration.z = 0;
@@ -84,14 +84,18 @@ public:
         // Appliquer le coefficient de friction pour réduire progressivement la vélocité dans les deux directions (X et Y)
         if (this->velocity.x > 0) {
             this->velocity.x -= frictionCoefficient;
+            this->rotate(-rotateSpeed * this->velocity.x, glm::vec3(0.0f, 0.0f, 1.0f));
         } else if (this->velocity.x < 0) {
             this->velocity.x += frictionCoefficient;
+            this->rotate(-rotateSpeed * this->velocity.x, glm::vec3(0.0f, 0.0f, 1.0f));
         }
 
         if (this->velocity.z > 0) {
             this->velocity.z -= frictionCoefficient;
+            this->rotate(-rotateSpeed * this->velocity.z, glm::vec3(1.0f, 0.0f, 0.0f));
         } else if (this->velocity.z < 0) {
             this->velocity.z += frictionCoefficient;
+            this->rotate(-rotateSpeed * this->velocity.z, glm::vec3(1.0f, 0.0f, 0.0f));
         }
         
     }

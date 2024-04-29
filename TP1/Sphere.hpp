@@ -79,5 +79,74 @@ public:
             }
         }
     }
+    // void roll(float angle, glm::vec3 axis) {
+    //     // Convertir l'angle en radians
+    //     float radians = glm::radians(angle);
+
+    //     // Matrice de rotation
+    //     glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), radians, axis);
+
+    //     // Appliquer la rotation à chaque sommet de la sphère
+    //     for (int i = 0; i < vertices.size(); ++i) {
+    //         vertices[i] = glm::vec3(rotationMatrix * glm::vec4(vertices[i], 1.0f));
+    //     }
+
+    //     // Mettre à jour les coordonnées de texture
+    //     for (int i = 0; i < uvs.size(); ++i) {
+    //         // Convertir les coordonnées de texture en vecteur 3D avec une composante z à 0
+    //         glm::vec3 uvVec = glm::vec3(uvs[i], 0.0f);
+    //         // Appliquer la rotation à chaque coordonnée de texture
+    //         uvVec = glm::vec3(rotationMatrix * glm::vec4(uvVec, 1.0f));
+    //         // Mettre à jour les coordonnées de texture avec les nouvelles valeurs
+    //         uvs[i] = glm::vec2(uvVec.x, uvVec.y);
+    //     }
+
+    //     // Mettre à jour la bounding box après la rotation
+    //     glm::vec3 minBounds = glm::vec3(std::numeric_limits<float>::max());
+    //     glm::vec3 maxBounds = glm::vec3(std::numeric_limits<float>::lowest());
+
+    //     for (const auto& vertex : vertices) {
+    //         minBounds = glm::min(minBounds, vertex);
+    //         maxBounds = glm::max(maxBounds, vertex);
+    //     }
+
+    //     BoundingBox newBoundingBox(minBounds, maxBounds);
+    //     setBoundingBox(newBoundingBox);
+    // }
+
+    void roll(float angle, glm::vec3 axis) {
+        // Convertir l'angle en radians
+        float radians = glm::radians(angle);
+
+        // Matrice de rotation
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), radians, axis);
+
+        // Appliquer la rotation à chaque sommet de la sphère
+        for (int i = 0; i < vertices.size(); ++i) {
+            vertices[i] = glm::vec3(rotationMatrix * glm::vec4(vertices[i], 1.0f));
+        }
+
+        // Déplacer les coordonnées de texture circulairement
+        for (int i = 0; i < uvs.size(); ++i) {
+            uvs[i].x += angle / (2.0f * M_PI);
+            // Assurez-vous que la coordonnée de texture reste dans la plage [0, 1]
+            if (uvs[i].x > 1.0f) {
+                uvs[i].x -= 1.0f;
+            }
+        }
+
+        // Mettre à jour la bounding box après la rotation
+        glm::vec3 minBounds = glm::vec3(std::numeric_limits<float>::max());
+        glm::vec3 maxBounds = glm::vec3(std::numeric_limits<float>::lowest());
+
+        for (const auto& vertex : vertices) {
+            minBounds = glm::min(minBounds, vertex);
+            maxBounds = glm::max(maxBounds, vertex);
+        }
+
+        BoundingBox newBoundingBox(minBounds, maxBounds);
+        setBoundingBox(newBoundingBox);
+    }
+
 };
 #endif

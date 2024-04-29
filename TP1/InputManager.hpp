@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "variables.hpp"
+#include "Player.hpp"
 
 void targetMesh(std::vector<glm::vec3> &indexed_vertices );
 
@@ -38,8 +39,8 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
     double yoffset = lastY - ypos; // La distance y est inversée (coordonnées écran)
 
     // Mettre à jour la position de la caméra en fonction du déplacement de la souris
-    if (!camera.getIsOrbiting())
-        camera.processMouseMovement(xoffset * camera.getSensitivity(), yoffset * camera.getSensitivity());
+    // if (!camera.getIsOrbiting())
+    //     camera.processMouseMovement(xoffset * camera.getSensitivity(), yoffset * camera.getSensitivity());
     // Sauvegarder la position précédente de la souris
     lastX = xpos;
     lastY = ypos;
@@ -48,7 +49,7 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 // Définition de la fonction de rappel pour le scroll de la souris
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
-    camera.processMouseScroll(yoffset);
+    // camera.processMouseScroll(yoffset);
 }
 
 class InputManager {
@@ -59,19 +60,20 @@ public:
 
     // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
     // ---------------------------------------------------------------------------------------------------------
-    void processInput(GLFWwindow *window)
+    void processInput(GLFWwindow *window, Player *player)
     {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, true);
 
         //----------------------------------- Camera Movements -----------------------------------//
-        camera.processKeyboard(window, deltaTime);
+        // camera.processKeyboard(window, deltaTime);
         updateMouse(window);
+        player->handleInputs(window, deltaTime);
 
         //----------------------------------- model Focus -----------------------------------//
-        if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS && !camera.getIsOrbiting()) {
-            camera.resetCamera();
-        }
+        // if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS && !camera.getIsOrbiting()) {
+        //     // camera.resetCamera();
+        // }
 
         //----------------------------------- Display mode -----------------------------------//
 

@@ -372,6 +372,8 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   ../TP1/Transform.hpp \
   ../TP1/BoundingBox.hpp \
   ../TP1/PhysicManager.hpp \
+  ../TP1/InputManager.hpp \
+  ../TP1/Player.hpp \
   ../TP1/Sphere.hpp \
   ../TP1/Plane.hpp \
   ../TP1/Cube.hpp
@@ -2957,6 +2959,8 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 /usr/include/c++/11/bits/uses_allocator.h:
 
+../TP1/Player.hpp:
+
 /usr/include/c++/11/bit:
 
 /usr/include/c++/11/bits/align.h:
@@ -3136,6 +3140,8 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 /usr/include/c++/11/bits/shared_ptr.h:
 
 /usr/include/c++/11/bits/stl_construct.h:
+
+../TP1/InputManager.hpp:
 
 /usr/include/c++/11/tr1/exp_integral.tcc:
 

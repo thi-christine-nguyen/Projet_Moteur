@@ -1,7 +1,8 @@
 #ifndef VARIABLES_H_
 #define VARIABLES_H_
 
-#include "Camera.hpp"
+#include "Camera/Camera.hpp"
+#include "Interface.hpp"
 
 // Settings
 const unsigned int SCR_WIDTH = 800;
@@ -16,7 +17,8 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // Camera
-Camera camera(glm::vec3(-3.f, 6.f, 0.f), glm::vec3(0.f, 1.f, 0.0f));
+
+Interface interface; 
 
 // For speed computation
 double lastTime = glfwGetTime();

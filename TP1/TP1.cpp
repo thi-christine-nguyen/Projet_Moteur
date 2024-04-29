@@ -1,13 +1,19 @@
 #include "lib.hpp"
-#include "InputManager.hpp"
+// #include "InputManager.hpp"
 #include "SceneManager.hpp"
-#include "Camera.hpp"
+#include "Camera/Camera.hpp"
 #include "GameObject.hpp"
 #include "Sphere.hpp"
 #include "Plane.hpp"
 #include "Cube.hpp"
+#include "Interface.hpp"
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 
 /*******************************************************************************/
+
 
 int main( void )
 {
@@ -65,16 +71,8 @@ int main( void )
     // Cull triangles which normal is not towards the camera
     //glEnable(GL_CULL_FACE);
 
-    // Création de la caméra
-    camera.setSpeed(0.1f);
-    camera.setIsOrbiting(false);
-    camera.setOrbitSpeed(0.025f);
-    camera.setFov(45.0f);
-    camera.resetCamera();
-
     // Création des managers
     SceneManager *SM = new SceneManager();
-    InputManager *IM = new InputManager();
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -109,14 +107,20 @@ int main( void )
     // Transformations sur les GameObjects
     basketBall->translate(glm::vec3(0.f, 1.f, 0.f));
     basketBall->scale(glm::vec3(0.2));
-
+    
+    
     // cube->translate(camera.getPosition());
     // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
     basketBall->setWeight(0.6f);
 
+
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
     GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+
+    interface.initImgui(window);
+    interface.camera.init();
+    // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
 
     do{
 
@@ -139,6 +143,7 @@ int main( void )
             totalDeltaTime = 0.;
         }
 
+   
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -148,24 +153,17 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        // Envoi de la matrice de vue et de projection au GPU
-        camera.sendToShader(programID);
+        //Imgui 
+        interface.createFrame(); 
 
-        // Input gérés par l'InputManager
-        IM->processInput(window);
+        interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
+        interface.camera.update(deltaTime, window);
+        interface.camera.sendToShader(programID); 
 
-        //----------------------------------- Throw cube 45° from camera front -----------------------------------//
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            basketBall->setPosition(camera.getPosition());
-            float throwStrenght = 3.0f;
-            glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
-            speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
-            basketBall->setVelocity(speedVector);
-        }
-
+  
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
-        
+
         float updateTime = 0.05f;
 
         while (physicsClock >= updateTime) {
@@ -176,6 +174,8 @@ int main( void )
 
         // Affichage de tous les élements de la scène via le SceneManager
         SM->draw();
+        interface.renderFrame(); 
+       
 
         // Swap buffers
         glfwSwapBuffers(window);
@@ -186,6 +186,10 @@ int main( void )
     } // Check if the ESC key was pressed or the window was closed
     while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
            glfwWindowShouldClose(window) == 0 );
+    
+
+    interface.deleteFrame();
+
 
     // Cleanup VBO and shader
     glDeleteBuffers(1, &vertexbuffer);
@@ -209,3 +213,4 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
+

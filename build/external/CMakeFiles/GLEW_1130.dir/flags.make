@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS
 
-C_INCLUDES = -I"/home/e20210001937/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/external/glfw-3.1.2/include/GLFW" -I"/home/e20210001937/Documents/Master1/M1/S2/Moteur de jeux/Projet_Moteur/external/glew-1.13.0/include"
+C_INCLUDES = -I/home/e20190003297/Documents/M1/S8/HAI819I/Projet_Moteur/external/glfw-3.1.2/include/GLFW -I/home/e20190003297/Documents/M1/S8/HAI819I/Projet_Moteur/external/glew-1.13.0/include
 
 C_FLAGS = 
 

@@ -65,6 +65,7 @@ private:
 
 	// Définition des paramètres du shake
 	std::unique_ptr<CameraShake> cameraShake;
+
 public: 
 
  	Camera(){
@@ -109,6 +110,7 @@ public:
 		return m_target; 
 	}
 
+	InputMode getInputMode() {return m_inputMode;}
 
 	void updateInterface(float _deltaTime)
 	{
@@ -253,7 +255,7 @@ public:
 			}
 		}
 
-		if (m_inputMode == InputMode::Free || m_inputMode == InputMode::Follow) {
+		if (m_inputMode == InputMode::Free) {
 			// m_target = glm::vec3(0.0f, 0.0f, -1.0f);
 			// Rotation de la caméra avec la souris
 			double mouseX, mouseY;
@@ -289,6 +291,15 @@ public:
 			if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
 				m_position -= m_rightDirection * translationSpeed;
 			}
+		}
+
+		if (m_inputMode == InputMode::Follow) {
+			glm::vec3 cameraOffset = glm::vec3(0.0f, 10.0f, 4.0f); // Ajustez le décalage selon vos préférences
+			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
+			glm::vec3 cameraPosition = targetPosition + cameraOffset;
+			
+			// Définir la nouvelle position de la caméra
+			m_position = cameraPosition;
 		}
 
 		// Limiter l'angle de pitch entre -90 et 90 degrés pour éviter les retournements
@@ -382,7 +393,8 @@ public:
         // View matrix : camera/view transformation lookat() utiliser camera_position camera_target camera_up
 		glm::mat4 mat_v; 
 		if(m_inputMode == InputMode::Follow){
-			mat_v = glm::lookAt(m_position, m_target, m_upDirection);
+			mat_v = glm::lookAt(m_position, m_position + m_target, m_upDirection);
+			// mat_v = glm::lookAt(m_target);
 		}else {
 			mat_v = glm::lookAt(m_position, m_position + m_target, m_upDirection);;
 		}

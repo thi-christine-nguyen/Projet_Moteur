@@ -160,7 +160,9 @@ int main( void )
         glUseProgram(programID);
 
         //Imgui 
-        interface.createFrame(); 
+        interface.createFrame();
+        if (interface.camera.getInputMode() == InputMode::Follow)
+            interface.camera.setCameraTarget(player->getTransform().getPosition());
 
         // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
         interface.camera.update(deltaTime, window);

@@ -52,7 +52,7 @@ public:
             this->rotate(rotateSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
         }
 
-        if(isMovingX == 0){
+        if(isMovingX == 0 && grounded){
             this->acceleration.x = 0;
         }
         // Mouvement vers le haut
@@ -77,7 +77,7 @@ public:
             }
             this->rotate(rotateSpeed, glm::vec3(1.0f, 0.0f, 0.0f));
         }
-        if(isMovingY == 0){
+        if(isMovingY == 0 && grounded){
             this->acceleration.z = 0;
         }
 

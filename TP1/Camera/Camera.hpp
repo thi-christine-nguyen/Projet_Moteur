@@ -191,7 +191,7 @@ public:
 			m_inputMode = InputMode::Drone;
 		}
 		if (glfwGetKey(_window, GLFW_KEY_X) == GLFW_PRESS) {
-			m_inputMode = InputMode::Free;
+			m_inputMode = InputMode::Follow;
 		}
 		if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_PRESS) {
 			// cameraShake->startShake();
@@ -294,7 +294,7 @@ public:
 		}
 
 		if (m_inputMode == InputMode::Follow) {
-			glm::vec3 cameraOffset = glm::vec3(0.0f, 1.0f, 0.0f); // Ajustez le décalage selon vos préférences
+			glm::vec3 cameraOffset = glm::vec3(0.0f, 8.0f, 0.0f); // Ajustez le décalage selon vos préférences
 			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
 			glm::vec3 cameraPosition = targetPosition + cameraOffset;
 			

@@ -165,6 +165,7 @@ int main( void )
             interface.camera.setCameraTarget(player->getTransform().getPosition());
 
         // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
+        interface.update(deltaTime, window);
         interface.camera.update(deltaTime, window);
         interface.camera.sendToShader(programID); 
         // Input gérés par l'InputManager

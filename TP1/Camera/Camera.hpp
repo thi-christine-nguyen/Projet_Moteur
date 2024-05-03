@@ -14,7 +14,9 @@
 #include <iostream>
 #include <array>
 #include <memory>
-#include "CameraShake.hpp"
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 #include <TP1/Camera/Camera_Helper.hpp>
 
 enum class InputMode
@@ -63,9 +65,6 @@ private:
     double m_transitionElapsedTime; // Temps au début de la transition
     float m_transitionDuration; // Durée de la transition
 
-	// Définition des paramètres du shake
-	std::unique_ptr<CameraShake> cameraShake;
-
 public: 
 
  	Camera(){
@@ -91,15 +90,6 @@ public:
 		m_transitionDuration = 1.0f;
 		m_transitioning = false;
 		m_transitionElapsedTime = 0.0f;
-
-		// Shake
-		float shakeDuration = 2.0f;
-		float positionAmplitude = 0.05f;
-		float rotationAmplitude = 1.0f;
-		float positionFrequency = 5.0f;
-		float rotationFrequency = 5.0f;
-		cameraShake = std::make_unique<CameraShake>(m_position, shakeDuration, positionAmplitude, rotationAmplitude, positionFrequency, rotationFrequency);
-		// cameraShake->startShake();
 	}
 
 	void setCameraTarget(glm::vec3 target){
@@ -112,10 +102,10 @@ public:
 
 	InputMode getInputMode() {return m_inputMode;}
 
-	void updateInterface(float _deltaTime)
+	void updateInterfaceCamera(float _deltaTime)
 	{
 		// ImGUI window creation
-		if (ImGui::Begin("Interface"))
+		if (ImGui::BeginTabItem("Camera Settings"))
 		{
 			ImGui::Separator();
 			ImGui::Text("Welcome to this TP about Cameras! Press escape to close the exe");
@@ -146,14 +136,6 @@ public:
 			ImGui::Text("Transition Duration");
 			ImGui::SliderFloat("Transition Duration", &m_transitionDuration, 0.1f, 10.0f);
 
-			// Paramètres d'édition du shake
-			cameraShake->updateInterface();
-			// Bouton pour jouer le shake
-			if (ImGui::Button("Play Shake")) {
-				// cameraShake->startShake(); // Appel de la fonction pour jouer le shake
-			}
-
-
 			// Afficher l'information du mode courant
 			ImGui::Text("Input Mode: %s", inputModes[(int)m_inputMode]);
 
@@ -168,16 +150,12 @@ public:
 			if (ImGui::Button("Reset Camera Settings")) {
 				resetWithTransition(_deltaTime);
 			}
+			ImGui::EndTabItem();
+			
 		}
-		ImGui::End();
-
-		if (m_showImguiDemo)
-		{
-			ImGui::ShowDemoWindow();
-		}
+		
 
 	}
-
 	
 	void updateFreeInput(float _deltaTime, GLFWwindow* _window)
 	{
@@ -372,11 +350,8 @@ public:
 
 	void update(float _deltaTime, GLFWwindow* _window)
 	{
-		updateInterface(_deltaTime);
+		// updateInterface(_deltaTime);
 		updateFreeInput(_deltaTime, _window);
-
-		cameraShake->update(_deltaTime);
-		// std::cout << m_position.x << "; " << m_position.y << "; " << m_position.z << std::endl;
 		
 		updateCameraRotation();
 		if (m_transitioning)

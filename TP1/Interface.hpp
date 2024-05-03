@@ -48,6 +48,30 @@ public :
         ImGui::DestroyContext();
     }
 
+    void updateInterface(float _deltaTime)
+	{
+        if (ImGui::Begin("Interface")){
+            if (ImGui::BeginTabBar("Tabs")) {
+                camera.updateInterfaceCamera(_deltaTime); 
+            }
+            if (ImGui::BeginTabItem("New Tab"))
+            {
+                // Contenu de votre nouvel onglet
+                ImGui::Text("Hello from the new tab!");
+                // Ajoutez ici le contenu de votre nouvel onglet
+
+                ImGui::EndTabItem();
+            }
+            ImGui::EndTabBar();
+        }
+        ImGui::End();
+    }
+
+    void update(float _deltaTime, GLFWwindow* _window){
+        updateInterface(_deltaTime);
+    }
+
+
 
 }; 
 #endif

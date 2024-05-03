@@ -360,13 +360,12 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   /usr/include/c++/11/backward/auto_ptr.h \
   /usr/include/c++/11/pstl/glue_memory_defs.h \
   /usr/include/c++/11/pstl/execution_defs.h \
-  ../TP1/Camera/CameraShake.hpp \
   ../imgui/imgui.h \
   ../imgui/imconfig.h \
-  ../TP1/Camera/Camera_Helper.hpp \
-  ../TP1/Interface.hpp \
   ../imgui/imgui_impl_glfw.h \
   ../imgui/imgui_impl_opengl3.h \
+  ../TP1/Camera/Camera_Helper.hpp \
+  ../TP1/Interface.hpp \
   ../TP1/SceneManager.hpp \
   ../TP1/GameObject.hpp \
   ../TP1/Transform.hpp \
@@ -2915,13 +2914,13 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 ../TP1/SceneManager.hpp:
 
-../imgui/imgui_impl_opengl3.h:
-
-../imgui/imgui_impl_glfw.h:
-
 ../TP1/Interface.hpp:
 
 ../TP1/Camera/Camera_Helper.hpp:
+
+../imgui/imgui_impl_opengl3.h:
+
+../imgui/imgui_impl_glfw.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xsavesintrin.h:
 
@@ -3032,8 +3031,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 ../external/glm-0.9.7.1/glm/detail/type_vec1.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/vaesintrin.h:
-
-../TP1/Camera/CameraShake.hpp:
 
 ../external/glm-0.9.7.1/glm/detail/_vectorize.hpp:
 

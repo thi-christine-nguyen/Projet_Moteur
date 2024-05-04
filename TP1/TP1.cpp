@@ -1,6 +1,5 @@
 #include "lib.hpp"
 // #include "InputManager.hpp"
-#include "SceneManager.hpp"
 #include "Camera/Camera.hpp"
 #include "PhysicManager.hpp"
 #include "InputManager.hpp"
@@ -75,7 +74,7 @@ int main( void )
     //glEnable(GL_CULL_FACE);
 
     // Création des managers
-    SceneManager *SM = new SceneManager();
+    // SceneManager *SM = new SceneManager();
     PhysicManager *PM = new PhysicManager();
     InputManager * IM = new InputManager();
 
@@ -102,8 +101,8 @@ int main( void )
     // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
 
     // Ajout des GameObjects au SceneManager
-    SM->addObject(std::move(landscape->ptr));
-    SM->addObject(std::move(player->ptr));
+    interface.SM->addObject(std::move(landscape->ptr));
+    interface.SM->addObject(std::move(player->ptr));
     // SM->addObject(std::move(cube->ptr));
 
     // Ajout des GameObjects au PhysicManager
@@ -111,7 +110,7 @@ int main( void )
     PM->addObject(player);
 
     // Initialisation des textures des GameObjects
-    SM->initGameObjectsTexture();
+    interface.SM->initGameObjectsTexture();
 
     // Transformations sur les GameObjects
     player->translate(glm::vec3(0.f, 1.f, 0.f));
@@ -181,7 +180,7 @@ int main( void )
         // }
 
         // Update des GameObjects dans la boucle
-        SM->update(deltaTime);
+        interface.SM->update(deltaTime);
         
         float updateTime = 1.0f/60.0f;
 
@@ -193,7 +192,7 @@ int main( void )
         }
 
         // Affichage de tous les élements de la scène via le SceneManager
-        SM->draw();
+        interface.SM->draw();
         interface.renderFrame(); 
 
         // Swap buffers

@@ -202,7 +202,7 @@ public:
     }
 
     /* ------------------------- BUFFERS -------------------------*/
-    void GenerateBuffers()
+    void GenerateBuffers(GLuint programID)
     {
         glGenVertexArrays(1, &vao);    // Le VAO qui englobe tout
         glGenBuffers(1, &vboVertices); // VBO vertex
@@ -227,7 +227,7 @@ public:
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * indices.size(), &indices[0], GL_STATIC_DRAW);
     }
 
-    void DeleteBuffers()
+    void DeleteBuffers(GLuint programID)
     {
         glDeleteBuffers(1, &vboVertices);
         glDeleteBuffers(1, &vboIndices);
@@ -236,7 +236,7 @@ public:
         glDeleteProgram(programID);
         for (GameObject *child : children)
         {
-            child->DeleteBuffers();
+            child->DeleteBuffers(programID);
         }
     };
 
@@ -290,7 +290,7 @@ public:
 
     /* ------------------------- TEXTURES -------------------------*/
 
-    void initTexture() {
+    void initTexture(GLuint programID) {
         if (textureID != 0) { // S'il y a une texture sur le GameObject
             std::cout << textureID << ": " << texturePath << std::endl;
             glActiveTexture(GL_TEXTURE0);
@@ -298,7 +298,7 @@ public:
             glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
         }
         for (GameObject *child : children) {
-            child->initTexture();
+            child->initTexture(programID);
         }
     }
 

@@ -17,7 +17,7 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // Camera
-Interface interface; 
+Interface interface(programID); 
 
 // For speed computation
 double lastTime = glfwGetTime();

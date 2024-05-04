@@ -20,7 +20,7 @@ public:
         init();
         computeUV();
         //  Generer et charger les buffers
-        this->GenerateBuffers();
+        this->GenerateBuffers(programID);
         // Init la bounding box
         this->initBoundingBox();
     }

@@ -7,17 +7,20 @@
 #include <iostream>
 #include <vector>
 #include "TP1/Camera/Camera.hpp"
+#include "SceneManager.hpp"
 
 
 
 class Interface
 {
 private : 
-  
+    GLuint programID;
 
 public : 
 
     Camera camera; 
+    SceneManager *SM = new SceneManager(programID);
+    Interface(GLuint programID) : programID(programID) {}
 
     void initImgui(GLFWwindow *window)
     {

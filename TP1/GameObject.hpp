@@ -76,6 +76,10 @@ protected:
     int textureID; // 0 = flatColor sinon Texture
     const char *texturePath;
 
+    // INTERFACE
+    bool scaleLocked_ ; 
+    bool gravityEnabled_;
+
 public:
     /* ------------------------- CONSTRUCTOR -------------------------*/
 
@@ -202,7 +206,7 @@ public:
     }
 
     /* ------------------------- BUFFERS -------------------------*/
-    void GenerateBuffers()
+    void GenerateBuffers(GLuint programID)
     {
         glGenVertexArrays(1, &vao);    // Le VAO qui englobe tout
         glGenBuffers(1, &vboVertices); // VBO vertex
@@ -227,7 +231,7 @@ public:
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * indices.size(), &indices[0], GL_STATIC_DRAW);
     }
 
-    void DeleteBuffers()
+    void DeleteBuffers(GLuint programID)
     {
         glDeleteBuffers(1, &vboVertices);
         glDeleteBuffers(1, &vboIndices);
@@ -236,7 +240,7 @@ public:
         glDeleteProgram(programID);
         for (GameObject *child : children)
         {
-            child->DeleteBuffers();
+            child->DeleteBuffers(programID);
         }
     };
 
@@ -290,7 +294,7 @@ public:
 
     /* ------------------------- TEXTURES -------------------------*/
 
-    void initTexture() {
+    void initTexture(GLuint programID) {
         if (textureID != 0) { // S'il y a une texture sur le GameObject
             std::cout << textureID << ": " << texturePath << std::endl;
             glActiveTexture(GL_TEXTURE0);
@@ -298,7 +302,7 @@ public:
             glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
         }
         for (GameObject *child : children) {
-            child->initTexture();
+            child->initTexture(programID);
         }
     }
 
@@ -306,11 +310,14 @@ public:
 
     void updatePhysicallyBasedPosition(float deltaTime) {
         // Application de la force gravitationnelle
-        if (!grounded)
+        if (gravityEnabled_  && !grounded)
             velocity += acceleration * deltaTime;
 
         // Application de sa vitesse à notre objet
-        translate(velocity * deltaTime);
+        if (gravityEnabled_){
+            translate(velocity * deltaTime);
+        }
+        
     }
     // Fonction pour calculer les impulsions à appliquer à chaque objet
     void calculer_impulsions(const GameObject& obj2, glm::vec3& impulsion1, glm::vec3& impulsion2, const glm::vec3& normale_contact) {
@@ -364,6 +371,61 @@ public:
     }
 
     std::unique_ptr<GameObject> ptr; // Pointeur unique vers l'objet
+
+    /* ------------------------- INTERFACE -------------------------*/
+
+    void resetParameters() {
+        // Réinitialiser la transformation à sa valeur par défaut
+        transform = Transform();
+
+        // Réinitialiser d'autres paramètres selon vos besoins
+        scaleLocked_ = false;
+        gravityEnabled_ = false;
+    }
+
+    void updateInterfaceTransform(float _deltaTime) {
+
+       
+        ImGui::Text("Position");
+        glm::vec3 position = transform.getPosition();
+        ImGui::DragFloat3(("##" + name + "Position").c_str(), glm::value_ptr(position));
+
+        glm::vec3 rotation = transform.getRotation();
+        ImGui::Text("Rotation");
+        ImGui::DragFloat3(("##" + name + "Rotation").c_str(), glm::value_ptr(rotation));
+
+        glm::vec3 scale = transform.getScale();
+
+        ImGui::Text("Lock Scale");
+        ImGui::SameLine();
+        ImGui::Checkbox(("##" + name + "LockScale").c_str(), &scaleLocked_);
+
+        if (scaleLocked_) {
+            // Si l'échelle est verrouillée, utilisez une seule valeur pour les trois axes
+            ImGui::Text("Scale");
+            ImGui::DragFloat(("##" + name + "Scale").c_str(), &scale.x);
+            scale.y = scale.x;
+            scale.z = scale.x;
+        } else {
+            ImGui::Text("Scale x, y, z");
+            // Sinon, laissez l'utilisateur modifier chaque valeur de l'échelle individuellement
+            ImGui::DragFloat3(("##" + name + "Scale").c_str(), glm::value_ptr(scale));
+        }
+
+        ImGui::Text("Gravity Enabled");
+        ImGui::SameLine();
+        ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
+
+        transform.setPosition(position);
+        transform.setRotation(rotation);
+        transform.setScale(scale);
+
+        if (ImGui::Button(("Reset " + name + " Parameters").c_str())) {
+            resetParameters(); // Appeler la fonction pour réinitialiser les paramètres lorsque le bouton est cliqué
+        }
+    }
+
+
 };
 
 #endif

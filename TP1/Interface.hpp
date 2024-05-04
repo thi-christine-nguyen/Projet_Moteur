@@ -7,17 +7,20 @@
 #include <iostream>
 #include <vector>
 #include "TP1/Camera/Camera.hpp"
+#include "SceneManager.hpp"
 
 
 
 class Interface
 {
 private : 
-  
+    GLuint programID;
 
 public : 
 
     Camera camera; 
+    SceneManager *SM = new SceneManager(programID);
+    Interface(GLuint programID) : programID(programID) {}
 
     void initImgui(GLFWwindow *window)
     {
@@ -47,6 +50,37 @@ public :
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
+
+    void updateInterface(float _deltaTime)
+	{
+        if (ImGui::Begin("Interface")){
+            if (ImGui::BeginTabBar("Tabs")) {
+                camera.updateInterfaceCamera(_deltaTime); 
+            }
+            if (ImGui::BeginTabItem("Objects"))
+            {
+                for (const auto& object : SM->getObjects()) {
+                    std::string objectName = object->getName();
+                    if (ImGui::CollapsingHeader(objectName.c_str())) {
+                        // Contenu détaillé de l'objet
+                        ImGui::Text("Object Name: %s", objectName.c_str());
+                    
+                        object->updateInterfaceTransform(_deltaTime); 
+                        
+                    }
+                }
+
+                ImGui::EndTabItem();
+            }
+            ImGui::EndTabBar();
+        }
+        ImGui::End();
+    }
+
+    void update(float _deltaTime, GLFWwindow* _window){
+        updateInterface(_deltaTime);
+    }
+
 
 
 }; 

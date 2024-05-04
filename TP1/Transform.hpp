@@ -3,6 +3,10 @@
 
 #include "lib.hpp"
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 class Transform {
 private:
     glm::vec3 position_;
@@ -63,6 +67,9 @@ public:
 
         return result;
     }
+
+
+    
 };
 
 #endif

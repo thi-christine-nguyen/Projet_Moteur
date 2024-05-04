@@ -8,9 +8,12 @@
 
 class SceneManager {
 private:
+    GLuint programID; 
     std::vector<std::unique_ptr<GameObject>> objects; // Vecteur de pointeurs uniques vers les objets de la scène ce qui garantit que chaque GameObject est géré par un unique SceneManager
 
 public:
+    SceneManager(GLuint programID) : programID(programID) {}
+
     // Méthode pour ajouter un objet à la scène
     void addObject(std::unique_ptr<GameObject> object) {
         objects.push_back(std::move(object)); // std::move permet de transférer la responsabilité de gestion de l'objet au SceneManager
@@ -51,7 +54,7 @@ public:
     void initGameObjectsTexture() {
         for (const auto& object : objects) {
             // Init la texture de l'objet
-            object->initTexture();
+            object->initTexture(programID);
         }
     }
 
@@ -61,6 +64,10 @@ public:
                 return object.get();
         }
         return nullptr;
+    }
+
+    std::vector<std::unique_ptr<GameObject>>& getObjects() {
+        return objects;
     }
 };
 

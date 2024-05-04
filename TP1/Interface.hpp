@@ -64,8 +64,8 @@ public :
                     if (ImGui::CollapsingHeader(objectName.c_str())) {
                         // Contenu détaillé de l'objet
                         ImGui::Text("Object Name: %s", objectName.c_str());
-                        Transform gameObjectTransform = object->getTransform();
-                        gameObjectTransform.updateInterfaceTransform(_deltaTime); 
+                    
+                        object->updateInterfaceTransform(_deltaTime); 
                         
                     }
                 }

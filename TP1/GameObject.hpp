@@ -76,6 +76,9 @@ protected:
     int textureID; // 0 = flatColor sinon Texture
     const char *texturePath;
 
+    // INTERFACE
+    bool scaleLocked_ ; 
+
 public:
     /* ------------------------- CONSTRUCTOR -------------------------*/
 
@@ -364,6 +367,37 @@ public:
     }
 
     std::unique_ptr<GameObject> ptr; // Pointeur unique vers l'objet
+
+    void updateInterfaceTransform(float _deltaTime) {
+
+        ImGui::Text("Transform");
+        glm::vec3 position = transform.getPosition();
+        ImGui::DragFloat3((name + "##Position").c_str(), glm::value_ptr(position));
+
+        glm::vec3 rotation = transform.getRotation();
+        ImGui::DragFloat3((name + "##Rotation").c_str(), glm::value_ptr(rotation));
+
+        glm::vec3 scale = transform.getScale();
+
+        // Ajout de la case à cocher pour verrouiller l'échelle
+        ImGui::Checkbox((name + "##LockScale").c_str(), &scaleLocked_);
+
+        if (scaleLocked_) {
+            // Si l'échelle est verrouillée, utilisez une seule valeur pour les trois axes
+            ImGui::DragFloat((name + "##Scale").c_str(), &scale.x);
+            scale.y = scale.x;
+            scale.z = scale.x;
+        } else {
+            // Sinon, laissez l'utilisateur modifier chaque valeur de l'échelle individuellement
+            ImGui::DragFloat3((name + "##Scale").c_str(), glm::value_ptr(scale));
+        }
+
+        transform.setPosition(position);
+        transform.setRotation(rotation);
+        transform.setScale(scale);
+    }
+
+
 };
 
 #endif

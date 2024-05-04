@@ -69,11 +69,7 @@ public:
     }
 
 
-    void updateInterfaceTransform(float _deltaTime) {
-        ImGui::Text("Transform");
-        ImGui::DragFloat3("##ObjectPosition", glm::value_ptr(position_));
-
-    }
+    
 };
 
 #endif

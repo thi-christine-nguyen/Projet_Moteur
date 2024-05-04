@@ -397,6 +397,7 @@ public:
         glm::vec3 scale = transform.getScale();
 
         ImGui::Text("Lock Scale");
+        ImGui::SameLine();
         ImGui::Checkbox(("##" + name + "LockScale").c_str(), &scaleLocked_);
 
         if (scaleLocked_) {
@@ -412,6 +413,7 @@ public:
         }
 
         ImGui::Text("Gravity Enabled");
+        ImGui::SameLine();
         ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
 
         transform.setPosition(position);

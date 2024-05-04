@@ -78,6 +78,7 @@ protected:
 
     // INTERFACE
     bool scaleLocked_ ; 
+    bool gravityEnabled_;
 
 public:
     /* ------------------------- CONSTRUCTOR -------------------------*/
@@ -309,11 +310,14 @@ public:
 
     void updatePhysicallyBasedPosition(float deltaTime) {
         // Application de la force gravitationnelle
-        if (!grounded)
+        if (gravityEnabled_  && !grounded)
             velocity += acceleration * deltaTime;
 
         // Application de sa vitesse à notre objet
-        translate(velocity * deltaTime);
+        if (gravityEnabled_){
+            translate(velocity * deltaTime);
+        }
+        
     }
     // Fonction pour calculer les impulsions à appliquer à chaque objet
     void calculer_impulsions(const GameObject& obj2, glm::vec3& impulsion1, glm::vec3& impulsion2, const glm::vec3& normale_contact) {
@@ -368,33 +372,55 @@ public:
 
     std::unique_ptr<GameObject> ptr; // Pointeur unique vers l'objet
 
+    /* ------------------------- INTERFACE -------------------------*/
+
+    void resetParameters() {
+        // Réinitialiser la transformation à sa valeur par défaut
+        transform = Transform();
+
+        // Réinitialiser d'autres paramètres selon vos besoins
+        scaleLocked_ = false;
+        gravityEnabled_ = false;
+    }
+
     void updateInterfaceTransform(float _deltaTime) {
 
-        ImGui::Text("Transform");
+       
+        ImGui::Text("Position");
         glm::vec3 position = transform.getPosition();
-        ImGui::DragFloat3((name + "##Position").c_str(), glm::value_ptr(position));
+        ImGui::DragFloat3(("##" + name + "Position").c_str(), glm::value_ptr(position));
 
         glm::vec3 rotation = transform.getRotation();
-        ImGui::DragFloat3((name + "##Rotation").c_str(), glm::value_ptr(rotation));
+        ImGui::Text("Rotation");
+        ImGui::DragFloat3(("##" + name + "Rotation").c_str(), glm::value_ptr(rotation));
 
         glm::vec3 scale = transform.getScale();
 
-        // Ajout de la case à cocher pour verrouiller l'échelle
-        ImGui::Checkbox((name + "##LockScale").c_str(), &scaleLocked_);
+        ImGui::Text("Lock Scale");
+        ImGui::Checkbox(("##" + name + "LockScale").c_str(), &scaleLocked_);
 
         if (scaleLocked_) {
             // Si l'échelle est verrouillée, utilisez une seule valeur pour les trois axes
-            ImGui::DragFloat((name + "##Scale").c_str(), &scale.x);
+            ImGui::Text("Scale");
+            ImGui::DragFloat(("##" + name + "Scale").c_str(), &scale.x);
             scale.y = scale.x;
             scale.z = scale.x;
         } else {
+            ImGui::Text("Scale x, y, z");
             // Sinon, laissez l'utilisateur modifier chaque valeur de l'échelle individuellement
-            ImGui::DragFloat3((name + "##Scale").c_str(), glm::value_ptr(scale));
+            ImGui::DragFloat3(("##" + name + "Scale").c_str(), glm::value_ptr(scale));
         }
+
+        ImGui::Text("Gravity Enabled");
+        ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
 
         transform.setPosition(position);
         transform.setRotation(rotation);
         transform.setScale(scale);
+
+        if (ImGui::Button(("Reset " + name + " Parameters").c_str())) {
+            resetParameters(); // Appeler la fonction pour réinitialiser les paramètres lorsque le bouton est cliqué
+        }
     }
 
 

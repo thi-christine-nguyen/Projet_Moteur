@@ -65,6 +65,10 @@ public:
         }
         return nullptr;
     }
+
+    std::vector<std::unique_ptr<GameObject>>& getObjects() {
+        return objects;
+    }
 };
 
 #endif

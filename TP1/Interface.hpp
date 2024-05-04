@@ -57,11 +57,18 @@ public :
             if (ImGui::BeginTabBar("Tabs")) {
                 camera.updateInterfaceCamera(_deltaTime); 
             }
-            if (ImGui::BeginTabItem("New Tab"))
+            if (ImGui::BeginTabItem("Objects"))
             {
-                // Contenu de votre nouvel onglet
-                ImGui::Text("Hello from the new tab!");
-                // Ajoutez ici le contenu de votre nouvel onglet
+                for (const auto& object : SM->getObjects()) {
+                    std::string objectName = object->getName();
+                    if (ImGui::CollapsingHeader(objectName.c_str())) {
+                        // Contenu détaillé de l'objet
+                        ImGui::Text("Object Name: %s", objectName.c_str());
+                        Transform gameObjectTransform = object->getTransform();
+                        gameObjectTransform.updateInterfaceTransform(_deltaTime); 
+                        
+                    }
+                }
 
                 ImGui::EndTabItem();
             }

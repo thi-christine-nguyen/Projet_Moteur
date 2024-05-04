@@ -3,6 +3,10 @@
 
 #include "lib.hpp"
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 class Transform {
 private:
     glm::vec3 position_;
@@ -62,6 +66,13 @@ public:
         result.scale_ = (1.0f - k) * scale_ + k * b.scale_;
 
         return result;
+    }
+
+
+    void updateInterfaceTransform(float _deltaTime) {
+        ImGui::Text("Transform");
+        ImGui::DragFloat3("##ObjectPosition", glm::value_ptr(position_));
+
     }
 };
 

@@ -9,7 +9,7 @@ public:
     float size;
 
     // Constructeur de Cube
-    Cube(std::string name, float size, int textureID = 0, const char *texturePath = "") {
+    Cube(std::string name, float size, int textureID = 0, const char *texturePath = "",  GLuint programID = 0) {
         this->name = name;
         this->size = size;
         this->textureID = textureID;

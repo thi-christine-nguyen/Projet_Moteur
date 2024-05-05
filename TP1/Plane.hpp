@@ -11,7 +11,7 @@ public:
     // Constructeur de Plane
     Plane() {}
 
-    Plane(std::string name, unsigned int res, unsigned int size, int textureID, const char *texturePath, bool randomHeight=false) {
+    Plane(std::string name, unsigned int res, unsigned int size, int textureID, const char *texturePath, GLuint programID = 0, bool randomHeight=false) {
         this->name = name;
         this->resolution = res;
         this->size = size;

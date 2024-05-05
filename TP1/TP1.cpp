@@ -14,6 +14,7 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
+
 /*******************************************************************************/
 
 
@@ -91,19 +92,20 @@ int main( void )
 
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
+    Interface interface(programID); 
     glUseProgram(programID);
 
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
-    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png");
-    // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
+    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png", programID);
+    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png", programID);
+    GameObject *cube = new Sphere("sphere", 20, 1, 3, "../data/textures/terrain.png", programID);
 
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
     interface.SM->addObject(std::move(player->ptr));
-    // SM->addObject(std::move(cube->ptr));
+    // interface.SM->addObject(std::move(cube->ptr));
 
     // Ajout des GameObjects au PhysicManager
     PM->addObject(landscape);
@@ -127,9 +129,10 @@ int main( void )
     interface.initImgui(window);
     interface.camera.init();
     // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
+    std::cout << programID << std::endl; 
 
     do{
-
+       
         // Measure speed
         // per-frame time logic
         // --------------------
@@ -191,6 +194,7 @@ int main( void )
             physicsClock -= updateTime;
         }
 
+       
         // Affichage de tous les élements de la scène via le SceneManager
         interface.SM->draw();
         interface.renderFrame(); 

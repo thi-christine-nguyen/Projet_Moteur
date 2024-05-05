@@ -246,6 +246,7 @@ public:
 
     virtual void draw() const
     {
+        
         glBindVertexArray(vao); // Bind le giga vecteur array
         // Envoi du type du GameObject
         glUniform1i(typeULoc, type);
@@ -296,7 +297,7 @@ public:
 
     void initTexture(GLuint programID) {
         if (textureID != 0) { // S'il y a une texture sur le GameObject
-            std::cout << textureID << ": " << texturePath << std::endl;
+            // std::cout << textureID << ": " << texturePath << std::endl;
             glActiveTexture(GL_TEXTURE0);
             loadTexture2DFromFilePath(texturePath);
             glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
@@ -403,13 +404,14 @@ public:
         if (scaleLocked_) {
             // Si l'échelle est verrouillée, utilisez une seule valeur pour les trois axes
             ImGui::Text("Scale");
-            ImGui::DragFloat(("##" + name + "Scale").c_str(), &scale.x);
+            ImGui::DragFloat((std::string("##") + name + "Scale").c_str(), &scale.x, 0.1f, 0.0f, FLT_MAX);
             scale.y = scale.x;
             scale.z = scale.x;
         } else {
             ImGui::Text("Scale x, y, z");
             // Sinon, laissez l'utilisateur modifier chaque valeur de l'échelle individuellement
-            ImGui::DragFloat3(("##" + name + "Scale").c_str(), glm::value_ptr(scale));
+            ImGui::DragFloat3((std::string("##") + name + "Scale").c_str(), glm::value_ptr(scale), 0.1f, 0.0f, FLT_MAX);
+
         }
 
         ImGui::Text("Gravity Enabled");

@@ -680,6 +680,30 @@ common/vboindexer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/common/vboindexer.cpp.s
 .PHONY : common/vboindexer.cpp.s
 
+imgui/ImGuiFileDialog.o: imgui/ImGuiFileDialog.cpp.o
+.PHONY : imgui/ImGuiFileDialog.o
+
+# target to build an object file
+imgui/ImGuiFileDialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/imgui/ImGuiFileDialog.cpp.o
+.PHONY : imgui/ImGuiFileDialog.cpp.o
+
+imgui/ImGuiFileDialog.i: imgui/ImGuiFileDialog.cpp.i
+.PHONY : imgui/ImGuiFileDialog.i
+
+# target to preprocess a source file
+imgui/ImGuiFileDialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/imgui/ImGuiFileDialog.cpp.i
+.PHONY : imgui/ImGuiFileDialog.cpp.i
+
+imgui/ImGuiFileDialog.s: imgui/ImGuiFileDialog.cpp.s
+.PHONY : imgui/ImGuiFileDialog.s
+
+# target to generate assembly for a file
+imgui/ImGuiFileDialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TP1.dir/build.make CMakeFiles/TP1.dir/imgui/ImGuiFileDialog.cpp.s
+.PHONY : imgui/ImGuiFileDialog.cpp.s
+
 imgui/imgui.o: imgui/imgui.cpp.o
 .PHONY : imgui/imgui.o
 
@@ -908,6 +932,9 @@ help:
 	@echo "... common/vboindexer.o"
 	@echo "... common/vboindexer.i"
 	@echo "... common/vboindexer.s"
+	@echo "... imgui/ImGuiFileDialog.o"
+	@echo "... imgui/ImGuiFileDialog.i"
+	@echo "... imgui/ImGuiFileDialog.s"
 	@echo "... imgui/imgui.o"
 	@echo "... imgui/imgui.i"
 	@echo "... imgui/imgui.s"

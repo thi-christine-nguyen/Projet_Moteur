@@ -10,7 +10,7 @@ public:
     float radius;
 
     // CONSTRUCTOR
-    Sphere(std::string name, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "") {
+    Sphere(std::string name, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "", GLuint programID = 0){
         this->name = name;
         this->textureID = textureID;
         this->texturePath = texturePath;

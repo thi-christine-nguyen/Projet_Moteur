@@ -58,7 +58,7 @@ public :
     }
 
     void addGameObject(float _deltaTime) {
-        
+       
 
         static char name[128] = ""; // Champ de saisie pour le nom du nouvel objet
         static GameObjectType selectedType = SPHERE; // Type d'objet sélectionné par défaut
@@ -112,10 +112,10 @@ public :
             Transform newTransform; // Initialisez la transformation selon les paramètres saisis
             // Création de l'objet en fonction du type sélectionné
             GameObject* newObject;
+            
             switch (selectedType) {
                 case SPHERE:
-                    
-                    newObject = new Sphere(name, resolution, size, textureID, texturePath.c_str(), programID);
+                    newObject = new Sphere(name, resolution, size, SM->getObjects().size() + 1, texturePath.c_str(), programID);
                     break;
                 case CUBE:
                     newObject = new Cube(name, size, textureID, texturePath.c_str(), programID);
@@ -131,13 +131,14 @@ public :
 
             }
 
-            // Ajoutez le nouvel objet à la scène
-            SM->addObject(std::move(newObject->ptr));
             newObject->initTexture(programID);
             // newObject->update(_deltaTime);
             // newObject->draw(); 
-            
-          
+
+
+            // Ajoutez le nouvel objet à la scène   
+            SM->addObject(std::move(newObject->ptr));
+           
             // Réinitialisez les paramètres de saisie pour le prochain objet
             name[0] = '\0';
             selectedType = SPHERE;
@@ -177,7 +178,6 @@ public :
 
     void update(float _deltaTime, GLFWwindow* _window){
         updateInterface(_deltaTime);
-        // SM->initGameObjectsTexture();
        
     }
 

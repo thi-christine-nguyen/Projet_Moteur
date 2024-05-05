@@ -100,7 +100,7 @@ int main( void )
     // Création des différents GameObjects
     GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png", programID);
     Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png", programID);
-    GameObject *cube = new Sphere("sphere", 20, 1, 3, "../data/textures/terrain.png", programID);
+    GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
 
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
@@ -128,10 +128,12 @@ int main( void )
 
     interface.initImgui(window);
     interface.camera.init();
-    // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
-    std::cout << programID << std::endl; 
+
+
+    int t = 0; 
 
     do{
+
        
         // Measure speed
         // per-frame time logic
@@ -183,6 +185,7 @@ int main( void )
         // }
 
         // Update des GameObjects dans la boucle
+       
         interface.SM->update(deltaTime);
         
         float updateTime = 1.0f/60.0f;

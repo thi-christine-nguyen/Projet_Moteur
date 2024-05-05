@@ -297,9 +297,9 @@ public:
 
     void initTexture(GLuint programID) {
         if (textureID != 0) { // S'il y a une texture sur le GameObject
-            // std::cout << textureID << ": " << texturePath << std::endl;
+            std::cout << textureID << ": " << texturePath << std::endl;
             glActiveTexture(GL_TEXTURE0);
-            loadTexture2DFromFilePath(texturePath);
+            loadTexture2DFromFilePath(texturePath); 
             glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
         }
         for (GameObject *child : children) {

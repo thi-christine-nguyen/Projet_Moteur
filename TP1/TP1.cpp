@@ -100,7 +100,7 @@ int main( void )
     // Création des différents GameObjects
     GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png", programID);
     Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png", programID);
-    GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
+    // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
 
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
@@ -131,6 +131,8 @@ int main( void )
 
 
     int t = 0; 
+
+    
 
     do{
 
@@ -185,6 +187,21 @@ int main( void )
         // }
 
         // Update des GameObjects dans la boucle
+
+        // if(t == 0){
+        //     glActiveTexture(GL_TEXTURE0);
+        //     GLuint textureID = loadTexture2DFromFilePath("/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/grass.bmp"); 
+        //     glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
+        //     if (textureID == 0) {
+        //         std::cerr << "Failed to load texture!" << std::endl;
+        //     } else {
+        //         GameObject *cube = new Sphere("sphere", 5, 1, textureID, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/hehe/ball.png", programID);
+        //         interface.SM->addObject(std::move(cube->ptr)); 
+        //         std::cout << "Texture loaded successfully. Texture ID: " << textureID << std::endl;
+        //     }
+        //     t++; 
+
+        // }
        
         interface.SM->update(deltaTime);
         
@@ -201,6 +218,7 @@ int main( void )
         // Affichage de tous les élements de la scène via le SceneManager
         interface.SM->draw();
         interface.renderFrame(); 
+
 
         // Swap buffers
         glfwSwapBuffers(window);

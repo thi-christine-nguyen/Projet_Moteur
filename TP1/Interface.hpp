@@ -57,14 +57,14 @@ public :
         ImGui::DestroyContext();
     }
 
+
     void addGameObject(float _deltaTime) {
        
 
-        static char name[128] = ""; // Champ de saisie pour le nom du nouvel objet
-        static GameObjectType selectedType = SPHERE; // Type d'objet sélectionné par défaut
+        static char name[128] = "";
+        static GameObjectType selectedType = SPHERE; 
         static int resolution;
         static int size;
-        int textureID = SM->getObjects().size() + 1;
         static std::string texturePath;
 
        
@@ -78,19 +78,16 @@ public :
         if (ImGui::Button("Texture Path")) {
             IGFD::FileDialogConfig config;
             config.path = ".";
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".png,.h,.hpp", config);
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".png,.jpg,.bmp", config);
         }
-
-
-        // Vérifier si l'utilisateur a sélectionné un fichier
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
-            // Vérifier si l'action est confirmée
+          
             if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
-                // Obtenir le chemin du fichier sélectionné
                 texturePath = ImGuiFileDialog::Instance()->GetFilePathName();
                 // std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-                
+
             }
+
             // Fermer la boîte de dialogue
             ImGuiFileDialog::Instance()->Close();
         }
@@ -107,15 +104,17 @@ public :
         ImGui::RadioButton("Player", reinterpret_cast<int*>(&selectedType), PLAYER);
 
         if (ImGui::Button("Add Object")) {
-            std::cout << textureID << std::endl; 
-            // Créez le nouvel objet avec les paramètres saisis
-            Transform newTransform; // Initialisez la transformation selon les paramètres saisis
-            // Création de l'objet en fonction du type sélectionné
+
+            glActiveTexture(GL_TEXTURE0);
+            GLuint textureID = loadTexture2DFromFilePath(texturePath); 
+            glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
+
+            // std::cout << textureID << std::endl; 
             GameObject* newObject;
             
             switch (selectedType) {
                 case SPHERE:
-                    newObject = new Sphere(name, resolution, size, SM->getObjects().size() + 1, texturePath.c_str(), programID);
+                    newObject = new Sphere(name, resolution, size, textureID, texturePath.c_str(), programID);
                     break;
                 case CUBE:
                     newObject = new Cube(name, size, textureID, texturePath.c_str(), programID);
@@ -130,19 +129,13 @@ public :
                     break;
 
             }
-
-            newObject->initTexture(programID);
-            // newObject->update(_deltaTime);
-            // newObject->draw(); 
-
-
             // Ajoutez le nouvel objet à la scène   
             SM->addObject(std::move(newObject->ptr));
-           
-            // Réinitialisez les paramètres de saisie pour le prochain objet
-            name[0] = '\0';
-            selectedType = SPHERE;
 
+            name[0] = '\0';
+            resolution = 0; 
+            size = 0; 
+            selectedType = SPHERE;
         }
         
     }
@@ -165,6 +158,9 @@ public :
                         
                     }
                 }
+                // if (ImGui::CollapsingHeader("Add texture")) {
+                //     addGameObject(_deltaTime);
+                // }
                 if (ImGui::CollapsingHeader("Add")) {
                     addGameObject(_deltaTime);
                 }

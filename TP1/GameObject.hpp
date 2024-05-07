@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <fstream>
 
 // UniquePtr
 #include <memory>
@@ -18,6 +19,7 @@
 #include <string>
 #include <cstring>
 #include <cstdio>
+#include <sstream>
 
 // Include standard headers
 #include "lib.hpp"
@@ -98,6 +100,159 @@ public:
         glm::vec3 max = boundingBox.getMax();
         // std::cout << "Initialisation of bounding box done : min(" << min.x << "; " << min.y << "; " << min.z << ") / max(" << max.x << "; " << max.y << "; " << max.z << ")" << std::endl;
     }
+
+
+    bool saveOFF( const std::string & filename ,
+              std::vector<vec3> & vertices ,
+              std::vector<vec3> & i_normals ,
+              std::vector<std::vector<unsigned short>>& i_triangles,
+              bool save_normals = true ) {
+    std::ofstream myfile;
+    myfile.open(filename.c_str());
+    if (!myfile.is_open()) {
+        std::cout << filename << " cannot be opened" << std::endl;
+        return false;
+    }
+
+    myfile << "OFF" << std::endl ;
+
+    unsigned int n_vertices = vertices.size() , n_triangles = i_triangles.size();
+    myfile << n_vertices << " " << n_triangles << " 0" << std::endl;
+
+    for( unsigned int v = 0 ; v < n_vertices ; ++v ) {
+        myfile << vertices[v][0] << " " << vertices[v][1] << " " << vertices[v][2] << " ";
+        if (save_normals) myfile << i_normals[v][0] << " " << i_normals[v][1] << " " << i_normals[v][2] << std::endl;
+        else myfile << std::endl;
+    }
+    for( unsigned int f = 0 ; f < n_triangles ; ++f ) {
+        myfile << 3 << " " << i_triangles[f][0] << " " << i_triangles[f][1] << " " << i_triangles[f][2];
+        myfile << std::endl;
+    }
+    myfile.close();
+    return true;
+}
+
+void openOFF(const std::string &filename, bool load_normals = true) {
+    std::ifstream myfile(filename);
+    if (!myfile.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << std::endl;
+        return;
+    }
+
+    std::string magic_s;
+    myfile >> magic_s;
+
+    if (magic_s != "OFF") {
+        std::cerr << "Error: Not a valid OFF file" << std::endl;
+        myfile.close();
+        return;
+    }
+
+    int n_vertices, n_faces, dummy_int;
+    myfile >> n_vertices >> n_faces >> dummy_int;
+
+    vertices.clear();
+    triangles.clear();
+    uvs.clear();
+
+    for (int v = 0; v < n_vertices; ++v) {
+        float x, y, z;
+        myfile >> x >> y >> z;
+        vertices.push_back(glm::vec3(x, y, z));
+    }
+
+    triangles.clear();
+    for (int f = 0; f < n_faces; ++f) {
+        int n_vertices_on_face;
+        myfile >> n_vertices_on_face;
+
+        if (n_vertices_on_face < 3) {
+            std::cerr << "Error: Faces must have at least 3 vertices." << std::endl;
+            myfile.close();
+            return;
+        }
+
+        std::vector<unsigned short> face_indices;
+        for (int i = 0; i < n_vertices_on_face; ++i) {
+            unsigned short index;
+            myfile >> index;
+            face_indices.push_back(index);
+        }
+        triangles.push_back(face_indices);
+    }
+
+    myfile.close();
+}
+
+
+     // Fonction pour charger un fichier .ply
+   void openPLY(const std::string& filename, bool load_normals = true) {
+    std::ifstream myfile(filename);
+    if (!myfile.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << std::endl;
+        return;
+    }
+
+    std::string magic_s;
+    myfile >> magic_s;
+
+    if (magic_s != "ply") {
+        std::cerr << "Error: Not a valid PLY file" << std::endl;
+        myfile.close();
+        return;
+    }
+
+    int n_vertices = 0, n_faces = 0;
+    bool header_end = false;
+    std::string line;
+    while (std::getline(myfile, line)) {
+        if (line.find("element vertex") != std::string::npos) {
+            sscanf(line.c_str(), "element vertex %d", &n_vertices);
+        } else if (line.find("element face") != std::string::npos) {
+            sscanf(line.c_str(), "element face %d", &n_faces);
+        } else if (line.find("end_header") != std::string::npos) {
+            header_end = true;
+            break;
+        }
+    }
+
+    if (!header_end) {
+        std::cerr << "Error: Invalid PLY file format." << std::endl;
+        myfile.close();
+        return;
+    }
+
+    vertices.clear();
+    for (int v = 0; v < n_vertices; ++v) {
+        float x, y, z;
+        myfile >> x >> y >> z;
+        vertices.push_back(glm::vec3(x, y, z));
+    }
+
+    triangles.clear();
+    for (int f = 0; f < n_faces; ++f) {
+        int n_vertices_on_face;
+        myfile >> n_vertices_on_face;
+        if (n_vertices_on_face < 3) {
+            std::cout << n_vertices_on_face << std::endl;
+            std::cerr << "Error: Faces must have at least 3 vertices." << std::endl;
+            myfile.close();
+            return;
+        }
+        std::vector<unsigned short> face_indices;
+        for (int i = 0; i < n_vertices_on_face; ++i) {
+            unsigned short index;
+            myfile >> index;
+            face_indices.push_back(index);
+        }
+        triangles.push_back(face_indices);
+    }
+
+    myfile.close();
+}
+
+
+
 
     /* ------------------------- GETTERS/SETTERS -------------------------*/
 

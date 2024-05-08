@@ -293,8 +293,8 @@ public:
 			}
 		}
 
-		if (m_inputMode == InputMode::Follow) {
-			glm::vec3 cameraOffset = glm::vec3(-4.0f, 3.0f, 0.0f); // Ajustez le décalage selon vos préférences
+		/*if (m_inputMode == InputMode::Follow) {
+			glm::vec3 cameraOffset = glm::vec3(-5.0f, 3.0f, 0.0f); // Ajustez le décalage selon vos préférences
 			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
 			glm::vec3 cameraPosition = targetPosition + cameraOffset;
 			
@@ -304,7 +304,24 @@ public:
 			glm::vec3 direction = glm::normalize(targetPosition - cameraPosition);
     		m_eulerAngle.z = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
     		m_eulerAngle.x = glm::degrees(asin(-direction.y)); // Angle vertical
+		}*/
+		if (m_inputMode == InputMode::Follow) {
+			glm::vec3 cameraOffset = glm::vec3(-5.0f, 3.0f, 0.0f); // Ajustez le décalage selon vos préférences
+			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
+			glm::vec3 cameraPosition = targetPosition + cameraOffset;
+			
+			// Calculer la nouvelle position de la caméra en utilisant l'interpolation
+			glm::vec3 interpolatedCameraPosition = interpolate(m_position, targetPosition + cameraOffset, _deltaTime*4);
+			
+			// Définir la nouvelle position de la caméra
+			m_position = interpolatedCameraPosition;
+			
+			glm::vec3 direction = glm::normalize(targetPosition - cameraPosition);
+    		m_eulerAngle.z = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
+    		m_eulerAngle.x = glm::degrees(asin(-direction.y)); // Angle vertical
 		}
+
+
 
 		// Limiter l'angle de pitch entre -90 et 90 degrés pour éviter les retournements
 		// m_eulerAngle.x = glm::clamp(m_eulerAngle.x, -89.0f, 89.0f);

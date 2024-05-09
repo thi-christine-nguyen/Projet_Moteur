@@ -374,10 +374,11 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/GameObject.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Transform.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/BoundingBox.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/PhysicManager.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/InputManager.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Player.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Sphere.hpp \
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/../common/objloader.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Plane.hpp \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Cube.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Landscape.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Player.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/PhysicManager.hpp \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/InputManager.hpp
+ /mnt/c/Users/snsdt/Desktop/Projet_Moteur/TP1/Landscape.hpp

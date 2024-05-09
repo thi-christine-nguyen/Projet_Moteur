@@ -9,9 +9,11 @@ private:
     std::vector<GameObject*> objects;
 
 public:
+   
     void addObject(GameObject* object) {
         objects.push_back(object);
     }
+
 
     // void removeObject(GameObject* object) {
     //     // Retirer l'objet du vecteur

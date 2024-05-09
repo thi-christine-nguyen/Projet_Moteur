@@ -5,9 +5,9 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
-
+#include <algorithm>
 #include <glm/glm.hpp>
-
+#include <set> 
 #include "objloader.hpp"
 
 // Very, VERY simple OBJ loader.
@@ -20,19 +20,47 @@
 // - More secure. Change another line and you can inject code.
 // - Loading from memory, stream, etc
 
+struct UVIndice {
+    int index;
+    int value;
+};
+
+bool compareByIndex(const UVIndice &a, const UVIndice &b) {
+    return a.index < b.index;
+}
+
+glm::vec3 findHighestPoint(const std::vector<glm::vec3> &vertices) {
+    if (vertices.empty()) {
+        // Gérer le cas où le vecteur est vide
+        return glm::vec3(0.0f, 0.0f, 0.0f);
+    }
+
+    glm::vec3 highestPoint = vertices[0];
+
+    for (size_t i = 1; i < vertices.size(); ++i) {
+        if (vertices[i].y > highestPoint.y) {
+            highestPoint = vertices[i];
+        }
+    }
+
+    return highestPoint;
+}
+
+
+
 bool loadOBJ(
         const char * path,
         std::vector<glm::vec3> & out_vertices,
         std::vector<glm::vec2> & out_uvs,
-        std::vector<glm::vec3> & out_normals
+        std::vector<glm::vec3> & out_normals, 
+        std::vector<unsigned short> &vertexIndices
         ){
     printf("Loading OBJ file %s...\n", path);
 
-    std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
+    std::vector<unsigned int> uvIndices, normalIndices;
     std::vector<glm::vec3> temp_vertices;
     std::vector<glm::vec2> temp_uvs;
     std::vector<glm::vec3> temp_normals;
-
 
     FILE * file = fopen(path, "r");
     if( file == NULL ){
@@ -58,13 +86,15 @@ bool loadOBJ(
         }else if ( strcmp( lineHeader, "vt" ) == 0 ){
             glm::vec2 uv;
             fscanf(file, "%f %f\n", &uv.x, &uv.y );
-            uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture, which are inverted. Remove if you want to use TGA or BMP loaders.
+            // uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture, which are inverted. Remove if you want to use TGA or BMP loaders.
             temp_uvs.push_back(uv);
+            // std::cout << uv.x << " " << uv.y << std::endl; 
         }else if ( strcmp( lineHeader, "vn" ) == 0 ){
             glm::vec3 normal;
             fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
             temp_normals.push_back(normal);
-        }else if ( strcmp( lineHeader, "f" ) == 0 ){
+        }
+        else if ( strcmp( lineHeader, "f" ) == 0 ){
             std::string vertex1, vertex2, vertex3;
             unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
             int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
@@ -73,12 +103,14 @@ bool loadOBJ(
                 fclose(file);
                 return false;
             }
-            vertexIndices.push_back(vertexIndex[0]);
-            vertexIndices.push_back(vertexIndex[1]);
-            vertexIndices.push_back(vertexIndex[2]);
-            uvIndices    .push_back(uvIndex[0]);
-            uvIndices    .push_back(uvIndex[1]);
-            uvIndices    .push_back(uvIndex[2]);
+           
+            vertexIndices.push_back(vertexIndex[0]-1);
+            vertexIndices.push_back(vertexIndex[1]-1);
+            vertexIndices.push_back(vertexIndex[2]-1);
+            uvIndices.push_back(uvIndex[0]-1);
+            uvIndices.push_back(uvIndex[1]-1);
+            uvIndices.push_back(uvIndex[2]-1);
+
             normalIndices.push_back(normalIndex[0]);
             normalIndices.push_back(normalIndex[1]);
             normalIndices.push_back(normalIndex[2]);
@@ -90,25 +122,36 @@ bool loadOBJ(
 
     }
 
-    // For each vertex of each triangle
-    for( unsigned int i=0; i<vertexIndices.size(); i++ ){
-
-        // Get the indices of its attributes
-        unsigned int vertexIndex = vertexIndices[i];
-        unsigned int uvIndex = uvIndices[i];
-        unsigned int normalIndex = normalIndices[i];
-
-        // Get the attributes thanks to the index
-        glm::vec3 vertex = temp_vertices[ vertexIndex-1 ];
-        glm::vec2 uv = temp_uvs[ uvIndex-1 ];
-        glm::vec3 normal = temp_normals[ normalIndex-1 ];
-
-        // Put the attributes in buffers
-        out_vertices.push_back(vertex);
-        out_uvs     .push_back(uv);
-        out_normals .push_back(normal);
-
+    // // For each vertex of each triangle
+    for(int i = 0; i < temp_vertices.size(); i++){
+        out_vertices.push_back(temp_vertices[i]); 
     }
+
+    std::vector<UVIndice> uv_indices_values;
+    std::set<int> uniqueIndices; // Déclarer un ensemble pour stocker les indices uniques
+
+    // Boucle pour traiter les données d'indices
+    for (size_t i = 0; i < vertexIndices.size(); ++i) {
+        int vertexIndex = vertexIndices[i];
+        int uvIndex = uvIndices[i];
+        if (uniqueIndices.find(vertexIndex) == uniqueIndices.end()) {
+            uniqueIndices.insert(vertexIndex);
+            UVIndice uv;
+            uv.index = vertexIndex;
+            uv.value = uvIndex;
+            uv_indices_values.push_back(uv);
+        }
+    }
+    std::sort(uv_indices_values.begin(), uv_indices_values.end(), compareByIndex);
+
+
+
+    for(int i = 0; i < uv_indices_values.size(); i++){
+        // std::cout << uv_indices_values[i].index << std::endl; 
+        out_uvs.push_back(temp_uvs[uv_indices_values[i].value]); 
+    }
+
+
     fclose(file);
     return true;
 }

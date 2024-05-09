@@ -37,6 +37,7 @@ class GameObject {
 protected:
     // GENERAL
     Transform transform;  // Transform de l'objet
+    Transform initialTransform; 
     GameObjectType type; // Type du GameObject
     std::string name; // Nom et identifiant de l'objet
 
@@ -113,6 +114,10 @@ public:
     // Méthode pour définir la transformation de cet objet
     void setTransform(const Transform& newTransform) {
         transform = newTransform;
+    }
+
+    void setInitalTransform(const Transform& newTransform) {
+        initialTransform = newTransform;
     }
 
     // Méthode pour modifier la position de cet objet
@@ -377,7 +382,7 @@ public:
 
     void resetParameters() {
         // Réinitialiser la transformation à sa valeur par défaut
-        transform = Transform();
+        transform = initialTransform; 
 
         // Réinitialiser d'autres paramètres selon vos besoins
         scaleLocked_ = false;

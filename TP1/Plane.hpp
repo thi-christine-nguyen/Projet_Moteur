@@ -28,58 +28,75 @@ public:
         this->initBoundingBox();
     }
 
+    Plane(std::string name, const char *path , int textureID, const char *texturePath, GLuint programID = 0, bool randomHeight=false) {
+        this->name = name;
+        this->type = PLANE;
+        this->textureID = textureID;
+        this->texturePath = texturePath;
+
+        indices.clear(); 
+        vertices.clear(); 
+        uvs.clear(); 
+        std::vector<glm::vec3> out_normals; 
+
+        loadOBJ(path, vertices, uvs, out_normals, indices); 
+        this->GenerateBuffers(programID);
+        this->initBoundingBox();
+
+    }
+
     void init()
     {
-    indices.clear();
-    triangles.clear();
-    vertices.clear();
-    uvs.clear();
+        indices.clear();
+        triangles.clear();
+        vertices.clear();
+        uvs.clear();
 
-    int nbVertices = resolution * resolution;
-    float step = size / (float)resolution;
-    float x, y, z, u, v;
+        int nbVertices = resolution * resolution;
+        float step = size / (float)resolution;
+        float x, y, z, u, v;
 
-    for (int i = 0; i <= resolution; i++)
-    {
-        for (int j = 0; j <= resolution; j++)
+        for (int i = 0; i <= resolution; i++)
         {
-            x = j * step;
-            if (randomHeight)
+            for (int j = 0; j <= resolution; j++)
             {
-                y = std::max((float)rand() / (RAND_MAX), 0.f);
+                x = j * step;
+                if (randomHeight)
+                {
+                    y = std::max((float)rand() / (RAND_MAX), 0.f);
+                }
+                else
+                {
+                    y = 0;
+                }
+                z = i * step;
+                u = x / size;
+                v = z / size;
+                vertices.push_back(glm::vec3(x - size / 2.f, y, z - size / 2.f));
+                uvs.push_back(glm::vec2(u, v));
             }
-            else
-            {
-                y = 0;
-            }
-            z = i * step;
-            u = x / size;
-            v = z / size;
-            vertices.push_back(glm::vec3(x - size / 2.f, y, z - size / 2.f));
-            uvs.push_back(glm::vec2(u, v));
         }
-    }
 
-    for (int i = 0; i < resolution; i++)
-    {
-        for (int j = 0; j < resolution; j++)
+        for (int i = 0; i < resolution; i++)
         {
-            unsigned short bottomLeft = j + i * (resolution + 1);
-            unsigned short bottomRight = bottomLeft + 1;
-            unsigned short topLeft = bottomLeft + (resolution + 1);
-            unsigned short topRight = topLeft + 1;
+            for (int j = 0; j < resolution; j++)
+            {
+                unsigned short bottomLeft = j + i * (resolution + 1);
+                unsigned short bottomRight = bottomLeft + 1;
+                unsigned short topLeft = bottomLeft + (resolution + 1);
+                unsigned short topRight = topLeft + 1;
 
-            triangles.push_back({bottomLeft, bottomRight, topLeft});
-            triangles.push_back({bottomRight, topRight, topLeft});
+                triangles.push_back({bottomLeft, bottomRight, topLeft});
+                triangles.push_back({bottomRight, topRight, topLeft});
 
-            indices.push_back(bottomLeft);
-            indices.push_back(bottomRight);
-            indices.push_back(topLeft);
-            indices.push_back(bottomRight);
-            indices.push_back(topRight);
-            indices.push_back(topLeft);
+                indices.push_back(bottomLeft);
+                indices.push_back(bottomRight);
+                indices.push_back(topLeft);
+                indices.push_back(bottomRight);
+                indices.push_back(topRight);
+                indices.push_back(topLeft);
+            }
         }
-    }
         std::cout << "indices size: " << indices.size() << std::endl;
         std::cout << "triangles size: " << triangles.size() << std::endl;
         std::cout << "vertices size: " << vertices.size() << std::endl;

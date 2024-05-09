@@ -1,5 +1,4 @@
 #include "lib.hpp"
-// #include "InputManager.hpp"
 #include "Camera/Camera.hpp"
 #include "PhysicManager.hpp"
 #include "InputManager.hpp"
@@ -76,8 +75,8 @@ int main( void )
 
     // Création des managers
     // SceneManager *SM = new SceneManager();
-    PhysicManager *PM = new PhysicManager();
-    InputManager * IM = new InputManager();
+    // PhysicManager *PM = new PhysicManager();
+    // InputManager * IM = new InputManager();
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -101,15 +100,18 @@ int main( void )
     GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png", programID);
     Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png", programID);
     // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
+    // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
+    // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
 
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
-    interface.SM->addObject(std::move(player->ptr));
+    // interface.SM->addObject(std::move(player->ptr));
+    // interface.SM->addObject(std::move(sphere->ptr)); 
     // interface.SM->addObject(std::move(cube->ptr));
 
     // Ajout des GameObjects au PhysicManager
-    PM->addObject(landscape);
-    PM->addObject(player);
+    interface.PM->addObject(landscape);
+    // interface.PM->addObject(player);
 
     // Initialisation des textures des GameObjects
     interface.SM->initGameObjectsTexture();
@@ -117,6 +119,8 @@ int main( void )
     // Transformations sur les GameObjects
     player->translate(glm::vec3(0.f, 1.f, 0.f));
     player->scale(glm::vec3(0.2));
+
+    // sphere->translate(glm::vec3(0.f, 3.f, 0.f));
 
     // cube->translate(camera.getPosition());
     // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
@@ -167,15 +171,15 @@ int main( void )
 
         //Imgui 
         interface.createFrame();
-        if (interface.camera.getInputMode() == InputMode::Follow)
-            interface.camera.setCameraTarget(player->getTransform().getPosition());
+        if (interface.camera.getInputMode() == InputMode::Follow && interface.getPlayer() != nullptr)
+            interface.camera.setCameraTarget(interface.getPlayer()->getTransform().getPosition());
 
         // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
         interface.update(deltaTime, window);
         interface.camera.update(deltaTime, window);
         interface.camera.sendToShader(programID); 
         // Input gérés par l'InputManager
-        IM->processInput(window, player);
+        // interface.IM->processInput(window, player);
 
         //----------------------------------- Throw cube 45° from camera front -----------------------------------//
         // if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
@@ -209,7 +213,7 @@ int main( void )
 
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects
-            PM->handleCollisions();
+            interface.PM->handleCollisions();
             // std::cout << "PM tick" << std::endl;
             physicsClock -= updateTime;
         }

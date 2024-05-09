@@ -314,7 +314,7 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/TP1/Camera/CameraShake.hpp \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/./imgui/imgui.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/./imgui/imconfig.h \
- /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/./TP1/Camera/Camera_Helper.hpp \
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/TP1/Camera/Camera_Helper.hpp \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/TP1/Interface.hpp \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/./imgui/imgui_impl_glfw.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/./imgui/imgui_impl_opengl3.h \

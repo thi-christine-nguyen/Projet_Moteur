@@ -15,6 +15,7 @@
 #include <array>
 #include <memory>
 #include "CameraShake.hpp"
+#include "Camera_Helper.hpp"
 #include <TP1/Camera/Camera_Helper.hpp>
 
 enum class InputMode
@@ -317,8 +318,13 @@ public:
 			m_position = interpolatedCameraPosition;
 			
 			glm::vec3 direction = glm::normalize(targetPosition - cameraPosition);
-    		m_eulerAngle.z = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
-    		m_eulerAngle.x = glm::degrees(asin(-direction.y)); // Angle vertical
+			float rotz = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
+    		float rotx = glm::degrees(asin(-direction.y)); // Angle vertical
+			glm::vec3 rota  = glm::vec3(rotx, m_eulerAngle.y, rotz);
+			glm::vec3 interpolatedCameraRotation = interpolateRotation(m_eulerAngle, rota, _deltaTime*4);
+			
+			m_eulerAngle = interpolatedCameraRotation;
+
 		}
 
 
@@ -349,6 +355,18 @@ public:
 		return start * (1.0f - ratio) + end * ratio;
 	}
 
+	// Fonction pour effectuer une interpolation de rotation en utilisant les angles d'Euler
+	glm::vec3 interpolateRotation(const glm::vec3& startAngles, const glm::vec3& endAngles, float ratio)
+	{
+		// Assurez-vous que les angles sont dans la plage correcte (-180 à 180 degrés)
+		glm::vec3 startNormalized = glm::degrees(glm::eulerAngles(glm::quat(glm::radians(startAngles))));
+		glm::vec3 endNormalized = glm::degrees(glm::eulerAngles(glm::quat(glm::radians(endAngles))));
+
+		// Utilisez une interpolation linéaire entre les angles de départ et d'arrivée
+		glm::vec3 interpolatedAngles = startNormalized * (1.0f - ratio) + endNormalized * ratio;
+
+		return interpolatedAngles;
+	}
 
 	void resetWithTransition(float _deltaTime) {
 		// Sauvegarder l'état actuel de la caméra

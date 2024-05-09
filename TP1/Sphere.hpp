@@ -54,6 +54,10 @@ public:
                 int i3 = (i + 1) * (resolution + 1) + j;
                 int i4 = i3 + 1;
 
+                // Ajouter les indices de chaque triangle au tableau des triangles
+                triangles.push_back({ i1, i3, i2 });
+                triangles.push_back({ i2, i3, i4 });
+
                 indices.push_back(i1);
                 indices.push_back(i3);
                 indices.push_back(i2);

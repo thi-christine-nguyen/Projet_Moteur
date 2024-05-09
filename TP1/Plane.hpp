@@ -86,7 +86,7 @@ public:
         std::cout << "uvs size: " << uvs.size() << std::endl;
     }
 
-    void computeUV() 
+    void computeUV()
     {
         uvs.clear();
 

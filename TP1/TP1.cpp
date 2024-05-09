@@ -96,9 +96,11 @@ int main( void )
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
-    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png");
+    GameObject *landscape = new Plane("landscape", 4, 15, 1, "../data/textures/terrain.png");
+    Player *player = new Player("player", 4, 1, 2, "../data/textures/ball.png");
     // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
+
+    landscape->setType(GameObjectType::MESH);
 
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
@@ -113,7 +115,7 @@ int main( void )
     interface.SM->initGameObjectsTexture();
 
     // Transformations sur les GameObjects
-    player->translate(glm::vec3(0.f, 1.f, 0.f));
+    player->translate(glm::vec3(0.f, 15.f, 0.f));
     player->scale(glm::vec3(0.2));
 
     // cube->translate(camera.getPosition());

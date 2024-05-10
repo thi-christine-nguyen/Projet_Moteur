@@ -4,13 +4,15 @@
 #include "variables.hpp"
 #include "GameObject.hpp"
 
+#include "../common/objloader.hpp"
+
 class Sphere : public GameObject {
 public:
     int resolution;
     float radius;
 
     // CONSTRUCTOR
-    Sphere(std::string name, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "") {
+    Sphere(std::string name, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "", GLuint programID = 0){
         this->name = name;
         this->textureID = textureID;
         this->texturePath = texturePath;
@@ -25,6 +27,24 @@ public:
         this->GenerateBuffers(programID);
         // Init la bounding box
         this->initBoundingBox();
+    }
+
+    Sphere(std::string name, const char * path, int textureID = 0, const char *texturePath = "", GLuint programID = 0){
+        this->name = name;
+        this->textureID = textureID;
+        this->texturePath = texturePath;
+        this->type = SPHERE;
+
+        indices.clear(); 
+        vertices.clear(); 
+        uvs.clear(); 
+        std::vector<glm::vec3> out_normals; 
+
+        loadOBJ(path, vertices, uvs, out_normals, indices); 
+        this->GenerateBuffers(programID);
+        this->initBoundingBox();
+
+
     }
 
     void init()
@@ -44,6 +64,7 @@ public:
 
                 glm::vec3 vertex = glm::vec3(cos_phi * sin_theta, cos_theta, sin_phi * sin_theta);
                 vertices.push_back(vertex * radius);
+                // std::cout << vertex.x << " " << vertex.y << " " << vertex.z<< std::endl; 
             }
         }
 
@@ -63,6 +84,8 @@ public:
                 indices.push_back(i4);
             }
         }
+
+        
     };
 
     void computeUV()

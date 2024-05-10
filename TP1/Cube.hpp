@@ -9,7 +9,7 @@ public:
     float size;
 
     // Constructeur de Cube
-    Cube(std::string name, float size, int textureID = 0, const char *texturePath = "") {
+    Cube(std::string name, float size, int textureID = 0, const char *texturePath = "",  GLuint programID = 0) {
         this->name = name;
         this->size = size;
         this->textureID = textureID;
@@ -24,6 +24,24 @@ public:
         // Init la bounding box
         this->initBoundingBox();
     }
+
+    Cube(std::string name, const char * path, int textureID = 0, const char *texturePath = "",  GLuint programID = 0) {
+        this->name = name;
+
+        this->textureID = textureID;
+        this->texturePath = texturePath;
+        this->type = CUBE;
+
+        indices.clear(); 
+        vertices.clear(); 
+        uvs.clear(); 
+        std::vector<glm::vec3> out_normals; 
+
+        loadOBJ(path, vertices, uvs, out_normals, indices); 
+        this->GenerateBuffers(programID);
+        this->initBoundingBox();
+    }
+
 
     void init() {
         float half_size = size / 2.0f;

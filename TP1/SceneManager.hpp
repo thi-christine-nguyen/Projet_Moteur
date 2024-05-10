@@ -69,6 +69,13 @@ public:
     std::vector<std::unique_ptr<GameObject>>& getObjects() {
         return objects;
     }
+
+    void removeObjectByName(const std::string& name) {
+        auto it = std::remove_if(objects.begin(), objects.end(), [&name](const std::unique_ptr<GameObject>& obj) {
+            return obj->getName() == name;
+        });
+        objects.erase(it, objects.end());
+    }
 };
 
 #endif

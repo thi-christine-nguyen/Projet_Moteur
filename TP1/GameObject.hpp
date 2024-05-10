@@ -37,6 +37,7 @@ class GameObject {
 protected:
     // GENERAL
     Transform transform;  // Transform de l'objet
+    Transform initialTransform; 
     GameObjectType type; // Type du GameObject
     std::string name; // Nom et identifiant de l'objet
 
@@ -71,6 +72,7 @@ protected:
     float weight = 1.f;
     bool grounded = false;
     float restitutionCoef = 0.6f;
+    bool hasPhysic = false; 
 
     // TEXTURE
     int textureID; // 0 = flatColor sinon Texture
@@ -78,7 +80,7 @@ protected:
 
     // INTERFACE
     bool scaleLocked_ ; 
-    bool gravityEnabled_;
+    bool gravityEnabled_ = false;
 
 public:
     /* ------------------------- CONSTRUCTOR -------------------------*/
@@ -113,6 +115,10 @@ public:
     // Méthode pour définir la transformation de cet objet
     void setTransform(const Transform& newTransform) {
         transform = newTransform;
+    }
+
+    void setInitalTransform(const Transform& newTransform) {
+        initialTransform = newTransform;
     }
 
     // Méthode pour modifier la position de cet objet
@@ -195,6 +201,10 @@ public:
         boundingBox = bbox;
     }
 
+    void setHasPhysic(bool physic){
+        hasPhysic = physic; 
+    }
+
     /* ------------------------- TRANSFORMATIONS -------------------------*/
 
     void translate(const glm::vec3 &translation) { transform.translate(translation); boundingBox.updateAfterTransformation(vertices, transform.getMatrix());}
@@ -246,6 +256,7 @@ public:
 
     virtual void draw() const
     {
+        
         glBindVertexArray(vao); // Bind le giga vecteur array
         // Envoi du type du GameObject
         glUniform1i(typeULoc, type);
@@ -298,7 +309,7 @@ public:
         if (textureID != 0) { // S'il y a une texture sur le GameObject
             std::cout << textureID << ": " << texturePath << std::endl;
             glActiveTexture(GL_TEXTURE0);
-            loadTexture2DFromFilePath(texturePath);
+            loadTexture2DFromFilePath(texturePath); 
             glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
         }
         for (GameObject *child : children) {
@@ -376,7 +387,7 @@ public:
 
     void resetParameters() {
         // Réinitialiser la transformation à sa valeur par défaut
-        transform = Transform();
+        transform = initialTransform; 
 
         // Réinitialiser d'autres paramètres selon vos besoins
         scaleLocked_ = false;
@@ -401,27 +412,29 @@ public:
         ImGui::Checkbox(("##" + name + "LockScale").c_str(), &scaleLocked_);
 
         if (scaleLocked_) {
-            // Si l'échelle est verrouillée, utilisez une seule valeur pour les trois axes
+           
             ImGui::Text("Scale");
-            ImGui::DragFloat(("##" + name + "Scale").c_str(), &scale.x);
+            ImGui::DragFloat((std::string("##") + name + "Scale").c_str(), &scale.x, 0.1f, 0.0f, FLT_MAX);
             scale.y = scale.x;
             scale.z = scale.x;
         } else {
             ImGui::Text("Scale x, y, z");
-            // Sinon, laissez l'utilisateur modifier chaque valeur de l'échelle individuellement
-            ImGui::DragFloat3(("##" + name + "Scale").c_str(), glm::value_ptr(scale));
-        }
+            ImGui::DragFloat3((std::string("##") + name + "Scale").c_str(), glm::value_ptr(scale), 0.1f, 0.0f, FLT_MAX);
 
-        ImGui::Text("Gravity Enabled");
-        ImGui::SameLine();
-        ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
+        }
+        if(hasPhysic == true){
+            ImGui::Text("Gravity Enabled");
+            ImGui::SameLine();
+            ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
+        }
+      
 
         transform.setPosition(position);
         transform.setRotation(rotation);
         transform.setScale(scale);
 
         if (ImGui::Button(("Reset " + name + " Parameters").c_str())) {
-            resetParameters(); // Appeler la fonction pour réinitialiser les paramètres lorsque le bouton est cliqué
+            resetParameters();
         }
     }
 

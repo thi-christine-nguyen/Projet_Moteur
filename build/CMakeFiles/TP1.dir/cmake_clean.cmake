@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/TP1.dir/common/texture.cpp.o.d"
   "CMakeFiles/TP1.dir/common/vboindexer.cpp.o"
   "CMakeFiles/TP1.dir/common/vboindexer.cpp.o.d"
+  "CMakeFiles/TP1.dir/imgui/ImGuiFileDialog.cpp.o"
+  "CMakeFiles/TP1.dir/imgui/ImGuiFileDialog.cpp.o.d"
   "CMakeFiles/TP1.dir/imgui/imgui.cpp.o"
   "CMakeFiles/TP1.dir/imgui/imgui.cpp.o.d"
   "CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o"

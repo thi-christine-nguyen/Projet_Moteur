@@ -1,5 +1,4 @@
 #include "lib.hpp"
-// #include "InputManager.hpp"
 #include "Camera/Camera.hpp"
 #include "PhysicManager.hpp"
 #include "InputManager.hpp"
@@ -13,6 +12,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
+
 
 /*******************************************************************************/
 
@@ -75,8 +75,8 @@ int main( void )
 
     // Création des managers
     // SceneManager *SM = new SceneManager();
-    PhysicManager *PM = new PhysicManager();
-    InputManager * IM = new InputManager();
+    // PhysicManager *PM = new PhysicManager();
+    // InputManager * IM = new InputManager();
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -91,34 +91,36 @@ int main( void )
 
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
+    Interface interface(programID); 
     glUseProgram(programID);
 
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
-    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png");
-    // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
-
+    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png", programID);
+    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png", programID);
+    // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
+    // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
+    // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
+    
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
-    interface.SM->addObject(std::move(player->ptr));
-    // SM->addObject(std::move(cube->ptr));
 
     // Ajout des GameObjects au PhysicManager
-    PM->addObject(landscape);
-    PM->addObject(player);
-
-    // Initialisation des textures des GameObjects
+    interface.PM->addObject(landscape);
+   
+    // Initialisation du player
+    interface.setPlayer(player);  
+    interface.getPlayer()->translate(glm::vec3(0.f, 1.f, 0.f));
+    interface.getPlayer()->scale(glm::vec3(0.2));
+    interface.getPlayer()->setWeight(0.6f);
+    
+    interface.PM->addObject(interface.getPlayer());
+    interface.SM->addObject(std::move(interface.getPlayer()->ptr));
     interface.SM->initGameObjectsTexture();
 
-    // Transformations sur les GameObjects
-    player->translate(glm::vec3(0.f, 1.f, 0.f));
-    player->scale(glm::vec3(0.2));
-
-    // cube->translate(camera.getPosition());
-    // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
-    player->setWeight(0.6f);
+    
+   
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
@@ -126,10 +128,15 @@ int main( void )
 
     interface.initImgui(window);
     interface.camera.init();
-    // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
+
+
+    int t = 0; 
+
+    
 
     do{
 
+       
         // Measure speed
         // per-frame time logic
         // --------------------
@@ -160,15 +167,18 @@ int main( void )
 
         //Imgui 
         interface.createFrame();
-        if (interface.camera.getInputMode() == InputMode::Follow)
-            interface.camera.setCameraTarget(player->getTransform().getPosition());
+        if (interface.camera.getInputMode() == InputMode::Follow && interface.getPlayer() != nullptr)
+            interface.camera.setCameraTarget(interface.getPlayer()->getTransform().getPosition());
 
         // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
         interface.update(deltaTime, window);
         interface.camera.update(deltaTime, window);
         interface.camera.sendToShader(programID); 
         // Input gérés par l'InputManager
-        IM->processInput(window, player);
+        if(interface.getPlayer() != nullptr){
+            interface.IM->processInput(window, interface.getPlayer(), deltaTime);
+        }
+        
 
         //----------------------------------- Throw cube 45° from camera front -----------------------------------//
         // if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
@@ -180,20 +190,38 @@ int main( void )
         // }
 
         // Update des GameObjects dans la boucle
+
+        // if(t == 0){
+        //     glActiveTexture(GL_TEXTURE0);
+        //     GLuint textureID = loadTexture2DFromFilePath("/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/grass.bmp"); 
+        //     glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
+        //     if (textureID == 0) {
+        //         std::cerr << "Failed to load texture!" << std::endl;
+        //     } else {
+        //         GameObject *cube = new Sphere("sphere", 5, 1, textureID, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/hehe/ball.png", programID);
+        //         interface.SM->addObject(std::move(cube->ptr)); 
+        //         std::cout << "Texture loaded successfully. Texture ID: " << textureID << std::endl;
+        //     }
+        //     t++; 
+
+        // }
+       
         interface.SM->update(deltaTime);
         
         float updateTime = 1.0f/60.0f;
 
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects
-            PM->handleCollisions();
+            interface.PM->handleCollisions();
             // std::cout << "PM tick" << std::endl;
             physicsClock -= updateTime;
         }
 
+       
         // Affichage de tous les élements de la scène via le SceneManager
         interface.SM->draw();
         interface.renderFrame(); 
+
 
         // Swap buffers
         glfwSwapBuffers(window);

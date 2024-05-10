@@ -72,6 +72,7 @@ protected:
     float weight = 1.f;
     bool grounded = false;
     float restitutionCoef = 0.6f;
+    bool hasPhysic = false; 
 
     // TEXTURE
     int textureID; // 0 = flatColor sinon Texture
@@ -79,7 +80,7 @@ protected:
 
     // INTERFACE
     bool scaleLocked_ ; 
-    bool gravityEnabled_;
+    bool gravityEnabled_ = false;
 
 public:
     /* ------------------------- CONSTRUCTOR -------------------------*/
@@ -198,6 +199,10 @@ public:
     // Setter pour la boîte englobante
     void setBoundingBox(const BoundingBox& bbox) {
         boundingBox = bbox;
+    }
+
+    void setHasPhysic(bool physic){
+        hasPhysic = physic; 
     }
 
     /* ------------------------- TRANSFORMATIONS -------------------------*/
@@ -407,28 +412,29 @@ public:
         ImGui::Checkbox(("##" + name + "LockScale").c_str(), &scaleLocked_);
 
         if (scaleLocked_) {
-            // Si l'échelle est verrouillée, utilisez une seule valeur pour les trois axes
+           
             ImGui::Text("Scale");
             ImGui::DragFloat((std::string("##") + name + "Scale").c_str(), &scale.x, 0.1f, 0.0f, FLT_MAX);
             scale.y = scale.x;
             scale.z = scale.x;
         } else {
             ImGui::Text("Scale x, y, z");
-            // Sinon, laissez l'utilisateur modifier chaque valeur de l'échelle individuellement
             ImGui::DragFloat3((std::string("##") + name + "Scale").c_str(), glm::value_ptr(scale), 0.1f, 0.0f, FLT_MAX);
 
         }
-
-        ImGui::Text("Gravity Enabled");
-        ImGui::SameLine();
-        ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
+        if(hasPhysic == true){
+            ImGui::Text("Gravity Enabled");
+            ImGui::SameLine();
+            ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
+        }
+      
 
         transform.setPosition(position);
         transform.setRotation(rotation);
         transform.setScale(scale);
 
         if (ImGui::Button(("Reset " + name + " Parameters").c_str())) {
-            resetParameters(); // Appeler la fonction pour réinitialiser les paramètres lorsque le bouton est cliqué
+            resetParameters();
         }
     }
 

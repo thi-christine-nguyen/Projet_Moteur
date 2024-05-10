@@ -102,29 +102,25 @@ int main( void )
     // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
     // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
     // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
-
+    
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
-    // interface.SM->addObject(std::move(player->ptr));
-    // interface.SM->addObject(std::move(sphere->ptr)); 
-    // interface.SM->addObject(std::move(cube->ptr));
 
     // Ajout des GameObjects au PhysicManager
     interface.PM->addObject(landscape);
-    // interface.PM->addObject(player);
-
-    // Initialisation des textures des GameObjects
+   
+    // Initialisation du player
+    interface.setPlayer(player);  
+    interface.getPlayer()->translate(glm::vec3(0.f, 1.f, 0.f));
+    interface.getPlayer()->scale(glm::vec3(0.2));
+    interface.getPlayer()->setWeight(0.6f);
+    
+    interface.PM->addObject(interface.getPlayer());
+    interface.SM->addObject(std::move(interface.getPlayer()->ptr));
     interface.SM->initGameObjectsTexture();
 
-    // Transformations sur les GameObjects
-    player->translate(glm::vec3(0.f, 1.f, 0.f));
-    player->scale(glm::vec3(0.2));
-
-    // sphere->translate(glm::vec3(0.f, 3.f, 0.f));
-
-    // cube->translate(camera.getPosition());
-    // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
-    player->setWeight(0.6f);
+    
+   
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
@@ -179,7 +175,10 @@ int main( void )
         interface.camera.update(deltaTime, window);
         interface.camera.sendToShader(programID); 
         // Input gérés par l'InputManager
-        // interface.IM->processInput(window, player);
+        if(interface.getPlayer() != nullptr){
+            interface.IM->processInput(window, interface.getPlayer(), deltaTime);
+        }
+        
 
         //----------------------------------- Throw cube 45° from camera front -----------------------------------//
         // if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {

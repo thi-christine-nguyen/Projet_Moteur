@@ -35,8 +35,12 @@ public :
 
     Interface(GLuint programID) : programID(programID) {}
 
-    Player getPlayer(){
+    Player* getPlayer(){
         return player; 
+    }
+
+    void setPlayer(Player * p){
+        player = p; 
     }
 
     void initImgui(GLFWwindow *window)
@@ -71,7 +75,6 @@ public :
 
     void addGameObject(float _deltaTime, GLFWwindow* _window) {
        
-
         static char name[128] = "";
         static GameObjectType selectedType = SPHERE; 
         static int resolution;
@@ -84,11 +87,9 @@ public :
         static Transform transform; 
         static bool scaleLocked_ = false; 
 
-       
-        // Champ de saisie pour le nom de l'objet
         ImGui::InputText("Name", name, IM_ARRAYSIZE(name));
 
-
+        // Chemin pour le mesh
         if (ImGui::Button("Mesh Path")) {
             IGFD::FileDialogConfig config;
             config.path = ".";
@@ -114,7 +115,7 @@ public :
         
         ImGui::Text("Selected Mesh File: %s", meshPath.c_str());
        
-
+        // Chemin pour la texture
         if (ImGui::Button("Texture Path")) {
             IGFD::FileDialogConfig config;
             config.path = ".";
@@ -126,10 +127,8 @@ public :
                 texturePath = ImGuiFileDialog::Instance()->GetFilePathName();
             }
 
-            // Fermer la boîte de dialogue
             ImGuiFileDialog::Instance()->Close();
         }
-        // std::cout << texturePath << std::endl; 
 
         ImGui::Text("Selected Texture File: %s", texturePath.c_str());
 
@@ -150,16 +149,13 @@ public :
         ImGui::Checkbox("##LockScale", &scaleLocked_);
 
         if (scaleLocked_) {
-            // Si l'échelle est verrouillée, utilisez une seule valeur pour les trois axes
             ImGui::Text("Scale");
             ImGui::DragFloat((std::string("##") + name + "Scale").c_str(), &scale.x, 0.1f, 0.0f, FLT_MAX);
             scale.y = scale.x;
             scale.z = scale.x;
         } else {
             ImGui::Text("Scale x, y, z");
-            // Sinon, laissez l'utilisateur modifier chaque valeur de l'échelle individuellement
             ImGui::DragFloat3((std::string("##") + name + "Scale").c_str(), glm::value_ptr(scale), 0.1f, 0.0f, FLT_MAX);
-
         }
 
         transform.setPosition(position);
@@ -173,6 +169,7 @@ public :
         ImGui::RadioButton("Cube", reinterpret_cast<int*>(&selectedType), CUBE);
         ImGui::RadioButton("Plane", reinterpret_cast<int*>(&selectedType), PLANE);
 
+        // Si on veux controler l'objet (on part du principe qu'il n'y a que la sphère et 1 seuil objet jouable)
         if(selectedType == SPHERE){
             ImGui::Text("Is playable ?");
             ImGui::SameLine();
@@ -180,6 +177,7 @@ public :
        
         }
 
+        // Est ce que l'objet contient de la physique 
         ImGui::Text("Has physical properties ?");
         ImGui::SameLine();
         ImGui::Checkbox("##Physic", &physic);
@@ -188,15 +186,15 @@ public :
             ImGui::Text("Poids de l'objet");
             ImGui::SliderFloat("Poids", &poids, 0.0f, 10.0f);
         }
-        
 
+        
+        // Création de l'objet
         if (ImGui::Button("Add Object")) {
 
             glActiveTexture(GL_TEXTURE0);
             GLuint textureID = loadTexture2DFromFilePath(texturePath); 
             glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
 
-            // std::cout << textureID << std::endl; 
             GameObject* newObject;
             
             switch (selectedType) {
@@ -269,19 +267,16 @@ public :
                 for (const auto& object : SM->getObjects()) {
                     std::string objectName = object->getName();
                     if (ImGui::CollapsingHeader(objectName.c_str())) {
-                        // Contenu détaillé de l'objet
                         ImGui::Text("Object Name: %s", objectName.c_str());
-                    
+                        // Récupère l'interface dans le gameObject pour la modification du transform
                         object->updateInterfaceTransform(_deltaTime); 
                         if(ImGui::Button("Suprimer")){
+                            //Supprime l'objet de la scène
                             SM->removeObjectByName(objectName); 
                         }
                         
                     }
                 }
-                // if (ImGui::CollapsingHeader("Add texture")) {
-                //     addGameObject(_deltaTime);
-                // }
                 if (ImGui::CollapsingHeader("Add")) {
                     addGameObject(_deltaTime, _window);
                 }
@@ -296,11 +291,6 @@ public :
     void update(float _deltaTime, GLFWwindow* _window){
         updateInterface(_deltaTime, _window);
 
-        
-        if (player != nullptr) {
-            IM->processInput(_window, player, _deltaTime); 
-        }   
-       
     }
 
 

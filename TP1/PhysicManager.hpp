@@ -11,6 +11,7 @@ private:
 public:
    
     void addObject(GameObject* object) {
+        object->setHasPhysic(true); 
         objects.push_back(object);
     }
 

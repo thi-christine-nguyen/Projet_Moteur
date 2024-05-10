@@ -71,13 +71,9 @@ public:
     }
 
     void removeObjectByName(const std::string& name) {
-        // Utiliser un itérateur pour parcourir le vecteur d'objets
         auto it = std::remove_if(objects.begin(), objects.end(), [&name](const std::unique_ptr<GameObject>& obj) {
-            // Retourner vrai si le nom de l'objet correspond
             return obj->getName() == name;
         });
-
-        // Supprimer les objets qui ont été marqués pour suppression
         objects.erase(it, objects.end());
     }
 };

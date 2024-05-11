@@ -311,26 +311,57 @@ public:
 			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
 			glm::vec3 cameraPosition = targetPosition + cameraOffset;
 			
-			// Calculer la nouvelle position de la caméra en utilisant l'interpolation
-			glm::vec3 interpolatedCameraPosition = interpolate(m_position, targetPosition + cameraOffset, _deltaTime*4);
-			
-			// Définir la nouvelle position de la caméra
-			m_position = interpolatedCameraPosition;
-			
-			glm::vec3 direction = glm::normalize(targetPosition - cameraPosition);
-			float rotz = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
-    		float rotx = glm::degrees(asin(-direction.y)); // Angle vertical
-			glm::vec3 rota  = glm::vec3(rotx, m_eulerAngle.y, rotz);
-			glm::vec3 interpolatedCameraRotation = interpolateRotation(m_eulerAngle, rota, _deltaTime*4);
-			
-			m_eulerAngle = interpolatedCameraRotation;
+			if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS) {
+				// Définir les paramètres de l'orbite
+				float orbitRadius = 4.0f; // Rayon de l'orbite
+				float orbitSpeed = 0.2f; // Vitesse de rotation en degrés par seconde
+
+				// Calculer l'angle de rotation actuel en fonction du temps écoulé
+				float currentAngle = orbitSpeed * _deltaTime;
+
+				// Mettre à jour les angles d'Euler de la caméra pour l'orbite
+				m_eulerAngle.x += currentAngle; // Rotation autour de l'axe vertical (Y)
+
+				// Convertir les angles d'Euler en radians
+				float yaw = glm::radians(m_eulerAngle.y);
+				float pitch = glm::radians(m_eulerAngle.x);
+
+				// Calculer les nouvelles coordonnées cartésiennes de la caméra
+				float newX = m_target.x + orbitRadius * glm::cos(pitch);
+				float newZ = m_target.z + orbitRadius * glm::sin(pitch);
+
+				// Mettre à jour la position de la caméra
+				m_position = glm::vec3(newX, m_position.y, newZ);
+
+				// Faire en sorte que la caméra regarde toujours vers le point cible
+				// Notez que cette partie reste la même que dans votre code initial
+				glm::vec3 direction = glm::normalize(m_target - m_position);
+				m_eulerAngle.z = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
+				m_eulerAngle.x = glm::degrees(asin(-direction.y)); // Angle vertical
+			}
+
+
+			else{
+				// Calculer la nouvelle position de la caméra en utilisant l'interpolation
+				glm::vec3 interpolatedCameraPosition = interpolate(m_position, targetPosition + cameraOffset, _deltaTime*4);
+				// Définir la nouvelle position de la caméra
+				m_position = interpolatedCameraPosition;
+				glm::vec3 direction = glm::normalize(targetPosition - cameraPosition);
+				float rotz = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
+				float rotx = glm::degrees(asin(-direction.y)); // Angle vertical
+				glm::vec3 rota  = glm::vec3(rotx, m_eulerAngle.y, rotz);
+				glm::vec3 interpolatedCameraRotation = interpolateRotation(m_eulerAngle, rota, _deltaTime*4);
+				
+				m_eulerAngle = interpolatedCameraRotation;
+				m_eulerAngle.x = glm::clamp(m_eulerAngle.x, -89.0f, 89.0f);
+			}
 
 		}
 
 
 
 		// Limiter l'angle de pitch entre -90 et 90 degrés pour éviter les retournements
-		// m_eulerAngle.x = glm::clamp(m_eulerAngle.x, -89.0f, 89.0f);
+		// 
 		
 	}
 	void updateCameraRotation()

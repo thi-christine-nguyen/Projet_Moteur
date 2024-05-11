@@ -116,7 +116,7 @@ int main( void )
     SM->initGameObjectsTexture();
 
     // Transformations sur les GameObjects
-    player->translate(glm::vec3(0.f, 2.f, 0.f));
+    player->translate(glm::vec3(0.f, 3.f, 0.f));
     player->scale(glm::vec3(0.2));
     
 

@@ -53,17 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-<<<<<<< HEAD
-CMAKE_SOURCE_DIR = /mnt/c/Users/snsdt/Desktop/Projet_Moteur
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build
-=======
 CMAKE_SOURCE_DIR = /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build
->>>>>>> origin/mouv
 
 # Include any dependencies generated for this target.
 include external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/depend.make
@@ -79,18 +72,6 @@ include external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/flags.make
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.o: external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/flags.make
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.o: ../external/glfw-3.1.2/tests/gamma.c
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.o: external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.o"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.o -MF CMakeFiles/gamma.dir/gamma.c.o.d -o CMakeFiles/gamma.dir/gamma.c.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests/gamma.c
-
-external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/gamma.dir/gamma.c.i"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests/gamma.c > CMakeFiles/gamma.dir/gamma.c.i
-
-external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/gamma.dir/gamma.c.s"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests/gamma.c -o CMakeFiles/gamma.dir/gamma.c.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.o"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.o -MF CMakeFiles/gamma.dir/gamma.c.o.d -o CMakeFiles/gamma.dir/gamma.c.o -c /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests/gamma.c
 
@@ -101,23 +82,10 @@ external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.i: cmake_force
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/gamma.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/gamma.dir/gamma.c.s"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests/gamma.c -o CMakeFiles/gamma.dir/gamma.c.s
->>>>>>> origin/mouv
 
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.o: external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/flags.make
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.o: ../external/glfw-3.1.2/deps/getopt.c
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.o: external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.o"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.o -MF CMakeFiles/gamma.dir/__/deps/getopt.c.o.d -o CMakeFiles/gamma.dir/__/deps/getopt.c.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/getopt.c
-
-external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/gamma.dir/__/deps/getopt.c.i"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/getopt.c > CMakeFiles/gamma.dir/__/deps/getopt.c.i
-
-external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/gamma.dir/__/deps/getopt.c.s"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/getopt.c -o CMakeFiles/gamma.dir/__/deps/getopt.c.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.o"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.o -MF CMakeFiles/gamma.dir/__/deps/getopt.c.o.d -o CMakeFiles/gamma.dir/__/deps/getopt.c.o -c /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/getopt.c
 
@@ -128,7 +96,6 @@ external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.i: cmake_force
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/__/deps/getopt.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/gamma.dir/__/deps/getopt.c.s"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/getopt.c -o CMakeFiles/gamma.dir/__/deps/getopt.c.s
->>>>>>> origin/mouv
 
 # Object files for target gamma
 gamma_OBJECTS = \
@@ -150,31 +117,18 @@ external/glfw-3.1.2/tests/gamma: /usr/lib/x86_64-linux-gnu/libXinerama.so
 external/glfw-3.1.2/tests/gamma: /usr/lib/x86_64-linux-gnu/libXcursor.so
 external/glfw-3.1.2/tests/gamma: /usr/lib/x86_64-linux-gnu/libGL.so
 external/glfw-3.1.2/tests/gamma: external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/link.txt
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable gamma"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gamma.dir/link.txt --verbose=$(VERBOSE)
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable gamma"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gamma.dir/link.txt --verbose=$(VERBOSE)
->>>>>>> origin/mouv
 
 # Rule to build all files generated by this target.
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/build: external/glfw-3.1.2/tests/gamma
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/build
 
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/clean:
-<<<<<<< HEAD
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -P CMakeFiles/gamma.dir/cmake_clean.cmake
-.PHONY : external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/clean
-
-external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/depend:
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/snsdt/Desktop/Projet_Moteur /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/DependInfo.cmake --color=$(COLOR)
-=======
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -P CMakeFiles/gamma.dir/cmake_clean.cmake
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/clean
 
 external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/depend:
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/DependInfo.cmake --color=$(COLOR)
->>>>>>> origin/mouv
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/gamma.dir/depend
 

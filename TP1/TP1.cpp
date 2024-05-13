@@ -97,21 +97,12 @@ int main( void )
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-<<<<<<< HEAD
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
-    // GameObject *landscape = new GameObject("landscape", 0, Transform(),nullptr, DEFAULT);
-    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png");
-    //GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
-    // landscape->openOFF("../data/avion_n.off");
-
-=======
     GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png", programID);
     Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png", programID);
     // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
     // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
     // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
     
->>>>>>> 26d557dea54604d391821a35a48f6f931aee1830
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
 
@@ -128,19 +119,8 @@ int main( void )
     interface.SM->addObject(std::move(interface.getPlayer()->ptr));
     interface.SM->initGameObjectsTexture();
 
-<<<<<<< HEAD
-    // Transformations sur les GameObjects
-    player->translate(glm::vec3(0.f, 3.f, 0.f));
-    player->scale(glm::vec3(0.2));
-    
-
-    // cube->translate(camera.getPosition());
-    // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
-    player->setWeight(0.6f);
-=======
     
    
->>>>>>> 26d557dea54604d391821a35a48f6f931aee1830
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);

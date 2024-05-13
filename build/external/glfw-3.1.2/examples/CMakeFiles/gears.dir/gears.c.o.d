@@ -1,9 +1,5 @@
 external/glfw-3.1.2/examples/CMakeFiles/gears.dir/gears.c.o: \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/examples/gears.c \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/examples/gears.c \
->>>>>>> origin/mouv
  /usr/include/stdc-predef.h /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -62,15 +58,9 @@ external/glfw-3.1.2/examples/CMakeFiles/gears.dir/gears.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
- /usr/include/GL/gl.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
->>>>>>> origin/mouv
  /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \

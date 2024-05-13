@@ -1,6 +1,2 @@
 # Hashes of file build rules.
-<<<<<<< HEAD
-bedad952e3b4a021032e7501c4e9270d external/glfw-3.1.2/CMakeFiles/uninstall
-=======
 5b9d57bc341783fdd483e08ab95c0e0a external/glfw-3.1.2/CMakeFiles/uninstall
->>>>>>> origin/mouv

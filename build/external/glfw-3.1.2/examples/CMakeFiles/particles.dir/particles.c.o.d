@@ -1,9 +1,5 @@
 external/glfw-3.1.2/examples/CMakeFiles/particles.dir/particles.c.o: \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/examples/particles.c \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/examples/particles.c \
->>>>>>> origin/mouv
  /usr/include/stdc-predef.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -65,11 +61,7 @@ external/glfw-3.1.2/examples/CMakeFiles/particles.dir/particles.c.o: \
  /usr/include/x86_64-linux-gnu/bits/time.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.h \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.h \
->>>>>>> origin/mouv
  /usr/include/pthread.h /usr/include/sched.h \
  /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
@@ -77,19 +69,11 @@ external/glfw-3.1.2/examples/CMakeFiles/particles.dir/particles.c.o: \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/getopt.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/linmath.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
- /usr/include/GL/gl.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/getopt.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/linmath.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
->>>>>>> origin/mouv
  /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \

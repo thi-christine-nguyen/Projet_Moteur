@@ -441,13 +441,6 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   /usr/include/c++/11/bits/fstream.tcc \
   ../TP1/SceneManager.hpp \
   ../TP1/GameObject.hpp \
-  /usr/include/c++/11/fstream \
-  /usr/include/c++/11/bits/codecvt.h \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
-  /usr/include/c++/11/bits/fstream.tcc \
-  /usr/include/c++/11/sstream \
-  /usr/include/c++/11/bits/sstream.tcc \
   ../TP1/Transform.hpp \
   ../TP1/BoundingBox.hpp \
   ../TP1/PhysicManager.hpp \
@@ -3439,13 +3432,9 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 ../external/glm-0.9.7.1/glm/gtc/constants.inl:
 
-<<<<<<< HEAD
-/usr/lib/gcc/x86_64-linux-gnu/11/include/tmmintrin.h:
-=======
 /usr/lib/gcc/x86_64-linux-gnu/11/include/pconfigintrin.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
->>>>>>> 26d557dea54604d391821a35a48f6f931aee1830
 
 /usr/include/c++/11/cstring:
 
@@ -3455,9 +3444,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 ../external/glm-0.9.7.1/glm/detail/type_vec3.inl:
 
-<<<<<<< HEAD
-../common/objloader.cpp:
-=======
 /usr/include/c++/11/bits/stl_function.h:
 
 /usr/include/c++/11/bits/memoryfwd.h:
@@ -3467,7 +3453,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 ../external/glfw-3.1.2/include/GLFW/glfw3.h:
 
 /usr/include/linux/limits.h:
->>>>>>> 26d557dea54604d391821a35a48f6f931aee1830
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/amxtileintrin.h:
 
@@ -3481,21 +3466,7 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 /usr/include/c++/11/istream:
 
-<<<<<<< HEAD
-/usr/include/c++/11/sstream:
-
-/usr/include/c++/11/bits/fstream.tcc:
-
-/usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h:
-
-/usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h:
-
-/usr/include/c++/11/fstream:
-
-../TP1/GameObject.hpp:
-=======
 /usr/include/c++/11/bits/basic_ios.tcc:
->>>>>>> 26d557dea54604d391821a35a48f6f931aee1830
 
 /usr/include/c++/11/bits/enable_special_members.h:
 

@@ -1,13 +1,7 @@
 external/CMakeFiles/GLEW_1130.dir/glew-1.13.0/src/glew.c.o: \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glew-1.13.0/src/glew.c \
- /usr/include/stdc-predef.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glew-1.13.0/include/GL/glew.h \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glew-1.13.0/src/glew.c \
  /usr/include/stdc-predef.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glew-1.13.0/include/GL/glew.h \
->>>>>>> origin/mouv
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -25,11 +19,7 @@ external/CMakeFiles/GLEW_1130.dir/glew-1.13.0/src/glew.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h /usr/include/GL/glu.h \
  /usr/include/GL/gl.h \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glew-1.13.0/include/GL/glxew.h \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glew-1.13.0/include/GL/glxew.h \
->>>>>>> origin/mouv
  /usr/include/X11/Xlib.h /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \

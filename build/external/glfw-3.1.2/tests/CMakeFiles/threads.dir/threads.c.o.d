@@ -1,13 +1,7 @@
 external/glfw-3.1.2/tests/CMakeFiles/threads.dir/threads.c.o: \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests/threads.c \
- /usr/include/stdc-predef.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.h \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests/threads.c \
  /usr/include/stdc-predef.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.h \
->>>>>>> origin/mouv
  /usr/include/time.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -48,15 +42,9 @@ external/glfw-3.1.2/tests/CMakeFiles/threads.dir/threads.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
-<<<<<<< HEAD
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
- /usr/include/GL/gl.h \
- /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
-=======
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h \
  /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
->>>>>>> origin/mouv
  /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \

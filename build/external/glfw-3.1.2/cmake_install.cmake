@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Install script for directory: /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2
-=======
 # Install script for directory: /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2
->>>>>>> origin/mouv
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -47,22 +43,13 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-<<<<<<< HEAD
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/include/GLFW" FILES_MATCHING REGEX "/glfw3\\.h$" REGEX "/glfw3native\\.h$")
-=======
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/include/GLFW" FILES_MATCHING REGEX "/glfw3\\.h$" REGEX "/glfw3native\\.h$")
->>>>>>> origin/mouv
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw" TYPE FILE FILES
-<<<<<<< HEAD
-    "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/src/glfw3Config.cmake"
-    "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/src/glfw3ConfigVersion.cmake"
-=======
     "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/src/glfw3Config.cmake"
     "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/src/glfw3ConfigVersion.cmake"
->>>>>>> origin/mouv
     )
 endif()
 
@@ -70,11 +57,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw/glfwTargets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw/glfwTargets.cmake"
-<<<<<<< HEAD
-         "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/CMakeFiles/Export/lib/cmake/glfw/glfwTargets.cmake")
-=======
          "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/CMakeFiles/Export/lib/cmake/glfw/glfwTargets.cmake")
->>>>>>> origin/mouv
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw/glfwTargets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -83,37 +66,21 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-<<<<<<< HEAD
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw" TYPE FILE FILES "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/CMakeFiles/Export/lib/cmake/glfw/glfwTargets.cmake")
-  if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw" TYPE FILE FILES "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/CMakeFiles/Export/lib/cmake/glfw/glfwTargets-noconfig.cmake")
-=======
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw" TYPE FILE FILES "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/CMakeFiles/Export/lib/cmake/glfw/glfwTargets.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
     file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/glfw" TYPE FILE FILES "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/CMakeFiles/Export/lib/cmake/glfw/glfwTargets-noconfig.cmake")
->>>>>>> origin/mouv
   endif()
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-<<<<<<< HEAD
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/src/glfw3.pc")
-=======
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/src/glfw3.pc")
->>>>>>> origin/mouv
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-<<<<<<< HEAD
-  include("/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/src/cmake_install.cmake")
-  include("/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/examples/cmake_install.cmake")
-  include("/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests/cmake_install.cmake")
-=======
   include("/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/src/cmake_install.cmake")
   include("/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/examples/cmake_install.cmake")
   include("/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests/cmake_install.cmake")
->>>>>>> origin/mouv
 
 endif()
 

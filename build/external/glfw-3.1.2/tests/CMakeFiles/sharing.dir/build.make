@@ -53,17 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-<<<<<<< HEAD
-CMAKE_SOURCE_DIR = /mnt/c/Users/snsdt/Desktop/Projet_Moteur
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build
-=======
 CMAKE_SOURCE_DIR = /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build
->>>>>>> origin/mouv
 
 # Include any dependencies generated for this target.
 include external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/depend.make
@@ -79,18 +72,6 @@ include external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/flags.make
 external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.o: external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/flags.make
 external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.o: ../external/glfw-3.1.2/tests/sharing.c
 external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.o: external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.o"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.o -MF CMakeFiles/sharing.dir/sharing.c.o.d -o CMakeFiles/sharing.dir/sharing.c.o -c /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests/sharing.c
-
-external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/sharing.dir/sharing.c.i"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests/sharing.c > CMakeFiles/sharing.dir/sharing.c.i
-
-external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/sharing.dir/sharing.c.s"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests/sharing.c -o CMakeFiles/sharing.dir/sharing.c.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.o"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.o -MF CMakeFiles/sharing.dir/sharing.c.o.d -o CMakeFiles/sharing.dir/sharing.c.o -c /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests/sharing.c
 
@@ -101,7 +82,6 @@ external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.i: cmake_force
 external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/sharing.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/sharing.dir/sharing.c.s"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests/sharing.c -o CMakeFiles/sharing.dir/sharing.c.s
->>>>>>> origin/mouv
 
 # Object files for target sharing
 sharing_OBJECTS = \
@@ -121,31 +101,18 @@ external/glfw-3.1.2/tests/sharing: /usr/lib/x86_64-linux-gnu/libXinerama.so
 external/glfw-3.1.2/tests/sharing: /usr/lib/x86_64-linux-gnu/libXcursor.so
 external/glfw-3.1.2/tests/sharing: /usr/lib/x86_64-linux-gnu/libGL.so
 external/glfw-3.1.2/tests/sharing: external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/link.txt
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable sharing"
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sharing.dir/link.txt --verbose=$(VERBOSE)
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable sharing"
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sharing.dir/link.txt --verbose=$(VERBOSE)
->>>>>>> origin/mouv
 
 # Rule to build all files generated by this target.
 external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/build: external/glfw-3.1.2/tests/sharing
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/build
 
 external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/clean:
-<<<<<<< HEAD
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -P CMakeFiles/sharing.dir/cmake_clean.cmake
-.PHONY : external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/clean
-
-external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/depend:
-	cd /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/snsdt/Desktop/Projet_Moteur /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests /mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/DependInfo.cmake --color=$(COLOR)
-=======
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests && $(CMAKE_COMMAND) -P CMakeFiles/sharing.dir/cmake_clean.cmake
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/clean
 
 external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/depend:
 	cd /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/DependInfo.cmake --color=$(COLOR)
->>>>>>> origin/mouv
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/depend
 

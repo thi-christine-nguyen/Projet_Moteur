@@ -185,7 +185,7 @@ int main( void )
         // Update des GameObjects dans la boucle
         SM->update(deltaTime);
         
-        float updateTime = 1.0f/60.0f;
+        float updateTime = 1.0f/100.0f;
 
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects

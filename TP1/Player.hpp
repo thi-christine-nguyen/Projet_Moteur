@@ -1,7 +1,7 @@
 #ifndef PLAYER_HPP__
 #define PLAYER_HPP__
 
-#include "Sphere.hpp"
+#include "Objects/Sphere.hpp"
 
 class Player : public Sphere{
 private:
@@ -9,13 +9,9 @@ private:
 public:
 
 
-    Player(std::string name, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "", GLuint programID = 0)
-         : Sphere(name, res, rad, textureID, texturePath, programID) {
-    }
+    Player(std::string name, bool isPlayer, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "", GLuint programID = 0)
+         : Sphere(name, isPlayer, res, rad, textureID, texturePath, programID) {}
 
-    Player(std::string name,const char *meshPath ,int textureID = 0, const char *texturePath = "", GLuint programID = 0)
-         : Sphere(name, meshPath, textureID, texturePath, programID) {
-    }
 
     void handleInputs(GLFWwindow *window, float deltaTime){
         

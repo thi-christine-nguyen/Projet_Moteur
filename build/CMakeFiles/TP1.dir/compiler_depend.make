@@ -446,11 +446,14 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   ../TP1/PhysicManager.hpp \
   ../TP1/InputManager.hpp \
   ../TP1/Player.hpp \
-  ../TP1/Sphere.hpp \
-  ../common/objloader.hpp \
-  ../TP1/Plane.hpp \
-  ../TP1/Cube.hpp \
-  ../TP1/Landscape.hpp
+  ../TP1/Objects/Sphere.hpp \
+  ../TP1/GameObject.hpp \
+  ../TP1/Objects/Plane.hpp \
+  ../TP1/Objects/Mesh.hpp \
+  /mnt/c/Users/snsdt/Desktop/common/objloader.hpp \
+  ../TP1/Objects/Landscape.hpp \
+  ../TP1/Objects/Plane.hpp \
+  ../TP1/Objects/Cube.hpp
 
 CMakeFiles/TP1.dir/common/controls.cpp.o: ../common/controls.cpp \
   /usr/include/stdc-predef.h \
@@ -3346,6 +3349,10 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vbmivlintrin.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vbmiintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/avx512ifmavlintrin.h:
+
 /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h:
 
 /usr/include/linux/types.h:
@@ -3374,9 +3381,13 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h:
 
+/mnt/c/Users/snsdt/Desktop/common/objloader.hpp:
+
 ../external/glm-0.9.7.1/glm/vec2.hpp:
 
 /usr/include/c++/11/bits/string_view.tcc:
+
+../TP1/Objects/Landscape.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h:
 
@@ -3423,8 +3434,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 ../imgui/imgui.cpp:
 
 ../external/glm-0.9.7.1/glm/detail/precision.hpp:
-
-../TP1/Landscape.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
@@ -3832,11 +3841,11 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 /usr/include/c++/11/bits/stl_deque.h:
 
+../TP1/Objects/Cube.hpp:
+
 /usr/include/c++/11/bits/vector.tcc:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xsaveoptintrin.h:
-
-../TP1/Sphere.hpp:
 
 ../external/glm-0.9.7.1/glm/gtc/quaternion.hpp:
 
@@ -3865,8 +3874,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 ../external/glm-0.9.7.1/glm/gtc/matrix_transform.inl:
 
 /usr/include/alloca.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/avx512ifmavlintrin.h:
 
 ../external/glm-0.9.7.1/glm/detail/type_float.hpp:
 
@@ -3986,6 +3993,8 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 /usr/include/c++/11/regex:
 
+../TP1/Objects/Plane.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
@@ -4051,8 +4060,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 ../external/glm-0.9.7.1/glm/detail/type_mat4x4.inl:
 
 ../external/glm-0.9.7.1/glm/detail/func_trigonometric.hpp:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vbmiintrin.h:
 
 ../external/glm-0.9.7.1/glm/detail/_vectorize.hpp:
 
@@ -4174,8 +4181,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 /usr/include/c++/11/bits/cxxabi_forced.h:
 
-../TP1/Plane.hpp:
-
 /usr/include/c++/11/bits/algorithmfwd.h:
 
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
@@ -4219,6 +4224,8 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 /usr/include/c++/11/map:
 
 /usr/include/c++/11/bits/stl_multimap.h:
+
+../TP1/Objects/Sphere.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h:
 
@@ -4344,7 +4351,7 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 ../TP1/PhysicManager.hpp:
 
-../TP1/Cube.hpp:
+../TP1/Objects/Mesh.hpp:
 
 ../external/glm-0.9.7.1/glm/detail/type_vec1.inl:
 

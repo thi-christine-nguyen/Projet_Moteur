@@ -16,6 +16,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/stb_image.cpp" "CMakeFiles/TP1.dir/common/stb_image.cpp.o" "gcc" "CMakeFiles/TP1.dir/common/stb_image.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/texture.cpp" "CMakeFiles/TP1.dir/common/texture.cpp.o" "gcc" "CMakeFiles/TP1.dir/common/texture.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/vboindexer.cpp" "CMakeFiles/TP1.dir/common/vboindexer.cpp.o" "gcc" "CMakeFiles/TP1.dir/common/vboindexer.cpp.o.d"
+  "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/ImGuiFileDialog.cpp" "CMakeFiles/TP1.dir/imgui/ImGuiFileDialog.cpp.o" "gcc" "CMakeFiles/TP1.dir/imgui/ImGuiFileDialog.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui.cpp" "CMakeFiles/TP1.dir/imgui/imgui.cpp.o" "gcc" "CMakeFiles/TP1.dir/imgui/imgui.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_demo.cpp" "CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o" "gcc" "CMakeFiles/TP1.dir/imgui/imgui_demo.cpp.o.d"
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/imgui/imgui_draw.cpp" "CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o" "gcc" "CMakeFiles/TP1.dir/imgui/imgui_draw.cpp.o.d"

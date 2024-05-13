@@ -1,6 +1,7 @@
 #ifndef VARIABLES_H_
 #define VARIABLES_H_
 
+
 #include "Camera/Camera.hpp"
 #include "Interface.hpp"
 
@@ -17,7 +18,7 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // Camera
-Interface interface(programID); 
+
 
 // For speed computation
 double lastTime = glfwGetTime();

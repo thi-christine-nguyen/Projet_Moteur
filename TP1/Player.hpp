@@ -9,11 +9,16 @@ private:
 public:
 
 
-    Player(std::string name, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "")
-         : Sphere(name, res, rad, textureID, texturePath) {
+    Player(std::string name, unsigned int res, unsigned int rad, int textureID = 0, const char *texturePath = "", GLuint programID = 0)
+         : Sphere(name, res, rad, textureID, texturePath, programID) {
+    }
+
+    Player(std::string name,const char *meshPath ,int textureID = 0, const char *texturePath = "", GLuint programID = 0)
+         : Sphere(name, meshPath, textureID, texturePath, programID) {
     }
 
     void handleInputs(GLFWwindow *window, float deltaTime){
+        
         const float frictionCoefficient = 0.05f;
         const float velocityMax = 2.0f;
         const float rotateSpeed = 0.1f;

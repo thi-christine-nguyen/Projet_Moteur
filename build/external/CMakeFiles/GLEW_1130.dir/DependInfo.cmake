@@ -8,7 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+<<<<<<< HEAD
   "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glew-1.13.0/src/glew.c" "external/CMakeFiles/GLEW_1130.dir/glew-1.13.0/src/glew.c.o" "gcc" "external/CMakeFiles/GLEW_1130.dir/glew-1.13.0/src/glew.c.o.d"
+=======
+  "/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glew-1.13.0/src/glew.c" "external/CMakeFiles/GLEW_1130.dir/glew-1.13.0/src/glew.c.o" "gcc" "external/CMakeFiles/GLEW_1130.dir/glew-1.13.0/src/glew.c.o.d"
+>>>>>>> origin/mouv
   )
 
 # Targets to which this target links.

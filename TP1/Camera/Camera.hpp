@@ -17,6 +17,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
+#include "Camera_Helper.hpp"
 #include <TP1/Camera/Camera_Helper.hpp>
 
 enum class InputMode
@@ -37,7 +38,7 @@ private:
 	float		m_translationSpeed;
 	float 		m_rotationSpeed;
 	glm::vec3	m_position{ glm::vec3(0.f, 40.f, 0.f) };
-	glm::vec3	m_eulerAngle{ glm::vec3(0.f, 0.f, 0.f) };
+	glm::vec3	m_eulerAngle{ glm::vec3(-90.f, 0.f, 0.f) };
 	glm::quat	m_rotation{};
 
     // Directions de la caméra
@@ -75,7 +76,7 @@ public:
 	{
 		m_fovDegree = 45.0f;
 		m_position = glm::vec3(0.f, 40.f, 0.f);
-		m_eulerAngle = glm::vec3(glm::radians(-90.f), 0.f, 0.f);
+		m_eulerAngle = glm::vec3(glm::radians(-90.f), -glm::radians(90.f), 0.f);
 		m_rotation = glm::quat{};
 		m_translationSpeed = 15.0f;
 		m_rotationSpeed = 1.0f;
@@ -169,7 +170,7 @@ public:
 			m_inputMode = InputMode::Drone;
 		}
 		if (glfwGetKey(_window, GLFW_KEY_X) == GLFW_PRESS) {
-			m_inputMode = InputMode::Free;
+			m_inputMode = InputMode::Follow;
 		}
 		if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_PRESS) {
 			// cameraShake->startShake();
@@ -271,17 +272,74 @@ public:
 			}
 		}
 
-		if (m_inputMode == InputMode::Follow) {
-			glm::vec3 cameraOffset = glm::vec3(0.0f, 1.0f, 0.0f); // Ajustez le décalage selon vos préférences
+		/*if (m_inputMode == InputMode::Follow) {
+			glm::vec3 cameraOffset = glm::vec3(-5.0f, 3.0f, 0.0f); // Ajustez le décalage selon vos préférences
 			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
 			glm::vec3 cameraPosition = targetPosition + cameraOffset;
 			
 			// Définir la nouvelle position de la caméra
 			m_position = cameraPosition;
+
+			glm::vec3 direction = glm::normalize(targetPosition - cameraPosition);
+    		m_eulerAngle.z = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
+    		m_eulerAngle.x = glm::degrees(asin(-direction.y)); // Angle vertical
+		}*/
+		if (m_inputMode == InputMode::Follow) {
+			glm::vec3 cameraOffset = glm::vec3(-5.0f, 3.0f, 0.0f); // Ajustez le décalage selon vos préférences
+			glm::vec3 targetPosition = m_target; // Position actuelle du joueur
+			glm::vec3 cameraPosition = targetPosition + cameraOffset;
+			
+			if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS) {
+				// Définir les paramètres de l'orbite
+				float orbitRadius = 4.0f; // Rayon de l'orbite
+				float orbitSpeed = 0.2f; // Vitesse de rotation en degrés par seconde
+
+				// Calculer l'angle de rotation actuel en fonction du temps écoulé
+				float currentAngle = orbitSpeed * _deltaTime;
+
+				// Mettre à jour les angles d'Euler de la caméra pour l'orbite
+				m_eulerAngle.x += currentAngle; // Rotation autour de l'axe vertical (Y)
+
+				// Convertir les angles d'Euler en radians
+				float yaw = glm::radians(m_eulerAngle.y);
+				float pitch = glm::radians(m_eulerAngle.x);
+
+				// Calculer les nouvelles coordonnées cartésiennes de la caméra
+				float newX = m_target.x + orbitRadius * glm::cos(pitch);
+				float newZ = m_target.z + orbitRadius * glm::sin(pitch);
+
+				// Mettre à jour la position de la caméra
+				m_position = glm::vec3(newX, m_position.y, newZ);
+
+				// Faire en sorte que la caméra regarde toujours vers le point cible
+				// Notez que cette partie reste la même que dans votre code initial
+				glm::vec3 direction = glm::normalize(m_target - m_position);
+				m_eulerAngle.z = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
+				m_eulerAngle.x = glm::degrees(asin(-direction.y)); // Angle vertical
+			}
+
+
+			else{
+				// Calculer la nouvelle position de la caméra en utilisant l'interpolation
+				glm::vec3 interpolatedCameraPosition = interpolate(m_position, targetPosition + cameraOffset, _deltaTime*4);
+				// Définir la nouvelle position de la caméra
+				m_position = interpolatedCameraPosition;
+				glm::vec3 direction = glm::normalize(targetPosition - cameraPosition);
+				float rotz = glm::degrees(atan2(-direction.x, -direction.z)); // Angle horizontal
+				float rotx = glm::degrees(asin(-direction.y)); // Angle vertical
+				glm::vec3 rota  = glm::vec3(rotx, m_eulerAngle.y, rotz);
+				glm::vec3 interpolatedCameraRotation = interpolateRotation(m_eulerAngle, rota, _deltaTime*4);
+				
+				m_eulerAngle = interpolatedCameraRotation;
+				m_eulerAngle.x = glm::clamp(m_eulerAngle.x, -89.0f, 89.0f);
+			}
+
 		}
 
+
+
 		// Limiter l'angle de pitch entre -90 et 90 degrés pour éviter les retournements
-		// m_eulerAngle.x = glm::clamp(m_eulerAngle.x, -89.0f, 89.0f);
+		// 
 		
 	}
 	void updateCameraRotation()
@@ -306,6 +364,18 @@ public:
 		return start * (1.0f - ratio) + end * ratio;
 	}
 
+	// Fonction pour effectuer une interpolation de rotation en utilisant les angles d'Euler
+	glm::vec3 interpolateRotation(const glm::vec3& startAngles, const glm::vec3& endAngles, float ratio)
+	{
+		// Assurez-vous que les angles sont dans la plage correcte (-180 à 180 degrés)
+		glm::vec3 startNormalized = glm::degrees(glm::eulerAngles(glm::quat(glm::radians(startAngles))));
+		glm::vec3 endNormalized = glm::degrees(glm::eulerAngles(glm::quat(glm::radians(endAngles))));
+
+		// Utilisez une interpolation linéaire entre les angles de départ et d'arrivée
+		glm::vec3 interpolatedAngles = startNormalized * (1.0f - ratio) + endNormalized * ratio;
+
+		return interpolatedAngles;
+	}
 
 	void resetWithTransition(float _deltaTime) {
 		// Sauvegarder l'état actuel de la caméra

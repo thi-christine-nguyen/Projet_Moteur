@@ -1,7 +1,13 @@
 CMakeFiles/TP1.dir/common/stb_image.cpp.o: \
+<<<<<<< HEAD
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/stb_image.cpp \
  /usr/include/stdc-predef.h \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/common/./stb_image.hpp \
+=======
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/common/stb_image.cpp \
+ /usr/include/stdc-predef.h \
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/common/./stb_image.hpp \
+>>>>>>> origin/mouv
  /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \

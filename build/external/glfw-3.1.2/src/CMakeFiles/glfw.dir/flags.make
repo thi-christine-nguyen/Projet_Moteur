@@ -4,7 +4,11 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H
 
+<<<<<<< HEAD
 C_INCLUDES = -I/mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/src -I/mnt/c/Users/snsdt/Desktop/Projet_Moteur/build/external/glfw-3.1.2/src
+=======
+C_INCLUDES = -I/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/src -I/mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/build/external/glfw-3.1.2/src
+>>>>>>> origin/mouv
 
 C_FLAGS = -fPIC   -Wall
 

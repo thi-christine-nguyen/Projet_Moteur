@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Install script for directory: /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/tests
+=======
+# Install script for directory: /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/tests
+>>>>>>> origin/mouv
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

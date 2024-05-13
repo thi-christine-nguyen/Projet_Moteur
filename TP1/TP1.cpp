@@ -97,8 +97,10 @@ int main( void )
 
     // Création des différents GameObjects
     GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
+    // GameObject *landscape = new GameObject("landscape", 0, Transform(),nullptr, DEFAULT);
     Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png");
-    // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
+    //GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
+    // landscape->openOFF("../data/avion_n.off");
 
     // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(landscape->ptr));
@@ -113,8 +115,9 @@ int main( void )
     interface.SM->initGameObjectsTexture();
 
     // Transformations sur les GameObjects
-    player->translate(glm::vec3(0.f, 1.f, 0.f));
+    player->translate(glm::vec3(0.f, 3.f, 0.f));
     player->scale(glm::vec3(0.2));
+    
 
     // cube->translate(camera.getPosition());
     // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
@@ -182,7 +185,7 @@ int main( void )
         // Update des GameObjects dans la boucle
         interface.SM->update(deltaTime);
         
-        float updateTime = 1.0f/60.0f;
+        float updateTime = 1.0f/100.0f;
 
         while (physicsClock >= updateTime) {
             // Check des collisions entre le plan et les gameObjects

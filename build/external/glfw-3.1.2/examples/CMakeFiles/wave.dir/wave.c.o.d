@@ -1,5 +1,9 @@
 external/glfw-3.1.2/examples/CMakeFiles/wave.dir/wave.c.o: \
+<<<<<<< HEAD
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/examples/wave.c \
+=======
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/examples/wave.c \
+>>>>>>> origin/mouv
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -55,11 +59,21 @@ external/glfw-3.1.2/examples/CMakeFiles/wave.dir/wave.c.o: \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+<<<<<<< HEAD
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
+=======
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/include/GLFW/glfw3.h \
+ /usr/include/GL/gl.h \
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/GL/glext.h \
+>>>>>>> origin/mouv
  /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+<<<<<<< HEAD
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/linmath.h
+=======
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/linmath.h
+>>>>>>> origin/mouv

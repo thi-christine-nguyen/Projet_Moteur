@@ -368,6 +368,13 @@ CMakeFiles/TP1.dir/TP1/TP1.cpp.o: ../TP1/TP1.cpp \
   ../TP1/Interface.hpp \
   ../TP1/SceneManager.hpp \
   ../TP1/GameObject.hpp \
+  /usr/include/c++/11/fstream \
+  /usr/include/c++/11/bits/codecvt.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+  /usr/include/c++/11/bits/fstream.tcc \
+  /usr/include/c++/11/sstream \
+  /usr/include/c++/11/bits/sstream.tcc \
   ../TP1/Transform.hpp \
   ../TP1/BoundingBox.hpp \
   ../TP1/PhysicManager.hpp \
@@ -2872,8 +2879,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 
 ../common/stb_image.cpp:
 
-/usr/include/c++/11/sstream:
-
 /usr/lib/gcc/x86_64-linux-gnu/11/include/tmmintrin.h:
 
 /usr/include/c++/11/bits/unordered_map.h:
@@ -2883,14 +2888,6 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 /usr/include/c++/11/unordered_map:
 
 /usr/include/c++/11/algorithm:
-
-/usr/include/c++/11/bits/fstream.tcc:
-
-/usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h:
-
-/usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h:
-
-/usr/include/c++/11/fstream:
 
 ../common/objloader.cpp:
 
@@ -2905,6 +2902,16 @@ CMakeFiles/TP1.dir/imgui/imgui_widgets.cpp.o: ../imgui/imgui_widgets.cpp \
 ../TP1/PhysicManager.hpp:
 
 ../TP1/Transform.hpp:
+
+/usr/include/c++/11/sstream:
+
+/usr/include/c++/11/bits/fstream.tcc:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h:
+
+/usr/include/c++/11/fstream:
 
 ../TP1/GameObject.hpp:
 

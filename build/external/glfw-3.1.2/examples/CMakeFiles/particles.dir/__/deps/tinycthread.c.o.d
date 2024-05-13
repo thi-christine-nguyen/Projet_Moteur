@@ -1,7 +1,13 @@
 external/glfw-3.1.2/examples/CMakeFiles/particles.dir/__/deps/tinycthread.c.o: \
+<<<<<<< HEAD
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.c \
  /usr/include/stdc-predef.h \
  /mnt/c/Users/snsdt/Desktop/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.h \
+=======
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.c \
+ /usr/include/stdc-predef.h \
+ /mnt/c/Users/matle/Documents/Info/Master/Moteur/Projet_Moteur/external/glfw-3.1.2/deps/tinycthread.h \
+>>>>>>> origin/mouv
  /usr/include/time.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \

@@ -11,10 +11,10 @@
 #include "SceneManager.hpp"
 #include "PhysicManager.hpp"
 #include "InputManager.hpp"
-#include "Sphere.hpp"
-#include "Plane.hpp"
-#include "Cube.hpp"
-#include "Landscape.hpp"
+#include "Objects/Sphere.hpp"
+#include "Objects/Plane.hpp"
+#include "Objects/Mesh.hpp"
+#include "Objects/Landscape.hpp"
 #include "Player.hpp"
 
 
@@ -89,23 +89,40 @@ public :
 
         ImGui::InputText("Name", name, IM_ARRAYSIZE(name));
 
-        // Chemin pour le mesh
-        if (ImGui::Button("Mesh Path")) {
-            IGFD::FileDialogConfig config;
-            config.path = ".";
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseMeshDlgKey", "Choose Mesh File", ".obj", config);
+        // Boutons de radio pour choisir le type d'objet à créer
+        ImGui::Text("Select Object Type:");
+        ImGui::RadioButton("Sphere", reinterpret_cast<int*>(&selectedType), SPHERE);
+        ImGui::RadioButton("Mesh", reinterpret_cast<int*>(&selectedType), MESH);
+        ImGui::RadioButton("Plane", reinterpret_cast<int*>(&selectedType), PLANE);
+
+        
+        // Si on veux controler l'objet (on part du principe qu'il n'y a que la sphère et 1 seuil objet jouable)
+        if(selectedType == SPHERE){
+            ImGui::Text("Is playable ?");
+            ImGui::SameLine();
+            ImGui::Checkbox("##Playable", &playable);
+       
         }
 
-        if (ImGuiFileDialog::Instance()->Display("ChooseMeshDlgKey")) {
-            if (ImGuiFileDialog::Instance()->IsOk()) {
-                meshPath = ImGuiFileDialog::Instance()->GetFilePathName();
+        if(!playable){
+             // Chemin pour le mesh
+            if (ImGui::Button("Mesh Path")) {
+                IGFD::FileDialogConfig config;
+                config.path = ".";
+                ImGuiFileDialog::Instance()->OpenDialog("ChooseMeshDlgKey", "Choose Mesh File", ".obj", config);
             }
-            ImGuiFileDialog::Instance()->Close();
-        }
 
-        if (ImGui::Button("Annuler le mesh")){
-            meshPath = ""; 
-        };
+            if (ImGuiFileDialog::Instance()->Display("ChooseMeshDlgKey")) {
+                if (ImGuiFileDialog::Instance()->IsOk()) {
+                    meshPath = ImGuiFileDialog::Instance()->GetFilePathName();
+                }
+                ImGuiFileDialog::Instance()->Close();
+            }
+
+            if (ImGui::Button("Annuler le mesh")){
+                meshPath = ""; 
+            };
+        }
 
         if(meshPath == ""){
             ImGui::InputInt("Resolution", &resolution);
@@ -131,6 +148,8 @@ public :
         }
 
         ImGui::Text("Selected Texture File: %s", texturePath.c_str());
+
+        
 
 
         // Ajustement du transform de base
@@ -161,21 +180,6 @@ public :
         transform.setPosition(position);
         transform.setRotation(rotation);
         transform.setScale(scale);
-        
-
-        // Boutons de radio pour choisir le type d'objet à créer
-        ImGui::Text("Select Object Type:");
-        ImGui::RadioButton("Sphere", reinterpret_cast<int*>(&selectedType), SPHERE);
-        ImGui::RadioButton("Cube", reinterpret_cast<int*>(&selectedType), CUBE);
-        ImGui::RadioButton("Plane", reinterpret_cast<int*>(&selectedType), PLANE);
-
-        // Si on veux controler l'objet (on part du principe qu'il n'y a que la sphère et 1 seuil objet jouable)
-        if(selectedType == SPHERE){
-            ImGui::Text("Is playable ?");
-            ImGui::SameLine();
-            ImGui::Checkbox("##Playable", &playable);
-       
-        }
 
         // Est ce que l'objet contient de la physique 
         ImGui::Text("Has physical properties ?");
@@ -200,11 +204,11 @@ public :
             switch (selectedType) {
                 case SPHERE :
                     if(playable = true){
-                        player = meshPath.empty() ?  new Player(name, resolution, size, textureID, texturePath.c_str(), programID) :
-                                                        new Player(name, meshPath.c_str(), textureID, texturePath.c_str(), programID); 
+                        player = new Player(name, playable, resolution, size, textureID, texturePath.c_str(), programID); 
                         
                         player->setTransform(transform); 
                         player->setInitalTransform(transform); 
+
                         if(physic == true){
                             player->setWeight(poids); 
                             PM->addObject(player); 
@@ -212,35 +216,30 @@ public :
                         SM->addObject(std::move(player->ptr)); 
 
                     }else {
-                        newObject = meshPath.empty() ?  new Sphere(name, resolution, size, textureID, texturePath.c_str(), programID) :
-                                                        new Sphere(name, meshPath.c_str(), textureID, texturePath.c_str(), programID);
-
+                        newObject = new Sphere(name, resolution, size, textureID, texturePath.c_str(), programID);
                     }
                     break;
 
-                case CUBE:
-                    newObject = meshPath.empty() ?  new Cube(name, size, textureID, texturePath.c_str(), programID):
-                                                    new Cube(name, meshPath.c_str(), textureID, texturePath.c_str(), programID);
+                case MESH:
+                    newObject = new Mesh(name, meshPath.c_str(), textureID, texturePath.c_str(), programID);
                     break;
                    
                 case PLANE:
-                    newObject = meshPath.empty() ?  new Plane(name, resolution, size, textureID, texturePath.c_str(), programID):
-                                                    new Plane(name, meshPath.c_str(), textureID, texturePath.c_str(), programID);
+                    newObject = new Plane(name, resolution, size, textureID, texturePath.c_str(), programID);
                     break;
-                // case LANDSCAPE : 
-                //     newObject = new Landscape(name, resolution, size, textureID, texturePath.c_str()); 
-                // case PLAYER:
-                //     newObject = new Player(name, resolution, size, textureID, texturePath.c_str(), programID);
-                //     break;
+             
 
             }
 
             if(selectedType != SPHERE){
+                newObject->setTransform(transform); 
+                newObject->setInitalTransform(transform); 
                 if(physic == true){
                     newObject->setWeight(poids); 
                     PM->addObject(newObject); 
                     
                 }
+
 
                 SM->addObject(std::move(newObject->ptr));
 
@@ -270,11 +269,6 @@ public :
                         ImGui::Text("Object Name: %s", objectName.c_str());
                         // Récupère l'interface dans le gameObject pour la modification du transform
                         object->updateInterfaceTransform(_deltaTime); 
-                        if(ImGui::Button("Suprimer")){
-                            //Supprime l'objet de la scène
-                            SM->removeObjectByName(objectName); 
-                        }
-                        
                     }
                 }
                 if (ImGui::CollapsingHeader("Add")) {

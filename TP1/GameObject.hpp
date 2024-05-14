@@ -11,7 +11,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
-#include <fstream>
 
 // UniquePtr
 #include <memory>
@@ -19,7 +18,6 @@
 #include <string>
 #include <cstring>
 #include <cstdio>
-#include <sstream>
 
 // Include standard headers
 #include "lib.hpp"
@@ -32,7 +30,20 @@ enum GameObjectType {
     CUBE,
     PLANE,
     LANDSCAPE,
-    PLAYER
+    PLAYER, 
+    MESH
+};
+
+struct Triangle {
+    glm::vec3 v1, v2, v3;
+    glm::vec3 getNormal() const {
+        glm::vec3 edge1 = v2 - v1;
+        glm::vec3 edge2 = v3 - v1;
+        return glm::normalize(glm::cross(edge1, edge2));
+    }
+    glm::vec3 getCenter() const {
+        return (v1 + v2 + v3) / 3.0f;
+    }
 };
 
 class GameObject {
@@ -62,7 +73,6 @@ protected:
 
     // MESH DATA
     std::vector<unsigned short> indices;
-    std::vector<std::vector<unsigned short>> triangles;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     glm::vec4 color;
@@ -81,7 +91,7 @@ protected:
     const char *texturePath;
 
     // INTERFACE
-    bool scaleLocked_ ; 
+    bool scaleLocked_ = false; 
     bool gravityEnabled_ = false;
 
 public:
@@ -99,166 +109,33 @@ public:
         child->parent = this;
     }
 
+    
+    std::vector<glm::vec3> getVerticesWorld() const{
+        // Obtenez la transformation de l'objet dans l'espace mondial
+        glm::mat4 worldTransform = getWorldBasedTransform();
+        std::vector<glm::vec3> verticesWorld; 
+
+        for (size_t i = 0; i < vertices.size(); ++i) {
+            // Appliquez la transformation à chaque sommet
+            verticesWorld.push_back(glm::vec3(worldTransform * glm::vec4(vertices[i], 1.0f)));
+        }
+        return verticesWorld; 
+    }
+
+    glm::vec3 getPointInWorld(glm::vec3 point){
+        glm::mat4 worldTransform = getWorldBasedTransform();
+
+        return glm::vec3(worldTransform * glm::vec4(point, 1.0f));
+    }
+
     // Initialise la bounding box selon les vertices du GameObject
     void initBoundingBox() {
-        boundingBox.init(vertices);
+        std::vector<glm::vec3> verticesWorld = getVerticesWorld(); 
+        boundingBox.init(verticesWorld);
         glm::vec3 min = boundingBox.getMin();
         glm::vec3 max = boundingBox.getMax();
         // std::cout << "Initialisation of bounding box done : min(" << min.x << "; " << min.y << "; " << min.z << ") / max(" << max.x << "; " << max.y << "; " << max.z << ")" << std::endl;
     }
-
-
-    bool saveOFF( const std::string & filename ,
-              std::vector<vec3> & vertices ,
-              std::vector<vec3> & i_normals ,
-              std::vector<std::vector<unsigned short>>& i_triangles,
-              bool save_normals = true ) {
-    std::ofstream myfile;
-    myfile.open(filename.c_str());
-    if (!myfile.is_open()) {
-        std::cout << filename << " cannot be opened" << std::endl;
-        return false;
-    }
-
-    myfile << "OFF" << std::endl ;
-
-    unsigned int n_vertices = vertices.size() , n_triangles = i_triangles.size();
-    myfile << n_vertices << " " << n_triangles << " 0" << std::endl;
-
-    for( unsigned int v = 0 ; v < n_vertices ; ++v ) {
-        myfile << vertices[v][0] << " " << vertices[v][1] << " " << vertices[v][2] << " ";
-        if (save_normals) myfile << i_normals[v][0] << " " << i_normals[v][1] << " " << i_normals[v][2] << std::endl;
-        else myfile << std::endl;
-    }
-    for( unsigned int f = 0 ; f < n_triangles ; ++f ) {
-        myfile << 3 << " " << i_triangles[f][0] << " " << i_triangles[f][1] << " " << i_triangles[f][2];
-        myfile << std::endl;
-    }
-    myfile.close();
-    return true;
-}
-
-void openOFF(const std::string &filename, bool load_normals = true) {
-    std::ifstream myfile(filename);
-    if (!myfile.is_open()) {
-        std::cerr << "Error: Could not open file " << filename << std::endl;
-        return;
-    }
-
-    std::string magic_s;
-    myfile >> magic_s;
-
-    if (magic_s != "OFF") {
-        std::cerr << "Error: Not a valid OFF file" << std::endl;
-        myfile.close();
-        return;
-    }
-
-    int n_vertices, n_faces, dummy_int;
-    myfile >> n_vertices >> n_faces >> dummy_int;
-
-    vertices.clear();
-    triangles.clear();
-    uvs.clear();
-
-    for (int v = 0; v < n_vertices; ++v) {
-        float x, y, z;
-        myfile >> x >> y >> z;
-        vertices.push_back(glm::vec3(x, y, z));
-    }
-
-    triangles.clear();
-    for (int f = 0; f < n_faces; ++f) {
-        int n_vertices_on_face;
-        myfile >> n_vertices_on_face;
-
-        if (n_vertices_on_face < 3) {
-            std::cerr << "Error: Faces must have at least 3 vertices." << std::endl;
-            myfile.close();
-            return;
-        }
-
-        std::vector<unsigned short> face_indices;
-        for (int i = 0; i < n_vertices_on_face; ++i) {
-            unsigned short index;
-            myfile >> index;
-            face_indices.push_back(index);
-        }
-        triangles.push_back(face_indices);
-    }
-
-    myfile.close();
-}
-
-
-     // Fonction pour charger un fichier .ply
-   void openPLY(const std::string& filename, bool load_normals = true) {
-    std::ifstream myfile(filename);
-    if (!myfile.is_open()) {
-        std::cerr << "Error: Could not open file " << filename << std::endl;
-        return;
-    }
-
-    std::string magic_s;
-    myfile >> magic_s;
-
-    if (magic_s != "ply") {
-        std::cerr << "Error: Not a valid PLY file" << std::endl;
-        myfile.close();
-        return;
-    }
-
-    int n_vertices = 0, n_faces = 0;
-    bool header_end = false;
-    std::string line;
-    while (std::getline(myfile, line)) {
-        if (line.find("element vertex") != std::string::npos) {
-            sscanf(line.c_str(), "element vertex %d", &n_vertices);
-        } else if (line.find("element face") != std::string::npos) {
-            sscanf(line.c_str(), "element face %d", &n_faces);
-        } else if (line.find("end_header") != std::string::npos) {
-            header_end = true;
-            break;
-        }
-    }
-
-    if (!header_end) {
-        std::cerr << "Error: Invalid PLY file format." << std::endl;
-        myfile.close();
-        return;
-    }
-
-    vertices.clear();
-    for (int v = 0; v < n_vertices; ++v) {
-        float x, y, z;
-        myfile >> x >> y >> z;
-        vertices.push_back(glm::vec3(x, y, z));
-    }
-
-    triangles.clear();
-    for (int f = 0; f < n_faces; ++f) {
-        int n_vertices_on_face;
-        myfile >> n_vertices_on_face;
-        if (n_vertices_on_face < 3) {
-            std::cout << n_vertices_on_face << std::endl;
-            std::cerr << "Error: Faces must have at least 3 vertices." << std::endl;
-            myfile.close();
-            return;
-        }
-        std::vector<unsigned short> face_indices;
-        for (int i = 0; i < n_vertices_on_face; ++i) {
-            unsigned short index;
-            myfile >> index;
-            face_indices.push_back(index);
-        }
-        triangles.push_back(face_indices);
-    }
-
-    myfile.close();
-}
-
-
-
 
     /* ------------------------- GETTERS/SETTERS -------------------------*/
 
@@ -270,15 +147,19 @@ void openOFF(const std::string &filename, bool load_normals = true) {
     // Méthode pour définir la transformation de cet objet
     void setTransform(const Transform& newTransform) {
         transform = newTransform;
+        initBoundingBox();
+
     }
 
     void setInitalTransform(const Transform& newTransform) {
         initialTransform = newTransform;
+        initBoundingBox();
     }
 
     // Méthode pour modifier la position de cet objet
     void setPosition(glm::vec3 pos) {
         transform.setPosition(pos);
+        initBoundingBox();
     }
 
     // Méthodes pour accéder et modifier le parent de cet objet
@@ -356,9 +237,28 @@ void openOFF(const std::string &filename, bool load_normals = true) {
         boundingBox = bbox;
     }
 
+    bool getHasPhysic(){
+        return hasPhysic; 
+    }
+
     void setHasPhysic(bool physic){
         hasPhysic = physic; 
     }
+
+    std::vector<unsigned short> getIndices() const{
+        return indices; 
+    }
+
+    std::vector<glm::vec3> getVertices() const {
+        return vertices; 
+    }
+
+    glm::vec3 getWorldBasedPosition() const {
+        glm::vec4 pos = getWorldBasedTransform() * glm::vec4(transform.getPosition(), 1.0f);
+        return glm::vec3(pos);
+    }
+
+
 
     /* ------------------------- TRANSFORMATIONS -------------------------*/
 
@@ -480,7 +380,7 @@ void openOFF(const std::string &filename, bool load_normals = true) {
             velocity += acceleration * deltaTime;
 
         // Application de sa vitesse à notre objet
-        if (gravityEnabled_){
+        if (gravityEnabled_ ){
             translate(velocity * deltaTime);
         }
         
@@ -495,8 +395,7 @@ void openOFF(const std::string &filename, bool load_normals = true) {
         impulsion2 = -impulse_factor * normale_contact / obj2.getWeight();
     }
 
-    // Méthode pour détecter et résoudre les collisions avec un autre GameObject
-    void handleCollision(const GameObject& other) {
+    void handleCollisionBox(const GameObject& other){
         if (other.getType() == GameObjectType::PLANE) { // Collision avec le landscape
             // Collision entre le GameObject et le terrain détectée
             // Vérifiez la collision avec les AABB
@@ -525,7 +424,126 @@ void openOFF(const std::string &filename, bool load_normals = true) {
                 }
             }
         }
+
     }
+
+    bool intersectTriangles(const Triangle& t1, const Triangle& t2) {
+        glm::vec3 axes[] = {
+            glm::normalize(glm::cross(t1.v2 - t1.v1, t1.v3 - t1.v1)),
+            glm::normalize(glm::cross(t2.v2 - t2.v1, t2.v3 - t2.v1))
+        };
+
+        // Projection sur les axes
+        for (int i = 0; i < 2; ++i) {
+            float minT1 = glm::dot(t1.v1, axes[i]);
+            float maxT1 = minT1;
+            float minT2 = glm::dot(t2.v1, axes[i]);
+            float maxT2 = minT2;
+
+            float projT1_2 = glm::dot(t1.v2, axes[i]);
+            minT1 = std::min(minT1, projT1_2);
+            maxT1 = std::max(maxT1, projT1_2);
+
+            float projT1_3 = glm::dot(t1.v3, axes[i]);
+            minT1 = std::min(minT1, projT1_3);
+            maxT1 = std::max(maxT1, projT1_3);
+
+            float projT2_2 = glm::dot(t2.v2, axes[i]);
+            minT2 = std::min(minT2, projT2_2);
+            maxT2 = std::max(maxT2, projT2_2);
+
+            float projT2_3 = glm::dot(t2.v3, axes[i]);
+            minT2 = std::min(minT2, projT2_3);
+            maxT2 = std::max(maxT2, projT2_3);
+
+            if (maxT1 < minT2 || maxT2 < minT1) {
+                return false; // Pas d'intersection
+            }
+        }
+
+        // Conditions pour tester l'intersection
+        glm::vec3 dp1 = glm::cross(t1.v1 - t2.v1, t2.v2 - t2.v1);
+        glm::vec3 dq1 = glm::cross(t1.v1 - t2.v2, t2.v3 - t2.v2);
+        glm::vec3 dr1 = glm::cross(t1.v1 - t2.v3, t2.v1 - t2.v3);
+
+        glm::vec3 dp2 = glm::cross(t2.v1 - t1.v1, t1.v2 - t1.v1);
+        glm::vec3 dq2 = glm::cross(t2.v1 - t1.v2, t1.v3 - t1.v2);
+        glm::vec3 dr2 = glm::cross(t2.v1 - t1.v3, t1.v1 - t1.v3);
+
+        if (((glm::dot(dp1, dq1) > 0.0f) && (glm::dot(dp1, dr1) > 0.0f)) || 
+            ((glm::dot(dp2, dq2) > 0.0f) && (glm::dot(dp2, dr2) > 0.0f))) {
+            return true; // Les triangles s'intersectent
+        }
+
+        return false; // Pas d'intersection
+    }
+
+    void handleCollision(const GameObject& other) {
+
+        if (type == GameObjectType::PLAYER) { 
+            
+            // Récupération des coordonées mondes 
+            std::vector<glm::vec3> verticesWorld = getVerticesWorld(); 
+            std::vector<glm::vec3> otherVerticesWorld = other.getVerticesWorld(); 
+            std::vector<unsigned short> otherIndices = other.getIndices();
+        
+
+            bool allIntersect = false; 
+        
+            for (int i = 0; i < indices.size(); i+=3) {
+
+                Triangle t1 = {verticesWorld[indices[i]], verticesWorld[indices[i+ 1]], verticesWorld[indices[i+ 2]]};
+
+                // Parcourir les triangles de l'autre GameObject
+                for (int j = 0; j < otherIndices.size(); j+=3) {
+                  
+                    Triangle t2 = {otherVerticesWorld[otherIndices[j]], otherVerticesWorld[otherIndices[j+ 1]], otherVerticesWorld[otherIndices[j+ 2]]};
+
+                    // Vérifier s'ils s'intersectent
+                    if (intersectTriangles(t1, t2)) {
+
+                        allIntersect = true; 
+                        
+                        if(!grounded){
+
+                            // if (other.getType() == GameObjectType::MESH){ //Réaction à la collision si c'est un mesh 
+                            //     // std::cout << "hehe" << std::endl; 
+                                // float impulse = glm::dot(getVelocity(), t2.getNormal()) * (1 + restitutionCoef);
+                                // setVelocity(getVelocity() - (impulse / getWeight()) * t2.getNormal());
+
+
+                            // }else{//Réaction à la collision si c'est un plan
+                                // std::cout << length(getVelocity()) << std::endl;
+                                
+                            setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f) : glm::vec3(0.0f));
+                                
+                        
+                          
+                            grounded = true; 
+                          
+
+                            // grounded = true; 
+                            // break; 
+
+    
+                        }
+
+                       
+                                    
+                    }
+                    
+                }
+                
+            }
+            if(!allIntersect && grounded){
+             
+                grounded = false; 
+            }
+        }
+          
+      
+    }
+
 
     bool isGrounded() {return grounded;}
 
@@ -547,6 +565,7 @@ void openOFF(const std::string &filename, bool load_normals = true) {
         // Réinitialiser d'autres paramètres selon vos besoins
         scaleLocked_ = false;
         gravityEnabled_ = false;
+        velocity = glm::vec3(0.0f); 
     }
 
     void updateInterfaceTransform(float _deltaTime) {

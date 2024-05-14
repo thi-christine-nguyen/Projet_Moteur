@@ -4,9 +4,9 @@
 #include "InputManager.hpp"
 #include "Player.hpp"
 #include "GameObject.hpp"
-#include "Sphere.hpp"
-#include "Plane.hpp"
-#include "Cube.hpp"
+#include "Objects/Sphere.hpp"
+#include "Objects/Plane.hpp"
+#include "Objects/Cube.hpp"
 #include "Interface.hpp"
 
 #include <imgui/imgui.h>
@@ -97,29 +97,44 @@ int main( void )
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png", programID);
-    Player *player = new Player("player", 20, 1, 2, "../data/textures/ball.png", programID);
-    // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
-    // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
-    // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
+    // GameObject *pente = new Mesh("plan", "../data/meshes/plan.obj", 1, "../data/textures/terrain.png", programID);
     
-    // Ajout des GameObjects au SceneManager
-    interface.SM->addObject(std::move(landscape->ptr));
+    // GameObject *pente =  new Plane("plan1", 1, 1, 1, "../data/textures/terrain.png", programID);
+    GameObject *pente = new Plane("landscape", 1, 10, 1, "../data/textures/terrain.png", programID);
+    Player *player = new Player("player", true, 10, 1, 2, "../data/textures/ball.png", programID);
+    // Player *player = new Player("player", "../data/meshes/sphereLow.obj", 3, "../data/textures/ball.png", programID);
+    // // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
+    // // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
+    // // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
 
-    // Ajout des GameObjects au PhysicManager
-    interface.PM->addObject(landscape);
+    // landscape->getTransform()
+    // pente->translate(glm::vec3(-1, -1, 0)); 
+    pente->setInitalTransform(pente->getTransform()); 
+
+    // landscape->translate(glm::vec3(0, 0, 0));
+    // landscape->setInitalTransform(landscape->getTransform()); 
+    
+    
+    // // Ajout des GameObjects au SceneManager
+    interface.SM->addObject(std::move(pente->ptr));
+    // interface.SM->addObject(std::move(landscape->ptr));
+
+    // // Ajout des GameObjects au PhysicManager
+    interface.PM->addObject(pente);
+    // interface.PM->addObject(landscape);
    
     // Initialisation du player
     interface.setPlayer(player);  
-    interface.getPlayer()->translate(glm::vec3(0.f, 1.f, 0.f));
+    interface.getPlayer()->translate(glm::vec3(0.f, 5.f, 0.f));
     interface.getPlayer()->scale(glm::vec3(0.2));
     interface.getPlayer()->setWeight(0.6f);
+    player->setInitalTransform(player->getTransform()); 
+
     
     interface.PM->addObject(interface.getPlayer());
     interface.SM->addObject(std::move(interface.getPlayer()->ptr));
     interface.SM->initGameObjectsTexture();
 
-    
    
 
     // Get a handle for our "LightPosition" uniform
@@ -179,40 +194,15 @@ int main( void )
             interface.IM->processInput(window, interface.getPlayer(), deltaTime);
         }
         
-
-        //----------------------------------- Throw cube 45° from camera front -----------------------------------//
-        // if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        //     // player->setPosition(camera.getPosition());
-        //     // float throwStrenght = 3.0f;
-        //     // glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
-        //     // speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
-        //     player->setVelocity(glm::vec3(0.0f, 3.0f, 0.0f));
-        // }
-
-        // Update des GameObjects dans la boucle
-
-        // if(t == 0){
-        //     glActiveTexture(GL_TEXTURE0);
-        //     GLuint textureID = loadTexture2DFromFilePath("/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/grass.bmp"); 
-        //     glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
-        //     if (textureID == 0) {
-        //         std::cerr << "Failed to load texture!" << std::endl;
-        //     } else {
-        //         GameObject *cube = new Sphere("sphere", 5, 1, textureID, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/hehe/ball.png", programID);
-        //         interface.SM->addObject(std::move(cube->ptr)); 
-        //         std::cout << "Texture loaded successfully. Texture ID: " << textureID << std::endl;
-        //     }
-        //     t++; 
-
-        // }
-       
-        interface.SM->update(deltaTime);
-        
-        float updateTime = 1.0f/100.0f;
+        float updateTime = 1.0f/60.f;
 
         while (physicsClock >= updateTime) {
+
+            interface.SM->update(deltaTime);
+
             // Check des collisions entre le plan et les gameObjects
             interface.PM->handleCollisions();
+
             // std::cout << "PM tick" << std::endl;
             physicsClock -= updateTime;
         }
@@ -242,8 +232,8 @@ int main( void )
     glDeleteBuffers(1, &uvbuffer);
     glDeleteBuffers(1, &normalbuffer);
     glDeleteBuffers(1, &elementbuffer);
-    glDeleteProgram(programID);
     glDeleteVertexArrays(1, &VertexArrayID);
+    glDeleteProgram(programID);
 
     // Close OpenGL window and terminate GLFW
     glfwTerminate();

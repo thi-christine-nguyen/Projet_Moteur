@@ -216,21 +216,21 @@ public:
 			// Rotation
 			if (glfwGetKey(_window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 				m_eulerAngle.y += rotationSpeed;
-				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
+				// m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
 				
 			}
 			if (glfwGetKey(_window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 				m_eulerAngle.y -= rotationSpeed;
-				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
+				// m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
 
 			}
 			if (glfwGetKey(_window, GLFW_KEY_UP) == GLFW_PRESS) {
 				m_eulerAngle.x -= rotationSpeed;
-				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
+				// m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 			}
 			if (glfwGetKey(_window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 				m_eulerAngle.x += rotationSpeed;
-				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
+				// m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 			}
 		}
 
@@ -245,11 +245,11 @@ public:
 				double deltaY = mouseY - m_lastMouseY;
 
 				m_eulerAngle.x += static_cast<float>(deltaY) * m_rotationSpeed * 0.0075;
-				m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
+				// m_eulerAngle.x = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.x), 90);
 		
 		
 				m_eulerAngle.y -= static_cast<float>(deltaX) * m_rotationSpeed * 0.0075;
-				m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
+				// m_eulerAngle.y = Camera_Helper::clipAngle(glm::degrees(m_eulerAngle.y), 180);
 
 				
 			}

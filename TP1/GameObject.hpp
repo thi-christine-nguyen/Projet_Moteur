@@ -41,6 +41,9 @@ struct Triangle {
         glm::vec3 edge2 = v3 - v1;
         return glm::normalize(glm::cross(edge1, edge2));
     }
+    glm::vec3 getCenter() const {
+        return (v1 + v2 + v3) / 3.0f;
+    }
 };
 
 class GameObject {
@@ -117,6 +120,12 @@ public:
             verticesWorld.push_back(glm::vec3(worldTransform * glm::vec4(vertices[i], 1.0f)));
         }
         return verticesWorld; 
+    }
+
+    glm::vec3 getPointInWorld(glm::vec3 point){
+        glm::mat4 worldTransform = getWorldBasedTransform();
+
+        return glm::vec3(worldTransform * glm::vec4(point, 1.0f));
     }
 
     // Initialise la bounding box selon les vertices du GameObject
@@ -244,6 +253,12 @@ public:
         return vertices; 
     }
 
+    glm::vec3 getWorldBasedPosition() const {
+        glm::vec4 pos = getWorldBasedTransform() * glm::vec4(transform.getPosition(), 1.0f);
+        return glm::vec3(pos);
+    }
+
+
 
     /* ------------------------- TRANSFORMATIONS -------------------------*/
 
@@ -365,7 +380,7 @@ public:
             velocity += acceleration * deltaTime;
 
         // Application de sa vitesse à notre objet
-        if (gravityEnabled_){
+        if (gravityEnabled_ ){
             translate(velocity * deltaTime);
         }
         
@@ -418,6 +433,7 @@ public:
             glm::normalize(glm::cross(t2.v2 - t2.v1, t2.v3 - t2.v1))
         };
 
+        // Projection sur les axes
         for (int i = 0; i < 2; ++i) {
             float minT1 = glm::dot(t1.v1, axes[i]);
             float maxT1 = minT1;
@@ -462,7 +478,6 @@ public:
         return false; // Pas d'intersection
     }
 
-
     void handleCollision(const GameObject& other) {
 
         if (type == GameObjectType::PLAYER) { 
@@ -491,19 +506,26 @@ public:
                         
                         if(!grounded){
 
-                            if (other.getType() == GameObjectType::MESH){ //Réaction à la collision si c'est un mesh 
-                                // std::cout << "hehe" << std::endl; 
-                                float impulse = glm::dot(getVelocity(), t2.getNormal()) * (1 + restitutionCoef);
-                                setVelocity(getVelocity() - (impulse / getWeight()) * t2.getNormal());
+                            // if (other.getType() == GameObjectType::MESH){ //Réaction à la collision si c'est un mesh 
+                            //     // std::cout << "hehe" << std::endl; 
+                                // float impulse = glm::dot(getVelocity(), t2.getNormal()) * (1 + restitutionCoef);
+                                // setVelocity(getVelocity() - (impulse / getWeight()) * t2.getNormal());
 
-                            }else{//Réaction à la collision si c'est un plan
-                                // std::cout << length(getVelocity()) << std::endl; 
-                                setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f): glm::vec3(0.0f));
-                            }
 
+                            // }else{//Réaction à la collision si c'est un plan
+                                // std::cout << length(getVelocity()) << std::endl;
+                                
+                            setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f) : glm::vec3(0.0f));
+                                
+                        
+                          
                             grounded = true; 
+                          
 
+                            // grounded = true; 
+                            // break; 
 
+    
                         }
 
                        

@@ -5,7 +5,7 @@
 
 class Player : public Sphere{
 private:
-    float speed = 0.3f;
+    float speed = 5.0f;
 public:
 
 
@@ -16,9 +16,9 @@ public:
     void handleInputs(GLFWwindow *window, float deltaTime){
         
         const float frictionCoefficient = 0.05f;
-        const float velocityMax = 2.0f;
+        const float velocityMax = 5.0f;
         const float rotateSpeed = 0.1f;
-        const float accelerationMax = 5.0f;
+        const float accelerationMax = 10.0f;
         int isMovingX = 0;
         int isMovingY = 0;
 

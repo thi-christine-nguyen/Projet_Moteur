@@ -97,38 +97,39 @@ int main( void )
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    // GameObject *pente = new Mesh("pente", "../data/meshes/pente.obj", 1, "../data/textures/terrain.png", programID);
+    // GameObject *pente = new Mesh("plan", "../data/meshes/plan.obj", 1, "../data/textures/terrain.png", programID);
     
-    GameObject *pente =  new Plane("plan1", 1, 1, 1, "../data/textures/terrain.png", programID);
-    GameObject *landscape = new Plane("landscape", 1, 1, 2, "../data/textures/terrain.png", programID);
-    Player *player = new Player("player", true, 5, 1, 3, "../data/textures/ball.png", programID);
+    // GameObject *pente =  new Plane("plan1", 1, 1, 1, "../data/textures/terrain.png", programID);
+    GameObject *pente = new Plane("landscape", 1, 10, 1, "../data/textures/terrain.png", programID);
+    Player *player = new Player("player", true, 10, 1, 2, "../data/textures/ball.png", programID);
     // Player *player = new Player("player", "../data/meshes/sphereLow.obj", 3, "../data/textures/ball.png", programID);
     // // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
     // // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
     // // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
 
     // landscape->getTransform()
-    pente->translate(glm::vec3(-1, -1, 0)); 
+    // pente->translate(glm::vec3(-1, -1, 0)); 
     pente->setInitalTransform(pente->getTransform()); 
 
     // landscape->translate(glm::vec3(0, 0, 0));
-    landscape->setInitalTransform(landscape->getTransform()); 
-    // player->setInitalTransform(player->getTransform()); 
+    // landscape->setInitalTransform(landscape->getTransform()); 
     
     
     // // Ajout des GameObjects au SceneManager
     interface.SM->addObject(std::move(pente->ptr));
-    interface.SM->addObject(std::move(landscape->ptr));
+    // interface.SM->addObject(std::move(landscape->ptr));
 
     // // Ajout des GameObjects au PhysicManager
     interface.PM->addObject(pente);
-    interface.PM->addObject(landscape);
+    // interface.PM->addObject(landscape);
    
     // Initialisation du player
     interface.setPlayer(player);  
     interface.getPlayer()->translate(glm::vec3(0.f, 5.f, 0.f));
     interface.getPlayer()->scale(glm::vec3(0.2));
     interface.getPlayer()->setWeight(0.6f);
+    player->setInitalTransform(player->getTransform()); 
+
     
     interface.PM->addObject(interface.getPlayer());
     interface.SM->addObject(std::move(interface.getPlayer()->ptr));

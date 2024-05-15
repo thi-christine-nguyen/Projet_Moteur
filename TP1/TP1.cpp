@@ -97,10 +97,10 @@ int main( void )
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    // GameObject *pente = new Mesh("plan", "../data/meshes/plan.obj", 1, "../data/textures/terrain.png", programID);
+    GameObject *pente = new Mesh("plan", "../data/meshes/plan2.obj", 1, "../data/textures/terrain.png", programID);
     
     // GameObject *pente =  new Plane("plan1", 1, 1, 1, "../data/textures/terrain.png", programID);
-    GameObject *pente = new Plane("landscape", 1, 10, 1, "../data/textures/terrain.png", programID);
+    // GameObject *pente = new Plane("landscape", 1, 10, 1, "../data/textures/terrain.png", programID);
     Player *player = new Player("player", true, 10, 1, 2, "../data/textures/ball.png", programID);
     // Player *player = new Player("player", "../data/meshes/sphereLow.obj", 3, "../data/textures/ball.png", programID);
     // // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);

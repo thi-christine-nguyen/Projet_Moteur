@@ -1,7 +1,7 @@
 #ifndef MESH_HPP__
 #define MESH_HPP__
 #include "TP1/GameObject.hpp"
-#include "../common/objloader.hpp"
+#include "common/objloader.hpp"
 
 class Mesh : public GameObject {
 public:

@@ -85,6 +85,7 @@ protected:
     bool grounded = false;
     float restitutionCoef = 0.6f;
     bool hasPhysic = false; 
+    bool onPlane = false; 
 
     // TEXTURE
     int textureID; // 0 = flatColor sinon Texture
@@ -478,6 +479,7 @@ public:
         return false; // Pas d'intersection
     }
 
+
     void handleCollision(const GameObject& other) {
 
         if (type == GameObjectType::PLAYER) { 
@@ -504,30 +506,22 @@ public:
 
                         allIntersect = true; 
                         
-                        if(!grounded){
+                         if(grounded){
+                            float sens = glm::dot(t2.getNormal(), getVelocity()); 
+                            // Si la sphère est sur le sol et sur une pente alors on va utilisé la normale du triangle comme axe de reflexion. 
+                            if(sens < 0){
+                                // vecteur de reflexion
+                                glm::vec3 velocity_reflected = getVelocity() - 2.0f * sens * t2.getNormal();
+                                setVelocity(velocity_reflected);
 
-                            // if (other.getType() == GameObjectType::MESH){ //Réaction à la collision si c'est un mesh 
-                            //     // std::cout << "hehe" << std::endl; 
-                                // float impulse = glm::dot(getVelocity(), t2.getNormal()) * (1 + restitutionCoef);
-                                // setVelocity(getVelocity() - (impulse / getWeight()) * t2.getNormal());
+                            }
 
-
-                            // }else{//Réaction à la collision si c'est un plan
-                                // std::cout << length(getVelocity()) << std::endl;
-                                
+                        }else{
                             setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f) : glm::vec3(0.0f));
-                                
-                        
-                          
                             grounded = true; 
-                          
 
-                            // grounded = true; 
-                            // break; 
-
-    
                         }
-
+                        
                        
                                     
                     }

@@ -139,6 +139,24 @@ public:
     bool operator==(const BoundingBox& other) const {
         return min == other.min && max == other.max;
     }
+
+    glm::vec3 getMinOverlap(const BoundingBox& other) const {
+        glm::vec3 overlap;
+
+        glm::vec3 thisMin = min;
+        glm::vec3 thisMax = max;
+        glm::vec3 otherMin = other.min;
+        glm::vec3 otherMax = other.max;
+
+        // Calcul du chevauchement sur chaque axe
+        overlap.x = std::min(thisMax.x - otherMin.x, otherMax.x - thisMin.x);
+        overlap.y = std::min(thisMax.y - otherMin.y, otherMax.y - thisMin.y);
+        overlap.z = std::min(thisMax.z - otherMin.z, otherMax.z - thisMin.z);
+
+        return overlap;
+    }
+
+
 };
 
 #endif

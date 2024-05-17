@@ -30,13 +30,27 @@ enum GameObjectType {
     CUBE,
     PLANE,
     LANDSCAPE,
-    PLAYER
+    PLAYER, 
+    MESH
+};
+
+struct Triangle {
+    glm::vec3 v1, v2, v3;
+    glm::vec3 getNormal() const {
+        glm::vec3 edge1 = v2 - v1;
+        glm::vec3 edge2 = v3 - v1;
+        return glm::normalize(glm::cross(edge1, edge2));
+    }
+    glm::vec3 getCenter() const {
+        return (v1 + v2 + v3) / 3.0f;
+    }
 };
 
 class GameObject {
 protected:
     // GENERAL
     Transform transform;  // Transform de l'objet
+    Transform initialTransform; 
     GameObjectType type; // Type du GameObject
     std::string name; // Nom et identifiant de l'objet
 
@@ -59,7 +73,6 @@ protected:
 
     // MESH DATA
     std::vector<unsigned short> indices;
-    std::vector<std::vector<unsigned short>> triangles;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     glm::vec4 color;
@@ -68,13 +81,19 @@ protected:
     BoundingBox boundingBox;
     glm::vec3 velocity;
     glm::vec3 acceleration;
-    float weight = 0.f;
+    float weight = 1.f;
     bool grounded = false;
     float restitutionCoef = 0.6f;
+    bool hasPhysic = false; 
+    bool onPlane = false; 
 
     // TEXTURE
     int textureID; // 0 = flatColor sinon Texture
     const char *texturePath;
+
+    // INTERFACE
+    bool scaleLocked_ = false; 
+    bool gravityEnabled_ = false;
 
 public:
     /* ------------------------- CONSTRUCTOR -------------------------*/
@@ -91,9 +110,29 @@ public:
         child->parent = this;
     }
 
+    
+    std::vector<glm::vec3> getVerticesWorld() const{
+        // Obtenez la transformation de l'objet dans l'espace mondial
+        glm::mat4 worldTransform = getWorldBasedTransform();
+        std::vector<glm::vec3> verticesWorld; 
+
+        for (size_t i = 0; i < vertices.size(); ++i) {
+            // Appliquez la transformation à chaque sommet
+            verticesWorld.push_back(glm::vec3(worldTransform * glm::vec4(vertices[i], 1.0f)));
+        }
+        return verticesWorld; 
+    }
+
+    glm::vec3 getPointInWorld(glm::vec3 point){
+        glm::mat4 worldTransform = getWorldBasedTransform();
+
+        return glm::vec3(worldTransform * glm::vec4(point, 1.0f));
+    }
+
     // Initialise la bounding box selon les vertices du GameObject
     void initBoundingBox() {
-        boundingBox.init(vertices);
+        std::vector<glm::vec3> verticesWorld = getVerticesWorld(); 
+        boundingBox.init(verticesWorld);
         glm::vec3 min = boundingBox.getMin();
         glm::vec3 max = boundingBox.getMax();
         // std::cout << "Initialisation of bounding box done : min(" << min.x << "; " << min.y << "; " << min.z << ") / max(" << max.x << "; " << max.y << "; " << max.z << ")" << std::endl;
@@ -109,11 +148,19 @@ public:
     // Méthode pour définir la transformation de cet objet
     void setTransform(const Transform& newTransform) {
         transform = newTransform;
+        initBoundingBox();
+
+    }
+
+    void setInitalTransform(const Transform& newTransform) {
+        initialTransform = newTransform;
+        initBoundingBox();
     }
 
     // Méthode pour modifier la position de cet objet
     void setPosition(glm::vec3 pos) {
         transform.setPosition(pos);
+        initBoundingBox();
     }
 
     // Méthodes pour accéder et modifier le parent de cet objet
@@ -191,6 +238,29 @@ public:
         boundingBox = bbox;
     }
 
+    bool getHasPhysic(){
+        return hasPhysic; 
+    }
+
+    void setHasPhysic(bool physic){
+        hasPhysic = physic; 
+    }
+
+    std::vector<unsigned short> getIndices() const{
+        return indices; 
+    }
+
+    std::vector<glm::vec3> getVertices() const {
+        return vertices; 
+    }
+
+    glm::vec3 getWorldBasedPosition() const {
+        glm::vec4 pos = getWorldBasedTransform() * glm::vec4(transform.getPosition(), 1.0f);
+        return glm::vec3(pos);
+    }
+
+
+
     /* ------------------------- TRANSFORMATIONS -------------------------*/
 
     void translate(const glm::vec3 &translation) { transform.translate(translation); boundingBox.updateAfterTransformation(vertices, transform.getMatrix());}
@@ -202,7 +272,7 @@ public:
     }
 
     /* ------------------------- BUFFERS -------------------------*/
-    void GenerateBuffers()
+    void GenerateBuffers(GLuint programID)
     {
         glGenVertexArrays(1, &vao);    // Le VAO qui englobe tout
         glGenBuffers(1, &vboVertices); // VBO vertex
@@ -227,7 +297,7 @@ public:
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * indices.size(), &indices[0], GL_STATIC_DRAW);
     }
 
-    void DeleteBuffers()
+    void DeleteBuffers(GLuint programID)
     {
         glDeleteBuffers(1, &vboVertices);
         glDeleteBuffers(1, &vboIndices);
@@ -236,12 +306,13 @@ public:
         glDeleteProgram(programID);
         for (GameObject *child : children)
         {
-            child->DeleteBuffers();
+            child->DeleteBuffers(programID);
         }
     };
 
     virtual void draw() const
     {
+        
         glBindVertexArray(vao); // Bind le giga vecteur array
         // Envoi du type du GameObject
         glUniform1i(typeULoc, type);
@@ -290,15 +361,15 @@ public:
 
     /* ------------------------- TEXTURES -------------------------*/
 
-    void initTexture() {
+    void initTexture(GLuint programID) {
         if (textureID != 0) { // S'il y a une texture sur le GameObject
             std::cout << textureID << ": " << texturePath << std::endl;
             glActiveTexture(GL_TEXTURE0);
-            loadTexture2DFromFilePath(texturePath);
+            loadTexture2DFromFilePath(texturePath); 
             glUniform1i(glGetUniformLocation(programID, "gameObjectTexture"), 0);
         }
         for (GameObject *child : children) {
-            child->initTexture();
+            child->initTexture(programID);
         }
     }
 
@@ -306,11 +377,14 @@ public:
 
     void updatePhysicallyBasedPosition(float deltaTime) {
         // Application de la force gravitationnelle
-        if (!grounded)
+        if (gravityEnabled_  && !grounded)
             velocity += acceleration * deltaTime;
 
         // Application de sa vitesse à notre objet
-        translate(velocity * deltaTime);
+        if (gravityEnabled_ ){
+            translate(velocity * deltaTime);
+        }
+        
     }
     // Fonction pour calculer les impulsions à appliquer à chaque objet
     void calculer_impulsions(const GameObject& obj2, glm::vec3& impulsion1, glm::vec3& impulsion2, const glm::vec3& normale_contact) {
@@ -322,14 +396,14 @@ public:
         impulsion2 = -impulse_factor * normale_contact / obj2.getWeight();
     }
 
-    // Méthode pour détecter et résoudre les collisions avec un autre GameObject
-    void handleCollisionWithLandscape(const GameObject& other) {
-        if (other.getType() == GameObjectType::PLANE) {
+    void handleCollisionBox(const GameObject& other){
+        if (other.getType() == GameObjectType::PLANE) { // Collision avec le landscape
             // Collision entre le GameObject et le terrain détectée
             // Vérifiez la collision avec les AABB
             if (boundingBox.intersect(other.getBoundingBox())) {
                 // std::cout << "Collision entre le GameObject (" << getName() << ") et le terrain (" << other.getName() << ") détectée" << std::endl;
                 if (!grounded) { // Si elle n'était pas déjà au sol alors beginOverlap
+                    std::cout << "BeginOverlap" << std::endl;
                     grounded = true;
                     std::cout << "vitesse avant: " << getVelocity().x << "; " << getVelocity().y << "; " << getVelocity().z << std::endl;
                     setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f): glm::vec3(0.0f));
@@ -340,26 +414,199 @@ public:
                 // calculer_impulsions(other, impulsion1, impulsion2, normale_contact);
                 // std::cout << "normale contact: " << normale_contact.x << "; " << normale_contact.y << "; " << normale_contact.z << std::endl;
                 // std::cout << "impulsion: " << impulsion1.x << "; " << impulsion1.y << "; " << impulsion1.z << std::endl;
-                // Réglez la position du GameObject sur le terrain
+                // Régler la position du GameObject sur le terrain
                 // transform.setPosition(glm::vec3(transform.getPosition().x, other.getTransform().getPosition().y, transform.getPosition().z));
 
-                // Réinitialisez la vitesse du GameObject à zéro
+                // Réinitialiser la vitesse du GameObject à zéro
             } else {
-                if (grounded) // endOverlap
+                if (grounded) { // endOverlap
+                    std::cout << "EndOverlap" << std::endl;
                     grounded = false;
+                }
             }
         }
+
     }
+
+    bool intersectTriangles(const Triangle& t1, const Triangle& t2) {
+        glm::vec3 axes[] = {
+            glm::normalize(glm::cross(t1.v2 - t1.v1, t1.v3 - t1.v1)),
+            glm::normalize(glm::cross(t2.v2 - t2.v1, t2.v3 - t2.v1))
+        };
+
+        // Projection sur les axes
+        for (int i = 0; i < 2; ++i) {
+            float minT1 = glm::dot(t1.v1, axes[i]);
+            float maxT1 = minT1;
+            float minT2 = glm::dot(t2.v1, axes[i]);
+            float maxT2 = minT2;
+
+            float projT1_2 = glm::dot(t1.v2, axes[i]);
+            minT1 = std::min(minT1, projT1_2);
+            maxT1 = std::max(maxT1, projT1_2);
+
+            float projT1_3 = glm::dot(t1.v3, axes[i]);
+            minT1 = std::min(minT1, projT1_3);
+            maxT1 = std::max(maxT1, projT1_3);
+
+            float projT2_2 = glm::dot(t2.v2, axes[i]);
+            minT2 = std::min(minT2, projT2_2);
+            maxT2 = std::max(maxT2, projT2_2);
+
+            float projT2_3 = glm::dot(t2.v3, axes[i]);
+            minT2 = std::min(minT2, projT2_3);
+            maxT2 = std::max(maxT2, projT2_3);
+
+            if (maxT1 < minT2 || maxT2 < minT1) {
+                return false; // Pas d'intersection
+            }
+        }
+
+        // Conditions pour tester l'intersection
+        glm::vec3 dp1 = glm::cross(t1.v1 - t2.v1, t2.v2 - t2.v1);
+        glm::vec3 dq1 = glm::cross(t1.v1 - t2.v2, t2.v3 - t2.v2);
+        glm::vec3 dr1 = glm::cross(t1.v1 - t2.v3, t2.v1 - t2.v3);
+
+        glm::vec3 dp2 = glm::cross(t2.v1 - t1.v1, t1.v2 - t1.v1);
+        glm::vec3 dq2 = glm::cross(t2.v1 - t1.v2, t1.v3 - t1.v2);
+        glm::vec3 dr2 = glm::cross(t2.v1 - t1.v3, t1.v1 - t1.v3);
+
+        if (((glm::dot(dp1, dq1) > 0.0f) && (glm::dot(dp1, dr1) > 0.0f)) || 
+            ((glm::dot(dp2, dq2) > 0.0f) && (glm::dot(dp2, dr2) > 0.0f))) {
+            return true; // Les triangles s'intersectent
+        }
+
+        return false; // Pas d'intersection
+    }
+
+
+    void handleCollision(const GameObject& other) {
+
+        if (type == GameObjectType::PLAYER) { 
+            
+            // Récupération des coordonées mondes 
+            std::vector<glm::vec3> verticesWorld = getVerticesWorld(); 
+            std::vector<glm::vec3> otherVerticesWorld = other.getVerticesWorld(); 
+            std::vector<unsigned short> otherIndices = other.getIndices();
+        
+
+            bool allIntersect = false; 
+        
+            for (int i = 0; i < indices.size(); i+=3) {
+
+                Triangle t1 = {verticesWorld[indices[i]], verticesWorld[indices[i+ 1]], verticesWorld[indices[i+ 2]]};
+
+                // Parcourir les triangles de l'autre GameObject
+                for (int j = 0; j < otherIndices.size(); j+=3) {
+                  
+                    Triangle t2 = {otherVerticesWorld[otherIndices[j]], otherVerticesWorld[otherIndices[j+ 1]], otherVerticesWorld[otherIndices[j+ 2]]};
+
+                    // Vérifier s'ils s'intersectent
+                    if (intersectTriangles(t1, t2)) {
+
+                        allIntersect = true; 
+                        
+                         if(grounded){
+                            float sens = glm::dot(t2.getNormal(), getVelocity()); 
+                            // Si la sphère est sur le sol et sur une pente alors on va utilisé la normale du triangle comme axe de reflexion. 
+                            if(sens < 0){
+                                // vecteur de reflexion
+                                glm::vec3 velocity_reflected = getVelocity() - 2.0f * sens * t2.getNormal();
+                                setVelocity(velocity_reflected);
+
+                            }
+
+                        }else{
+                            setVelocity(length(getVelocity()) > 1.0f ? getVelocity() * restitutionCoef * glm::vec3(1.0f, -1.0f, 1.0f) : glm::vec3(0.0f));
+                            grounded = true; 
+
+                        }
+                        
+                       
+                                    
+                    }
+                    
+                }
+                
+            }
+            if(!allIntersect && grounded){
+             
+                grounded = false; 
+            }
+        }
+          
+      
+    }
+
 
     bool isGrounded() {return grounded;}
 
     /* ------------------------- UPDATE -------------------------*/
+    // Elements à mettre à jour à chaque frame ou tick de mise à jour
 
     void update(float deltaTime) {
         updatePhysicallyBasedPosition(deltaTime);
     }
 
     std::unique_ptr<GameObject> ptr; // Pointeur unique vers l'objet
+
+    /* ------------------------- INTERFACE -------------------------*/
+
+    void resetParameters() {
+        // Réinitialiser la transformation à sa valeur par défaut
+        transform = initialTransform; 
+
+        // Réinitialiser d'autres paramètres selon vos besoins
+        scaleLocked_ = false;
+        gravityEnabled_ = false;
+        velocity = glm::vec3(0.0f); 
+    }
+
+    void updateInterfaceTransform(float _deltaTime) {
+
+       
+        ImGui::Text("Position");
+        glm::vec3 position = transform.getPosition();
+        ImGui::DragFloat3(("##" + name + "Position").c_str(), glm::value_ptr(position));
+
+        glm::vec3 rotation = transform.getRotation();
+        ImGui::Text("Rotation");
+        ImGui::DragFloat3(("##" + name + "Rotation").c_str(), glm::value_ptr(rotation));
+
+        glm::vec3 scale = transform.getScale();
+
+        ImGui::Text("Lock Scale");
+        ImGui::SameLine();
+        ImGui::Checkbox(("##" + name + "LockScale").c_str(), &scaleLocked_);
+
+        if (scaleLocked_) {
+           
+            ImGui::Text("Scale");
+            ImGui::DragFloat((std::string("##") + name + "Scale").c_str(), &scale.x, 0.1f, 0.0f, FLT_MAX);
+            scale.y = scale.x;
+            scale.z = scale.x;
+        } else {
+            ImGui::Text("Scale x, y, z");
+            ImGui::DragFloat3((std::string("##") + name + "Scale").c_str(), glm::value_ptr(scale), 0.1f, 0.0f, FLT_MAX);
+
+        }
+        if(hasPhysic == true){
+            ImGui::Text("Gravity Enabled");
+            ImGui::SameLine();
+            ImGui::Checkbox(("##" + name + " GravityEnabled").c_str(), &gravityEnabled_);
+        }
+      
+
+        transform.setPosition(position);
+        transform.setRotation(rotation);
+        transform.setScale(scale);
+
+        if (ImGui::Button(("Reset " + name + " Parameters").c_str())) {
+            resetParameters();
+        }
+    }
+
+
 };
 
 #endif

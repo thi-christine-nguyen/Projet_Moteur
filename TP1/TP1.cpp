@@ -1,13 +1,21 @@
 #include "lib.hpp"
+#include "Camera/Camera.hpp"
+#include "PhysicManager.hpp"
 #include "InputManager.hpp"
-#include "SceneManager.hpp"
-#include "Camera.hpp"
+#include "Player.hpp"
 #include "GameObject.hpp"
-#include "Sphere.hpp"
-#include "Plane.hpp"
-#include "Cube.hpp"
+#include "Objects/Sphere.hpp"
+#include "Objects/Plane.hpp"
+#include "Objects/Cube.hpp"
+#include "Interface.hpp"
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 
 /*******************************************************************************/
+
 
 int main( void )
 {
@@ -48,7 +56,7 @@ int main( void )
     // Ensure we can capture the escape key being pressed below
     // glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     // Hide the mouse and enable unlimited mouvement
-     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     // Set the mouse at the center of the screen
     glfwPollEvents();
@@ -65,16 +73,10 @@ int main( void )
     // Cull triangles which normal is not towards the camera
     //glEnable(GL_CULL_FACE);
 
-    // Création de la caméra
-    camera.setSpeed(0.1f);
-    camera.setIsOrbiting(false);
-    camera.setOrbitSpeed(0.025f);
-    camera.setFov(45.0f);
-    camera.resetCamera();
-
     // Création des managers
-    SceneManager *SM = new SceneManager();
-    InputManager *IM = new InputManager();
+    // SceneManager *SM = new SceneManager();
+    // PhysicManager *PM = new PhysicManager();
+    // InputManager * IM = new InputManager();
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -89,37 +91,67 @@ int main( void )
 
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
+    Interface interface(programID); 
     glUseProgram(programID);
 
     //----------------------------------------- Init -----------------------------------------//
 
     // Création des différents GameObjects
-    GameObject *landscape = new Plane("landscape", 256, 15, 1, "../data/textures/terrain.png");
-    GameObject *basketBall = new Sphere("basketBall", 20, 1, 2, "../data/textures/ball.png");
-    // GameObject *cube = new Cube("cube", 0.2, 0, "../data/textures/ball.png");
+    GameObject *pente = new Mesh("plan", "../data/meshes/plan2.obj", 1, "../data/textures/terrain.png", programID);
+    
+    // GameObject *pente =  new Plane("plan1", 1, 1, 1, "../data/textures/terrain.png", programID);
+    // GameObject *pente = new Plane("landscape", 1, 10, 1, "../data/textures/terrain.png", programID);
+    Player *player = new Player("player", true, 10, 1, 2, "../data/textures/ball.png", programID);
+    // Player *player = new Player("player", "../data/meshes/sphereLow.obj", 3, "../data/textures/ball.png", programID);
+    // // GameObject *cube = new Sphere("sphere", 5, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/terrain.png", programID);
+    // // Sphere *sphere = new Sphere("patate", "../data/meshes/sphere.obj", 3, "../data/textures/ball.jpg", programID); 
+    // // Sphere *sphere = new Sphere("sphere", 20, 1, 3, "/mnt/c/Users/snsdt/Desktop/Projet_Moteur/data/textures/ball.png", programID);
 
-    // Ajout des GameObjects au SceneManager
-    SM->addObject(std::move(landscape->ptr));
-    SM->addObject(std::move(basketBall->ptr));
-    // SM->addObject(std::move(cube->ptr));
+    // landscape->getTransform()
+    // pente->translate(glm::vec3(-1, -1, 0)); 
+    pente->setInitalTransform(pente->getTransform()); 
 
-    // Initialisation des textures des GameObjects
-    SM->initGameObjectsTexture();
+    // landscape->translate(glm::vec3(0, 0, 0));
+    // landscape->setInitalTransform(landscape->getTransform()); 
+    
+    
+    // // Ajout des GameObjects au SceneManager
+    interface.SM->addObject(std::move(pente->ptr));
+    // interface.SM->addObject(std::move(landscape->ptr));
 
-    // Transformations sur les GameObjects
-    basketBall->translate(glm::vec3(0.f, 1.f, 0.f));
-    basketBall->scale(glm::vec3(0.2));
+    // // Ajout des GameObjects au PhysicManager
+    interface.PM->addObject(pente);
+    // interface.PM->addObject(landscape);
+   
+    // Initialisation du player
+    interface.setPlayer(player);  
+    interface.getPlayer()->translate(glm::vec3(0.f, 5.f, 0.f));
+    interface.getPlayer()->scale(glm::vec3(0.2));
+    interface.getPlayer()->setWeight(0.6f);
+    player->setInitalTransform(player->getTransform()); 
 
-    // cube->translate(camera.getPosition());
-    // cube->setColor(glm::vec4(0., 0.65, 0.6, 1.0));
-    basketBall->setWeight(0.6f);
+    
+    interface.PM->addObject(interface.getPlayer());
+    interface.SM->addObject(std::move(interface.getPlayer()->ptr));
+    interface.SM->initGameObjectsTexture();
+
+   
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);
     GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
 
+    interface.initImgui(window);
+    interface.camera.init();
+
+
+    int t = 0; 
+
+    
+
     do{
 
+       
         // Measure speed
         // per-frame time logic
         // --------------------
@@ -148,34 +180,38 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        // Envoi de la matrice de vue et de projection au GPU
-        camera.sendToShader(programID);
+        //Imgui 
+        interface.createFrame();
+        if (interface.camera.getInputMode() == InputMode::Follow && interface.getPlayer() != nullptr)
+            interface.camera.setCameraTarget(interface.getPlayer()->getTransform().getPosition());
 
+        // interface.camera.setCameraTarget(basketBall->getTransform().getPosition());
+        interface.update(deltaTime, window);
+        interface.camera.update(deltaTime, window);
+        interface.camera.sendToShader(programID); 
         // Input gérés par l'InputManager
-        IM->processInput(window);
-
-        //----------------------------------- Throw cube 45° from camera front -----------------------------------//
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            basketBall->setPosition(camera.getPosition());
-            float throwStrenght = 3.0f;
-            glm::vec3 speedVector = glm::normalize(glm::vec3(camera.getFront().x, 1.0f, camera.getFront().z)) * throwStrenght;
-            speedVector = glm::vec3((glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(speedVector, 1.0f));
-            basketBall->setVelocity(speedVector);
+        if(interface.getPlayer() != nullptr){
+            interface.IM->processInput(window, interface.getPlayer(), deltaTime);
         }
-
-        // Update des GameObjects dans la boucle
-        SM->update(deltaTime);
         
-        float updateTime = 0.05f;
+        float updateTime = 1.0f/60.f;
 
         while (physicsClock >= updateTime) {
+
+            interface.SM->update(deltaTime);
+
             // Check des collisions entre le plan et les gameObjects
-            basketBall->handleCollisionWithLandscape(*landscape);
+            interface.PM->handleCollisions();
+
+            // std::cout << "PM tick" << std::endl;
             physicsClock -= updateTime;
         }
 
+       
         // Affichage de tous les élements de la scène via le SceneManager
-        SM->draw();
+        interface.SM->draw();
+        interface.renderFrame(); 
+
 
         // Swap buffers
         glfwSwapBuffers(window);
@@ -184,16 +220,20 @@ int main( void )
         glfwPollEvents();
 
     } // Check if the ESC key was pressed or the window was closed
-    while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
-           glfwWindowShouldClose(window) == 0 );
+    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
+          glfwWindowShouldClose(window) == 0 );
+    
+
+    interface.deleteFrame();
+
 
     // Cleanup VBO and shader
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteBuffers(1, &uvbuffer);
     glDeleteBuffers(1, &normalbuffer);
     glDeleteBuffers(1, &elementbuffer);
-    glDeleteProgram(programID);
     glDeleteVertexArrays(1, &VertexArrayID);
+    glDeleteProgram(programID);
 
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
@@ -209,3 +249,4 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
+
